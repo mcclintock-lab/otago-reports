@@ -23,7 +23,6 @@ class ValuesTab extends ReportTab
   ]
 
 
-
   render: () ->
 
     #show tables instead of graph for IE
