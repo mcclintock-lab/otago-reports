@@ -37,7 +37,8 @@ class OverviewTab extends ReportTab
     coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
     new_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('NEW_HABS')
     total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
-
+    evenness = @recordSet('HabitatsOverview', 'HabitatEvenness').float('EVENNESS')
+    
     #show tables instead of graph for IE
     if window.d3
       d3IsPresent = true
@@ -57,7 +58,7 @@ class OverviewTab extends ReportTab
       COASTLINE_LENGTH: coastline_length
       new_habs: new_habs
       total_habs: total_habs
-
+      evenness: evenness
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
 
