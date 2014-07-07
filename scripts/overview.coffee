@@ -22,6 +22,7 @@ class OverviewTab extends ReportTab
   dependencies: [
     'Size'
     'CoastlineLength'
+    'HabitatsOverview'
   ]
 
 
@@ -32,9 +33,10 @@ class OverviewTab extends ReportTab
     # documentation for more info.
     attr = @model.getAttribute('MPA_TYPE')
 
-
     size = @recordSet('Size', 'Size').float('SIZE_IN_HA')
     coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
+    new_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('NEW_HABS')
+    total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
 
     #show tables instead of graph for IE
     if window.d3
@@ -53,7 +55,8 @@ class OverviewTab extends ReportTab
       admin: @project.isAdmin window.user
       SIZE: size
       COASTLINE_LENGTH: coastline_length
-
+      new_habs: new_habs
+      total_habs: total_habs
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()

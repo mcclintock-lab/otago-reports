@@ -13,9 +13,38 @@
 </div>
 {{/anyAttributes}}
 
-<div class="reportSection size">
-  <h4>No Environment Reports Yet</h4>
-  <p class="large">
-    TBD
-  </p>
+<div class="reportSection tableContainer">
+  <h4>Habitats Present in Sketch</h4>
+    {{#d3IsPresent}}
+      <table data-paging="20" class="hab_table"> 
+        <thead>
+          <tr>
+            <th class="sorting_col" style="width:250px;"><a class="hab_type sort_up" href="#">Habitat Type</a></th>
+            <th><a  class="hab_new_area sort_down" href="#" >Area (ha)</a></th>
+            <th><a class="hab_new_perc sort_down" href="#">Area (%)</a></th>
+          </tr>
+        </thead>
+        <tbody class="hab_values"></tbody>
+      </table>
+    {{/d3IsPresent}}
+    {{^d3IsPresent}}
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th style="width:250px;">Habitats</th>
+            <th>Area (ha)</th>
+            <th>Area (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#habitats}}
+          <tr>
+            <td>{{HAB_TYPE}}</td>
+            <td>{{SIZE_HA}}</td>
+            <td>{{SIZE_PERC}}</td>
+          </tr>
+          {{/habitats}}
+        </tbody>
+      </table>
+    {{/d3IsPresent}}
 </div>
