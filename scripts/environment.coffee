@@ -20,6 +20,7 @@ class EnvironmentTab extends ReportTab
   template: templates.environment
   dependencies: [
     'HabitatsEnvironment'
+    'HabitatsOverview'
   ]
 
 
@@ -33,6 +34,7 @@ class EnvironmentTab extends ReportTab
       d3IsPresent = false
 
     habitats = @recordSet('HabitatsEnvironment', 'HabitatSize').toArray()
+    evenness = @recordSet('HabitatsOverview', 'HabitatEvenness').float('EVENNESS')
     attributes = @model.getAttributes()
     
     context =
@@ -43,6 +45,8 @@ class EnvironmentTab extends ReportTab
       admin: @project.isAdmin window.user
       d3IsPresent: d3IsPresent
       habitats: habitats
+      evenness: evenness
+      
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
     @setupHabitatSorting(habitats)
