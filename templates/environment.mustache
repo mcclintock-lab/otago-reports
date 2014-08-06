@@ -60,3 +60,98 @@
       </p>
     </p>
 </div>
+<div class="reportSection tableContainer">
+  <h4>Adjacent Terrestrial Information</h4>
+      <p><em>MPA Guidelines: "Consider adjacent terrestrial environment" (areas shown below are within 100m of the Sketch)</em></p>
+      <p class="large"><strong>Public Conservation Land</strong></p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Distance (in Meters)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#public_land}}
+          <tr>
+            <td>{{NAME}}</td>
+            <td>{{DIST}}</td>
+          </tr>
+          {{/public_land}}
+        </tbody>
+      </table>
+      <p class="large"><strong>Coastal Protection and Recreation Areas (CPA & CRA)</strong></p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Distance (in Meters)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#coastal_land}}
+          <tr>
+            <td>{{NAME}}</td>
+            <td>{{DIST}}</td>
+          </tr>
+          {{/coastal_land}}
+        </tbody>
+      </table>
+      <p class="large"><strong>Adjacent Land Cover (LCDB4)</strong></p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Distance (in Meters)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#adjacent_land}}
+          <tr>
+            <td>{{NAME}}</td>
+            <td>{{DIST}}</td>
+          </tr>
+          {{/adjacent_land}}
+        </tbody>
+      </table>
+</div>
+
+<div class="reportSection tableContainer">
+  <h4>Species Information</h4>
+      <p class="large"><strong>Important Seabird Areas</strong></p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Name of Seabird Area</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#seabirds}}
+          <tr>
+            <td>{{Name}}</td>
+          </tr>
+          {{/seabirds}}
+        </tbody>
+      </table>
+      <p class="large"><strong>Marine Mammals</strong></p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Species</th>
+            <th>Sightings</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#mammals}}
+          <tr>
+            <td>{{Name}}</td>
+            <td>{{Count}}</td>
+          </tr>
+          {{/mammals}}
+        </tbody>
+      </table>
+      {{#inHighDiversityReefFishArea}}
+        </br><p class="large"><strong>Reef Fish Diversity</strong></p>
+        <p> The sketch is located in an area predicted to <strong>have a high diversity of reef fish</strong>.</p>
+      {{/inHighDiversityReefFishArea}}
+</div>

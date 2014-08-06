@@ -39,8 +39,9 @@ class OverviewTab extends ReportTab
     new_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('NEW_HABS')
     total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
     
-    
-    ratio = Math.round((coastline_length/size),2)
+    ratio = (coastline_length/size).toFixed(1)
+
+    console.log("ratio is ", ratio)
     #show tables instead of graph for IE
     if window.d3
       d3IsPresent = true

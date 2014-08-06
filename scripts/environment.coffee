@@ -21,6 +21,8 @@ class EnvironmentTab extends ReportTab
   dependencies: [
     'HabitatsEnvironment'
     'HabitatsOverview'
+    'SpeciesInformation'
+    'AdjacentTerrestrial'
   ]
 
 
@@ -35,6 +37,16 @@ class EnvironmentTab extends ReportTab
 
     habitats = @recordSet('HabitatsEnvironment', 'HabitatSize').toArray()
     evenness = @recordSet('HabitatsOverview', 'HabitatEvenness').float('EVENNESS')
+    public_land = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
+    coastal_land = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
+    adjacent_land = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
+
+    console.log("public land is ", public_land)
+    #species info
+    seabirds = @recordSet('SpeciesInformation', 'Seabirds').toArray()
+    mammals = @recordSet('SpeciesInformation', 'Mammals').toArray()
+    reef_fish = @recordSet('SpeciesInformation', 'ReefFish').toArray()
+    inHighDiversityReefFishArea = reef_fish?.length > 0
     attributes = @model.getAttributes()
     
     context =
@@ -46,7 +58,14 @@ class EnvironmentTab extends ReportTab
       d3IsPresent: d3IsPresent
       habitats: habitats
       evenness: evenness
-      
+      seabirds: seabirds
+      mammals: mammals
+      reef_fish: reef_fish
+      inHighDiversityReefFishArea: inHighDiversityReefFishArea
+      public_land: public_land
+      coastal_land: coastal_land
+      adjacent_land: adjacent_land
+
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
     @setupHabitatSorting(habitats)
@@ -70,45 +89,47 @@ class EnvironmentTab extends ReportTab
     if event
       event.preventDefault()
 
-    targetColumn = @getSelectedColumn(event, name)
-    sortUp = @getSortDir(targetColumn)
 
-    if isFloat
-      data = _.sortBy pdata, (row) ->  parseFloat(row[sortBy])
-    else
-      data = _.sortBy pdata, (row) -> row[sortBy]
+    if window.d3
+      targetColumn = @getSelectedColumn(event, name)
+      sortUp = @getSortDir(targetColumn)
 
-    #flip sorting if needed
-    if sortUp
-      data.reverse()
+      if isFloat
+        data = _.sortBy pdata, (row) ->  parseFloat(row[sortBy])
+      else
+        data = _.sortBy pdata, (row) -> row[sortBy]
 
-    el = @$(tbodyName)[0]
-    hab_body = d3.select(el)
+      #flip sorting if needed
+      if sortUp
+        data.reverse()
 
-    #remove old rows
-    hab_body.selectAll("tr.hab_rows")
-      .remove()
+      el = @$(tbodyName)[0]
+      hab_body = d3.select(el)
 
-    #add new rows (and data)
-    rows = hab_body.selectAll("tr")
-        .data(data)
-      .enter().insert("tr", ":first-child")
-      .attr("class", "hab_rows")
+      #remove old rows
+      hab_body.selectAll("tr.hab_rows")
+        .remove()
 
-    columns = ["HAB_TYPE", "SIZE_HA", "SIZE_PERC"]
-    cells = rows.selectAll("td")
-        .data((row, i) ->columns.map (column) -> (column: column, value: row[column]))
-      .enter()
-      .append("td").text((d, i) -> 
-        d.value
-      )    
+      #add new rows (and data)
+      rows = hab_body.selectAll("tr")
+          .data(data)
+        .enter().insert("tr", ":first-child")
+        .attr("class", "hab_rows")
 
-    @setNewSortDir(targetColumn, sortUp)
-    @setSortingColor(event, tableName)
-    #fire the event for the active page if pagination is present
-    @firePagination(tableName)
-    if event
-      event.stopPropagation()
+      columns = ["HAB_TYPE", "SIZE_HA", "SIZE_PERC"]
+      cells = rows.selectAll("td")
+          .data((row, i) ->columns.map (column) -> (column: column, value: row[column]))
+        .enter()
+        .append("td").text((d, i) -> 
+          d.value
+        )    
+
+      @setNewSortDir(targetColumn, sortUp)
+      @setSortingColor(event, tableName)
+      #fire the event for the active page if pagination is present
+      @firePagination(tableName)
+      if event
+        event.stopPropagation()
 
   #table row for habitat representation
   getHabitatRowString: (d) =>
