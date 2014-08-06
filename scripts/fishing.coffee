@@ -19,12 +19,13 @@ class FishingTab extends ReportTab
   timeout: 120000
   template: templates.fishing
   dependencies: [
-
+    'FishingCustomaryArea'
   ]
 
 
 
   render: () ->
+
 
     #show tables instead of graph for IE
     if window.d3
@@ -32,7 +33,7 @@ class FishingTab extends ReportTab
     else
       d3IsPresent = false
 
-
+    customary_fishing_existing = @recordSet('FishingCustomaryArea', 'FishingCustomaryArea').toArray()
     attributes = @model.getAttributes()
     
     context =
@@ -42,7 +43,8 @@ class FishingTab extends ReportTab
       anyAttributes: @model.getAttributes().length > 0
       admin: @project.isAdmin window.user
       d3IsPresent: d3IsPresent
-
+      customary_fishing_existing: customary_fishing_existing
+      
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
 

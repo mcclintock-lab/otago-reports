@@ -12,10 +12,21 @@
   </table>
 </div>
 {{/anyAttributes}}
-
-<div class="reportSection size">
-  <h4>No Fishing Reports Yet</h4>
-  <p class="large">
-    TBD
-  </p>
+<div class="reportSection tableContainer">
+  <h4>Customary Areas</h4>
+      <p> The sketch includes the following existing Customary Areas:</p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#customary_fishing_existing}}
+          <tr>
+            <td>{{FEAT_TYPE}}</td>
+          </tr>
+          {{/customary_fishing_existing}}
+        </tbody>
+      </table>
 </div>
