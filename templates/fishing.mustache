@@ -12,9 +12,35 @@
   </table>
 </div>
 {{/anyAttributes}}
-<div class="reportSection tableContainer">
-  <h4>Customary Areas</h4>
-      <p> The sketch includes the following existing Customary Areas:</p>
+{{#hasAnyFishing}}
+  {{#hasExistingFishing}}
+  <div class="reportSection tableContainer">
+    <h4>Existing Fisheries Management</h4>
+        <p><em>The Sketch includes the following existing fisheries restrictions. 
+        Also shown is the extent that the fisheries restrictions apply to the Sketch as a percentage of total sketch area.</em></p>
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th style="width:250px;">Name</th>
+              <th>Percent</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#existing_fishing_areas}}
+            <tr>
+              <td>{{FEAT_TYPE}}</td>
+              <td>{{PERC_AREA}}</td>
+            </tr>
+            {{/existing_fishing_areas}}
+          </tbody>
+        </table>
+  </div>
+  {{/hasExistingFishing}}
+  {{#hasCustomary}}
+  <div class="reportSection tableContainer">
+    <h4>Customary Areas</h4>
+    {{#hasExistingCustomary}}
+      <p> The sketch includes the following <strong>existing</strong> Customary Areas:</p>
       <table data-paging="10">
         <thead>
           <tr>
@@ -22,11 +48,38 @@
           </tr>
         </thead>
         <tbody>
-          {{#customary_fishing_existing}}
+          {{#existing_customary_fishing}}
           <tr>
             <td>{{FEAT_TYPE}}</td>
           </tr>
-          {{/customary_fishing_existing}}
+          {{/existing_customary_fishing}}
         </tbody>
       </table>
-</div>
+    {{/hasExistingCustomary}}
+    {{#hasProposedCustomary}}
+      <p> The sketch includes the following <strong>proposed</strong> Customary Areas:</p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#proposed_customary_fishing}}
+          <tr>
+            <td>{{FEAT_TYPE}}</td>
+          </tr>
+          {{/proposed_customary_fishing}}
+        </tbody>
+      </table>
+    {{/hasProposedCustomary}}
+  </div>
+  {{/hasCustomary}}
+
+{{/hasAnyFishing}}
+{{^hasAnyFishing}}
+  <div class="reportSection tableContainer">
+    <h4>No Existing or Customary Fishing Areas</h4>
+        <p>The sketch does <strong>not</strong> include any fishing existing or customary fishing areas.</p>
+  </div>
+{{/hasAnyFishing}}

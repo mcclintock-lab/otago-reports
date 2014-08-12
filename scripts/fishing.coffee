@@ -19,7 +19,7 @@ class FishingTab extends ReportTab
   timeout: 120000
   template: templates.fishing
   dependencies: [
-    'FishingCustomaryArea'
+    'FishingAreas'
   ]
 
 
@@ -33,7 +33,19 @@ class FishingTab extends ReportTab
     else
       d3IsPresent = false
 
-    customary_fishing_existing = @recordSet('FishingCustomaryArea', 'FishingCustomaryArea').toArray()
+    existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
+    hasExistingCustomary = existing_customary_fishing?.length > 0
+    console.log("existing_customary: ", existing_customary_fishing)
+    proposed_customary_fishing = @recordSet('FishingAreas', 'ProposedCustomaryArea').toArray()
+    console.log("proposed customary: ", proposed_customary_fishing)
+    hasProposedCustomary = proposed_customary_fishing?.length > 0
+    hasCustomary = hasExistingCustomary or hasProposedCustomary
+    console.log("has customary? ", hasCustomary)
+
+    existing_fishing_areas = @recordSet('FishingAreas', 'FishingExistingArea').toArray()
+    hasExistingFishing = existing_fishing_areas?.length > 0
+    hasAnyFishing = hasExistingFishing or hasCustomary
+
     attributes = @model.getAttributes()
     
     context =
@@ -43,7 +55,14 @@ class FishingTab extends ReportTab
       anyAttributes: @model.getAttributes().length > 0
       admin: @project.isAdmin window.user
       d3IsPresent: d3IsPresent
-      customary_fishing_existing: customary_fishing_existing
+      existing_customary_fishing: existing_customary_fishing
+      hasExistingCustomary: hasExistingCustomary
+      proposed_customary_fishing: proposed_customary_fishing
+      hasProposedCustomary: hasProposedCustomary
+      existing_fishing_areas: existing_fishing_areas
+      hasExistingFishing: hasExistingFishing
+      hasAnyFishing: hasAnyFishing
+      hasCustomary: hasCustomary
       
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
