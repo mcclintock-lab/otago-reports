@@ -1,0 +1,111 @@
+{{#sketchClass.deleted}}
+<div class="alert alert-warn" style="margin-bottom:10px;">
+  This sketch was created using the "{{sketchClass.name}}" template, which is
+  no longer available. You will not be able to copy this sketch or make new
+  sketches of this type.
+</div>
+{{/sketchClass.deleted}}
+{{#anyAttributes}}
+<div class="reportSection">
+  <h4>{{sketchClass.name}}</h4>
+  {{>attributes/attributesTable}}
+  </table>
+</div>
+{{/anyAttributes}}
+{{#hasUses}}
+  {{#hasRecUses}}
+  <div class="reportSection tableContainer">
+    <h4>Recreational Uses </h4>
+      <p><strong>Spectrum of MArine Recreational Opportunity (SMARO<sup>*</sup>)</strong></p>
+        <p>Sketch includes area(s) identified as having <strong> medium or high </strong> recreational opportunity.
+        <p><em><sup>*</sup>You can find more information on SMARO in the "data description" by right clicking on the layer name.</em></p>
+      </p>
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th style="width:250px;">Activity Type</th>
+              <th>Number of Sites</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#rec_uses}}
+            <tr>
+              <td>{{FEAT_TYPE}}</td>
+              <td>{{COUNT}}</td>
+            </tr>
+            {{/rec_uses}}
+          </tbody>
+        </table>
+  </div>
+  {{/hasRecUses}}
+
+  {{#hasHeritage}}
+  <div class="reportSection tableContainer">
+    <h4>Heritage</h4>
+        <p>The sketch contains or is within 200m of sites identified as having significant heritage values.</p>
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th style="width:250px;">Heritage Type</th>
+              <th>Number of Sites</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#heritage}}
+            <tr>
+              <td>{{FEAT_TYPE}}</td>
+              <td>{{COUNT}}</td>
+            </tr>
+            {{/heritage}}
+          </tbody>
+        </table>
+  </div>
+  {{/hasHeritage}}
+  {{#hasCoastal}}
+  <div class="reportSection tableContainer">
+    <h4>Existing Coastal Consents</h4>
+        <p>The sketch contains or is within 200m of sites with Resource Consents.</p>
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th style="width:250px;">Consent Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#coastal_consents}}
+            <tr>
+              <td>{{FEAT_TYPE}}</td>
+            </tr>
+            {{/coastal_consents}}
+          </tbody>
+        </table>
+  </div>
+  {{/hasCoastal}}
+
+  {{#hasInfrastructure}}
+    <div class="reportSection tableContainer">
+      <h4>Infrastructure</h4>
+          <p>The sketch contains or is within 200m of sites with existing infrastructure.</p>
+          <table data-paging="10">
+            <thead>
+              <tr>
+                <th style="width:250px;">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#infrastructure}}
+              <tr>
+                <td>{{FEAT_TYPE}}</td>
+              </tr>
+              {{/infrastructure}}
+            </tbody>
+          </table>
+    </div>
+  {{/hasInfrastructure}}
+{{/hasUses}}
+{{^hasUses}}
+  <div class="reportSection tableContainer">
+    <h4>Activities and Uses</h4>
+        <p>The sketch does <strong>not</strong> include any activities or uses.</p>
+  </div>
+{{/hasUses}}
