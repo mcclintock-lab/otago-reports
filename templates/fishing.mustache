@@ -42,11 +42,6 @@
     {{#hasExistingCustomary}}
       <p> The sketch includes the following <strong>existing</strong> Customary Areas:</p>
       <table data-paging="10">
-        <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
         <tbody>
           {{#existing_customary_fishing}}
           <tr>
@@ -59,11 +54,6 @@
     {{#hasProposedCustomary}}
       <p> The sketch includes the following <strong>proposed</strong> Customary Areas:</p>
       <table data-paging="10">
-        <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
         <tbody>
           {{#proposed_customary_fishing}}
           <tr>
@@ -80,6 +70,6 @@
 {{^hasAnyFishing}}
   <div class="reportSection tableContainer">
     <h4>No Existing or Customary Fishing Areas</h4>
-        <p>The sketch does <strong>not</strong> include any fishing existing or customary fishing areas.</p>
+        <p>The sketch does <strong>not</strong> include any <strong>existing fishing areas</strong> or <strong>customary fishing areas</strong>.</p>
   </div>
 {{/hasAnyFishing}}

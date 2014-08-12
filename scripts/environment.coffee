@@ -37,18 +37,24 @@ class EnvironmentTab extends ReportTab
 
     habitats = @recordSet('HabitatsEnvironment', 'HabitatSize').toArray()
     evenness = @recordSet('HabitatsOverview', 'HabitatEvenness').float('EVENNESS')
+    total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
     public_land = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
+    hasPublic = public_land?.length > 0
     coastal_land = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
+    hasCoastal = coastal_land?.length > 0
     adjacent_land = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
-
-    console.log("public land is ", public_land)
+    hasAdjacent = adjacent_land?.length > 0
+    
     #species info
     seabirds = @recordSet('SpeciesInformation', 'Seabirds').toArray()
+    hasSeabirds = seabirds?.length> 0
     mammals = @recordSet('SpeciesInformation', 'Mammals').toArray()
+    hasMammals = mammals?.length > 0
     reef_fish = @recordSet('SpeciesInformation', 'ReefFish').toArray()
     inHighDiversityReefFishArea = reef_fish?.length > 0
     attributes = @model.getAttributes()
     
+    hasSpecies = hasMammals or hasSeabirds or inHighDiversityReefFishArea
     context =
       sketch: @model.forTemplate()
       sketchClass: @sketchClass.forTemplate()
@@ -58,13 +64,23 @@ class EnvironmentTab extends ReportTab
       d3IsPresent: d3IsPresent
       habitats: habitats
       evenness: evenness
+      total_habs: total_habs
       seabirds: seabirds
+      hasSeabirds: hasSeabirds
+
       mammals: mammals
+      hasMammals: hasMammals
+
       reef_fish: reef_fish
+      hasSpecies: hasSpecies
+
       inHighDiversityReefFishArea: inHighDiversityReefFishArea
       public_land: public_land
+      hasPublicLand: hasPublic
       coastal_land: coastal_land
+      hasCoastalLand: hasCoastal
       adjacent_land: adjacent_land
+      hasAdjacentLand: hasAdjacent
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()

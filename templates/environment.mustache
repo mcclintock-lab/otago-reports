@@ -14,12 +14,12 @@
 {{/anyAttributes}}
 
 <div class="reportSection tableContainer">
-  <h4>Habitats Present in Sketch</h4>
+  <h4>Habitats Present in Sketch <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
     {{#d3IsPresent}}
       <table data-paging="20" class="hab_table"> 
         <thead>
           <tr>
-            <th class="sorting_col" style="width:250px;"><a class="hab_type sort_up" href="#">Habitat Type</a></th>
+            <th class="sorting_col" style="width:250px;"><a class="hab_type sort_up" href="#">Habitat Classification Type</a></th>
             <th><a  class="hab_new_area sort_down" href="#" >Area (ha)</a></th>
             <th><a class="hab_new_perc sort_down" href="#">Area (%)</a></th>
           </tr>
@@ -48,9 +48,10 @@
       </table>
     {{/d3IsPresent}}
     </br>
-    <p><strong>Habitat Evenness</strong>
-      <p style="margin-top:0px;" class="large">
-        The measure of habitat 'Evenness' for the Sketch is <strong>{{evenness}}</strong>.
+    <p>
+      <p class="large">
+        <strong>Habitat Evenness</strong></br>
+        The measure of 'evenness' for the <strong>{{total_habs}}</strong> habitats present in the Sketch is <strong>{{evenness}}</strong>.
       </p>
       <p>
         <em>Evenness is a measure of the relative abundance of habitats within an area, where a high number approaching 
@@ -65,93 +66,100 @@
       <p><em>MPA Guidelines: "Consider adjacent terrestrial environment" (areas shown below are within 100m of the Sketch)</em></p>
       <p class="large"><strong>Public Conservation Land</strong></p>
       <table data-paging="10">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Distance (in Meters)</th>
-          </tr>
-        </thead>
         <tbody>
-          {{#public_land}}
-          <tr>
-            <td>{{NAME}}</td>
-            <td>{{DIST}}</td>
-          </tr>
-          {{/public_land}}
+          {{#hasPublicLand}}
+            {{#public_land}}
+            <tr>
+              <td>{{NAME}}</td>
+            </tr>
+            {{/public_land}}
+          {{/hasPublicLand}}
+          {{^hasPublicLand}}
+            <tr>
+              <td><em>None Present</em></td>
+            </tr>
+          {{/hasPublicLand}}
         </tbody>
       </table>
       <p class="large"><strong>Coastal Protection and Recreation Areas (CPA & CRA)</strong></p>
       <table data-paging="10">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Distance (in Meters)</th>
-          </tr>
-        </thead>
         <tbody>
-          {{#coastal_land}}
-          <tr>
-            <td>{{NAME}}</td>
-            <td>{{DIST}}</td>
-          </tr>
-          {{/coastal_land}}
+          {{#hasCoastalLand}}
+            {{#coastal_land}}
+            <tr>
+              <td>{{NAME}}</td>
+            </tr>
+            {{/coastal_land}}
+          {{/hasCoastalLand}}
+          {{^hasCoastalLand}}
+            <tr>
+              <td><em>None Present</em></td>
+            </tr>
+          {{/hasCoastalLand}}
         </tbody>
       </table>
       <p class="large"><strong>Adjacent Land Cover (LCDB4)</strong></p>
       <table data-paging="10">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Distance (in Meters)</th>
-          </tr>
-        </thead>
         <tbody>
-          {{#adjacent_land}}
-          <tr>
-            <td>{{NAME}}</td>
-            <td>{{DIST}}</td>
-          </tr>
-          {{/adjacent_land}}
+          {{#hasAdjacentLand}}
+            {{#adjacent_land}}
+            <tr>
+              <td>{{NAME}}</td>
+            </tr>
+            {{/adjacent_land}}
+          {{/hasAdjacentLand}}
+          {{^hasAdjacentLand}}
+            <tr>
+              <td><em>None Present</em></td>
+            </tr>
+          {{/hasAdjacentLand}}
         </tbody>
       </table>
 </div>
 
+{{#hasSpecies}}
 <div class="reportSection tableContainer">
   <h4>Species Information</h4>
-      <p class="large"><strong>Important Seabird Areas</strong></p>
-      <table data-paging="10">
-        <thead>
-          <tr>
-            <th>Name of Seabird Area</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#seabirds}}
-          <tr>
-            <td>{{Name}}</td>
-          </tr>
-          {{/seabirds}}
-        </tbody>
-      </table>
-      <p class="large"><strong>Marine Mammals</strong></p>
-      <table data-paging="10">
-        <thead>
-          <tr>
-            <th>Species</th>
-            <th>Sightings</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#mammals}}
-          <tr>
-            <td>{{Name}}</td>
-            <td>{{Count}}</td>
-          </tr>
-          {{/mammals}}
-        </tbody>
-      </table>
+      {{#hasSeabirds}}
+        <p class="large"><strong>Important Seabird Areas</strong></p>
+        <table data-paging="10">
+          <tbody>
+            {{#seabirds}}
+            <tr>
+              <td>{{Name}}</td>
+            </tr>
+            {{/seabirds}}
+          </tbody>
+        </table>
+      {{/hasSeabirds}}
+      {{#hasMammals}}
+        <p class="large"><strong>Marine Mammals</strong></p>
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th>Species</th>
+              <th>Number of Sightings</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#mammals}}
+            <tr>
+              <td>{{Name}}</td>
+              <td>{{Count}}</td>
+            </tr>
+            {{/mammals}}
+          </tbody>
+        </table>
+      {{/hasMammals}}
       {{#inHighDiversityReefFishArea}}
         </br><p class="large"><strong>Reef Fish Diversity</strong></p>
         <p> The sketch is located in an area predicted to <strong>have a high diversity of reef fish</strong>.</p>
       {{/inHighDiversityReefFishArea}}
 </div>
+{{/hasSpecies}}
+{{^hasSpecies}}
+  <div class="reportSection tableContainer">
+    <h4>Species Information</h4>
+        <p>The sketch does <strong>not</strong> include any <strong>important species areas</strong>.</p>
+  </div>
+{{/hasSpecies}}

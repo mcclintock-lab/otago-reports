@@ -34,8 +34,10 @@ class OverviewTab extends ReportTab
     attr = @model.getAttribute('MPA_TYPE')
 
     size = @recordSet('Size', 'Size').float('SIZE_IN_HA')
+    new_size =  @addCommas size
     percent = @recordSet('Size', 'Percent').float('PERC_IN_HA')
     coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
+    coastline_length = @addCommas coastline_length
     new_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('NEW_HABS')
     total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
     
@@ -56,7 +58,7 @@ class OverviewTab extends ReportTab
       attributes: @model.getAttributes()
       anyAttributes: @model.getAttributes().length > 0
       admin: @project.isAdmin window.user
-      size: size
+      size: new_size
       coastline_length: coastline_length
       new_habs: new_habs
       total_habs: total_habs
@@ -66,5 +68,14 @@ class OverviewTab extends ReportTab
     @enableLayerTogglers()
 
     
+  addCommas: (num_str) =>
+    num_str += ''
+    x = num_str.split('.')
+    x1 = x[0]
+    x2 = if x.length > 1 then '.' + x[1] else ''
+    rgx = /(\d+)(\d{3})/
+    while rgx.test(x1)
+      x1 = x1.replace(rgx, '$1' + ',' + '$2')
+    return x1 + x2
 
 module.exports = OverviewTab
