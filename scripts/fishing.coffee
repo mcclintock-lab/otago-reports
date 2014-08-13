@@ -22,10 +22,7 @@ class FishingTab extends ReportTab
     'FishingAreas'
   ]
 
-
-
   render: () ->
-
 
     #show tables instead of graph for IE
     if window.d3

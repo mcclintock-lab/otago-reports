@@ -36,6 +36,9 @@ class EnvironmentTab extends ReportTab
       d3IsPresent = false
 
     habitats = @recordSet('HabitatsEnvironment', 'HabitatSize').toArray()
+    habs_in_sketch = habitats?.length
+    habs_plural = habs_in_sketch != 1
+
     evenness = @recordSet('HabitatsOverview', 'HabitatEvenness').float('EVENNESS')
     total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
     public_land = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
@@ -63,6 +66,8 @@ class EnvironmentTab extends ReportTab
       admin: @project.isAdmin window.user
       d3IsPresent: d3IsPresent
       habitats: habitats
+      habs_in_sketch: habs_in_sketch
+      habs_plural: habs_plural
       evenness: evenness
       total_habs: total_habs
       seabirds: seabirds

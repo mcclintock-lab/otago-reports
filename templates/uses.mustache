@@ -16,10 +16,13 @@
   {{#hasRecUses}}
   <div class="reportSection tableContainer">
     <h4>Recreational Uses </h4>
+      {{#hasSmaro}}
       <p><strong>Spectrum of MArine Recreational Opportunity (SMARO)</strong></p>
         <p>Sketch includes area(s) identified as having <strong> medium or high </strong> recreational opportunity.
         <em>You can find more information on SMARO in the "data description" by right clicking on the layer name.</em>
       </p>
+      </br></br>
+      {{/hasSmaro}}
         <table data-paging="10">
           <thead>
             <tr>
@@ -28,12 +31,19 @@
             </tr>
           </thead>
           <tbody>
-            {{#rec_uses}}
-            <tr>
-              <td>{{FEAT_TYPE}}</td>
-              <td>{{COUNT}}</td>
-            </tr>
-            {{/rec_uses}}
+            {{#hasRecUses}}
+              {{#rec_uses}}
+              <tr>
+                <td>{{FEAT_TYPE}}</td>
+                <td>{{COUNT}}</td>
+              </tr>
+              {{/rec_uses}}
+            {{/hasRecUses}}
+            {{^hasRecUses}}
+              <tr>
+                <td colspan=2><em>None Present</em></td>
+              </tr>
+            {{/hasRecUses}}
           </tbody>
         </table>
   </div>

@@ -31,8 +31,19 @@ class UsesTab extends ReportTab
     else
       d3IsPresent = false
 
+    smaro = "SMARO"
     rec_uses = @recordSet('OverlapWithRecreationalUses', 'RecreationalUse').toArray()
-    hasRecUses = rec_uses?.length > 0
+    hasSmaro = false
+    for rec in rec_uses
+      console.log(rec.FEAT_TYPE)
+      if rec.FEAT_TYPE == smaro
+        hasSmaro = true
+        break
+
+    console.log("has smaro? ", hasSmaro)
+    non_smaro_rec_uses = rec_uses.filter (rec) -> rec.FEAT_TYPE != smaro
+    hasRecUses = non_smaro_rec_uses?.length > 0
+    
     heritage = @recordSet('OverlapWithRecreationalUses', 'Heritage').toArray()
     hasHeritage = heritage?.length > 0
     coastal_consents = @recordSet('OverlapWithRecreationalUses', 'CoastalConsents').toArray()
@@ -48,7 +59,8 @@ class UsesTab extends ReportTab
       anyAttributes: @model.getAttributes().length > 0
       admin: @project.isAdmin window.user
       d3IsPresent: d3IsPresent
-      rec_uses: rec_uses
+      rec_uses: non_smaro_rec_uses
+      hasSmaro: hasSmaro
       hasRecUses: hasRecUses
       heritage: heritage
       hasHeritage: hasHeritage
