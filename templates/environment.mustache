@@ -14,7 +14,7 @@
 {{/anyAttributes}}
 
 <div class="reportSection tableContainer">
-  <h4>Habitats Present in Sketch <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
+  <h4>Habitats Present in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
     {{#d3IsPresent}}
       <table data-paging="20" class="hab_table"> 
         <thead>
@@ -51,7 +51,7 @@
     <p>
       <p class="large">
         <strong>Habitat Evenness</strong></br>
-        The measure of 'evenness' for the <strong>{{habs_in_sketch}}</strong> habitat{{#habs_plural}}s{{/habs_plural}} present in the Sketch is <strong>{{evenness}}</strong>.
+        The measure of 'evenness' for the <strong>{{habs_in_sketch}}</strong> habitat{{#habs_plural}}s{{/habs_plural}} present in the {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} is <strong>{{evenness}}</strong>.
       </p>
       <p>
         <em>Evenness is a measure of the relative abundance of habitats within an area, where a high number approaching 
@@ -63,7 +63,7 @@
 </div>
 <div class="reportSection tableContainer">
   <h4>Adjacent Terrestrial Information</h4>
-      <p><em>MPA Guidelines: "Consider adjacent terrestrial environment" (areas shown below are within 100m of the Sketch)</em></p>
+      <p><em>MPA Guidelines: "Consider adjacent terrestrial environment" (areas shown below are within 100m of {{#isCollection}}a sketch in the collection{{/isCollection}}{{^isCollection}} the sketch {{/isCollection}})</em></p>
       <p class="large"><strong>Public Conservation Land</strong></p>
       <table data-paging="10">
         <tbody>
@@ -153,13 +153,13 @@
       {{/hasMammals}}
       {{#inHighDiversityReefFishArea}}
         </br><p class="large"><strong>Reef Fish Diversity</strong></p>
-        <p> The sketch is located in an area predicted to <strong>have a high diversity of reef fish</strong>.</p>
+        <p>{{#isCollection}}A sketch within the collection{{/isCollection}}{{^isCollection}}The sketch {{/isCollection}} is located in an area predicted to <strong>have a high diversity of reef fish</strong>.</p>
       {{/inHighDiversityReefFishArea}}
 </div>
 {{/hasSpecies}}
 {{^hasSpecies}}
   <div class="reportSection tableContainer">
     <h4>Species Information</h4>
-        <p>The sketch does <strong>not</strong> include any <strong>important species areas</strong>.</p>
+        <p>The {{#isCollection}}sketches within the collection do {{/isCollection}}{{^isCollection}}sketch does{{/isCollection}} <strong>not</strong> include any <strong>important species areas</strong>.</p>
   </div>
 {{/hasSpecies}}

@@ -58,6 +58,7 @@ class EnvironmentTab extends ReportTab
     attributes = @model.getAttributes()
     
     hasSpecies = hasMammals or hasSeabirds or inHighDiversityReefFishArea
+    isCollection = @model.isCollection()
     context =
       sketch: @model.forTemplate()
       sketchClass: @sketchClass.forTemplate()
@@ -86,6 +87,7 @@ class EnvironmentTab extends ReportTab
       hasCoastalLand: hasCoastal
       adjacent_land: adjacent_land
       hasAdjacentLand: hasAdjacent
+      isCollection: isCollection
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()

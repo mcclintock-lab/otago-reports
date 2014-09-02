@@ -31,7 +31,12 @@ class OverviewTab extends ReportTab
     # The @recordSet method contains some useful means to get data out of 
     # the monsterous RecordSet json. Checkout the seasketch-reporting-template
     # documentation for more info.
-    attr = @model.getAttribute('MPA_TYPE')
+
+    isCollection = @model.isCollection()
+    if isCollection
+      numSketches = @model.collection.length
+    else
+      numSketches = 1
 
     size = @recordSet('Size', 'Size').float('SIZE_IN_HA')
     new_size =  @addCommas size
@@ -43,7 +48,7 @@ class OverviewTab extends ReportTab
     
     ratio = (coastline_length/size).toFixed(1)
 
-    console.log("ratio is ", ratio)
+
     #show tables instead of graph for IE
     if window.d3
       d3IsPresent = true
@@ -64,6 +69,9 @@ class OverviewTab extends ReportTab
       total_habs: total_habs
       ratio: ratio
       percent: percent
+      isCollection: isCollection
+      numSketches: numSketches
+
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
 
