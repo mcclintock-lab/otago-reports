@@ -25,8 +25,6 @@ class OverviewTab extends ReportTab
     'HabitatsOverview'
   ]
 
-
-
   render: () ->
     # The @recordSet method contains some useful means to get data out of 
     # the monsterous RecordSet json. Checkout the seasketch-reporting-template
@@ -34,10 +32,11 @@ class OverviewTab extends ReportTab
 
     isCollection = @model.isCollection()
     if isCollection
-      numSketches = @model.collection.length
+      numSketches = @model.getChildren().length
     else
       numSketches = 1
 
+      
     size = @recordSet('Size', 'Size').float('SIZE_IN_HA')
     new_size =  @addCommas size
     percent = @recordSet('Size', 'Percent').float('PERC_IN_HA')
