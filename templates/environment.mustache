@@ -47,19 +47,21 @@
         </tbody>
       </table>
     {{/d3IsPresent}}
-    </br>
-    <p>
-      <p class="large">
-        <strong>Habitat Evenness</strong></br>
-        The measure of 'evenness' for the <strong>{{habs_in_sketch}}</strong> habitat{{#habs_plural}}s{{/habs_plural}} present in the Sketch is <strong>{{evenness}}</strong>.
-      </p>
+    <!---  
+      </br>
       <p>
-        <em>Evenness is a measure of the relative abundance of habitats within an area, where a high number approaching 
-        1 means all the habitats are relatively similar in size, and a low number indicating that the habitats are varied 
-        in their size. A higher habitat evenness score generally indicates a higher species diversity. 
-        Evenness has been calculated using the Simpson's E index.</em>
+        <p class="large">
+          <strong>Habitat Evenness</strong></br>
+          The measure of 'evenness' for the <strong>{{habs_in_sketch}}</strong> habitat{{#habs_plural}}s{{/habs_plural}} present in the Sketch is <strong>{{evenness}}</strong>.
+        </p>
+        <p>
+          <em>Evenness is a measure of the relative abundance of habitats within an area, where a high number approaching 
+          1 means all the habitats are relatively similar in size, and a low number indicating that the habitats are varied 
+          in their size. A higher habitat evenness score generally indicates a higher species diversity. 
+          Evenness has been calculated using the Simpson's E index.</em>
+        </p>
       </p>
-    </p>
+    -->
 </div>
 <div class="reportSection tableContainer">
   <h4>Adjacent Terrestrial Information</h4>
@@ -151,10 +153,12 @@
           </tbody>
         </table>
       {{/hasMammals}}
-      {{#inHighDiversityReefFishArea}}
-        </br><p class="large"><strong>Reef Fish Diversity</strong></p>
-        <p> The sketch is located in an area predicted to <strong>have a high diversity of reef fish</strong>.</p>
-      {{/inHighDiversityReefFishArea}}
+      <!--
+        {{#inHighDiversityReefFishArea}}
+          </br><p class="large"><strong>Reef Fish Diversity</strong></p>
+          <p> The sketch is located in an area predicted to <strong>have a high diversity of reef fish</strong>.</p>
+        {{/inHighDiversityReefFishArea}}
+      -->
 </div>
 {{/hasSpecies}}
 {{^hasSpecies}}
