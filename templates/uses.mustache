@@ -18,7 +18,7 @@
     <h4>Recreational Uses </h4>
       {{#hasSmaro}}
       <p><strong>Spectrum of MArine Recreational Opportunity (SMARO)</strong></p>
-        <p>Sketch includes area(s) identified as having <strong> medium or high </strong> recreational opportunity.
+        <p>{{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} includes area(s) identified as having <strong> medium or high </strong> recreational opportunity.
         <em>You can find more information on SMARO in the "data description" by right clicking on the layer name.</em>
       </p>
       </br></br>
@@ -52,7 +52,7 @@
   {{#hasHeritage}}
   <div class="reportSection tableContainer">
     <h4>Heritage</h4>
-        <p>The sketch contains or is within 200m of sites identified as having significant heritage values.</p>
+        <p>{{#isCollection}}A sketch within the collection{{/isCollection}}{{^isCollection}}The sketch{{/isCollection}} contains or is within 200m of sites identified as having significant heritage values.</p>
         <table data-paging="10">
           <thead>
             <tr>
@@ -74,7 +74,7 @@
   {{#hasCoastal}}  
   <div class="reportSection tableContainer">
     <h4>Existing Coastal Consents <a href="#" data-toggle-node="53d719a49380174a7766dd85" data-visible="false">show layer</a></h4>
-        <p>The sketch contains or is within 200m of sites with Resource Consents.</p>
+        <p>{{#isCollection}}A sketch within the collection{{/isCollection}}{{^isCollection}}The sketch{{/isCollection}} contains or is within 200m of sites with Resource Consents.</p>
         <table data-paging="10">
           <thead>
             <tr>
@@ -95,7 +95,7 @@
   {{#hasInfrastructure}}
     <div class="reportSection tableContainer">
       <h4>Infrastructure</h4>
-          <p>The sketch contains or is within 200m of sites with existing infrastructure.</p>
+          <p>{{#isCollection}}A sketch within the collection{{/isCollection}}{{^isCollection}}The sketch{{/isCollection}} contains or is within 200m of sites with existing infrastructure.</p>
           <table data-paging="10">
             <thead>
               <tr>
@@ -116,6 +116,6 @@
 {{^hasUses}}
   <div class="reportSection tableContainer">
     <h4>Activities and Uses</h4>
-        <p>The sketch does <strong>not</strong> include any <strong>activities or uses</strong>.</p>
+        <p>The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}  does <strong>not</strong> include any <strong>activities or uses</strong>.</p>
   </div>
 {{/hasUses}}

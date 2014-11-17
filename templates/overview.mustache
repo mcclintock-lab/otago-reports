@@ -6,20 +6,29 @@
 </div>
 {{/sketchClass.deleted}}
 {{#anyAttributes}}
+
 <div class="reportSection">
   <h4>{{sketchClass.name}}</h4>
   {{>attributes/attributesTable}}
   </table>
 </div>
 {{/anyAttributes}}
+{{#isCollection}}
+  <div class="reportSection">
+    <h4>Collection</h4>
+    <p class="large">
+      This collection contains <strong>{{numSketches}}</strong> sketches.
+    </p>
+  </div>
+{{/isCollection}}
 
 <div class="reportSection size">
   <h4>Size</h4>
   <p class="large">
-    This sketch area is <strong>{{size}} ha</strong>, and it includes <strong>{{percent}}%</strong> of the South-East Planning Region.
+    This {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch area{{/isCollection}} is <strong>{{size}} ha</strong>, and it includes <strong>{{percent}}%</strong> of the South-East Planning Region.
   </p>
   <p class="large">
-    This sketch includes <strong>{{coastline_length}} meters</strong> of coastline.
+    This {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes <strong>{{coastline_length}} meters</strong> of coastline.
   </p>
 </div>
 
@@ -27,7 +36,7 @@
   <h4>Representation of Habitats <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
   <strong>Number of Habitat Classes</strong></br>
   <p style="margin-top:0px;" class="large">
-    There are <strong>{{total_habs}}</strong> habitat classes in the planning region, and your sketch
+    There are <strong>{{total_habs}}</strong> habitat classes in the planning region, and your {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}
     includes <strong>{{new_habs}}</strong>. For more information on the Habitat Classification, see
     the <a href="http://www.doc.govt.nz/Documents/conservation/marine-and-coastal/marine-protected-areas/mpa-classification-protection-standard.pdf" target="_blank">
     Marine Protected Areas Classification and Protection Standard</a>

@@ -52,6 +52,7 @@ class UsesTab extends ReportTab
     hasInfrastructure = infrastructure?.length > 0
     attributes = @model.getAttributes()
     hasUses = hasRecUses or hasHeritage or hasInfrastructure or hasCoastal
+    isCollection = @model.isCollection()
     context =
       sketch: @model.forTemplate()
       sketchClass: @sketchClass.forTemplate()
@@ -69,7 +70,7 @@ class UsesTab extends ReportTab
       infrastructure: infrastructure
       hasInfrastructure: hasInfrastructure
       hasUses: hasUses
-
+      isCollection: isCollection
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
 

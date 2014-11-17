@@ -38,7 +38,7 @@ class FishingTab extends ReportTab
     hasProposedCustomary = proposed_customary_fishing?.length > 0
     hasCustomary = hasExistingCustomary or hasProposedCustomary
     console.log("has customary? ", hasCustomary)
-
+    isCollection = @model.isCollection()
     existing_fishing_areas = @recordSet('FishingAreas', 'FishingExistingArea').toArray()
     hasExistingFishing = existing_fishing_areas?.length > 0
     hasAnyFishing = hasExistingFishing or hasCustomary
@@ -60,6 +60,8 @@ class FishingTab extends ReportTab
       hasExistingFishing: hasExistingFishing
       hasAnyFishing: hasAnyFishing
       hasCustomary: hasCustomary
+      isCollection: isCollection
+
       
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
