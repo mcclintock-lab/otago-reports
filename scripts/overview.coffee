@@ -24,6 +24,7 @@ class OverviewTab extends ReportTab
     'CoastlineLength'
     'HabitatsOverview'
     'ProposalSize'
+    'ProposalConnectivity'
   ]
 
   render: () ->
@@ -38,7 +39,17 @@ class OverviewTab extends ReportTab
       numSketches = 1
 
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
-    
+
+    connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
+    if connected_mpa_count?.length == 1
+      plural_connected_mpa_count = false
+    else
+      plural_connected_mpa_count = true
+
+    min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
+    max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
+    mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
+
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     mpa_avg_min_size = @getTotalAreaPercent(prop_sizes)
     prop_sizes = @cleanupData(prop_sizes)
@@ -101,6 +112,13 @@ class OverviewTab extends ReportTab
       mpa_count: mpa_count
       mpa_avg_size_guideline:mpa_avg_size_guideline
       plural_mpa_count: plural_mpa_count
+      connected_mpa_count: connected_mpa_count
+
+      plural_connected_mpa_count: plural_connected_mpa_count
+      min_distance: min_distance
+      max_distance: max_distance
+      mean_distance: mean_distance
+
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
