@@ -40,15 +40,17 @@ class OverviewTab extends ReportTab
 
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
 
-    connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
-    if connected_mpa_count?.length == 1
-      plural_connected_mpa_count = false
-    else
-      plural_connected_mpa_count = true
+    prop_conn = @recordSet('ProposalConnectivity', 'Conn')
+    if prop_conn?.length > 0
+      connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
+      if connected_mpa_count?.length == 1
+        plural_connected_mpa_count = false
+      else
+        plural_connected_mpa_count = true
 
-    min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
-    max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
-    mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
+      min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
+      max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
+      mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
 
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     mpa_avg_min_size = @getTotalAreaPercent(prop_sizes)
