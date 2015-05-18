@@ -38,26 +38,16 @@ class OverviewTab extends ReportTab
     else
       numSketches = 1
 
+
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
 
-    prop_conn = @recordSet('ProposalConnectivity', 'Conn')
-    if prop_conn?.length > 0
-      connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
-      if connected_mpa_count?.length == 1
-        plural_connected_mpa_count = false
-      else
-        plural_connected_mpa_count = true
-
-      min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
-      max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
-      mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
 
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     mpa_avg_min_size = @getTotalAreaPercent(prop_sizes)
     prop_sizes = @cleanupData(prop_sizes)
     
     mpa_count = @getMinDimCount(prop_sizes)
-    total_mpa_count = prop_sizes?.length - 1
+    total_mpa_count = numSketches
     plural_mpa_count = mpa_count > 1
 
     
@@ -85,6 +75,18 @@ class OverviewTab extends ReportTab
     
     ratio = (coastline_length/size).toFixed(1)
 
+    #setup connectivity data
+    if numSketches > 1
+      prop_conn = @recordSet('ProposalConnectivity', 'Conn').toArray()
+      connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
+      
+      plural_connected_mpa_count = true
+
+      min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
+      max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
+      mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
+      conn_pie_values = @build_values("Within Distance", connected_mpa_count,"#b3cfa7", "Not Within Distance", 
+        total_mpa_count-connected_mpa_count, "#e5cace")
 
     #show tables instead of graph for IE
     if window.d3
@@ -120,10 +122,84 @@ class OverviewTab extends ReportTab
       min_distance: min_distance
       max_distance: max_distance
       mean_distance: mean_distance
-
+      singleSketch: numSketches == 1
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
+
+    size_pie_values = @build_values("Meets Min. Size", mpa_count,"#b3cfa7", "Does not Meet Size Min.", 
+      total_mpa_count-mpa_count, "#e5cace")
+
+
+    @drawPie(conn_pie_values, "#connectivity_pie")
+    @drawPie(size_pie_values, "#size_pie")
+
+  build_values: (yes_label, yes_count, yes_color, no_label, no_count, no_color) =>
+    yes_val = {"label":yes_label+" ("+yes_count+")", "value":yes_count, "color":yes_color}
+    no_val = {"label":no_label+" ("+no_count+")", "value":no_count, "color":no_color}
+
+    return [yes_val, no_val]
+
+  getDataValue: (data) =>
+    return data.value
+
+  drawPie: (data, pie_name) =>
+    if window.d3
+      w = 400
+      h = 200
+      r = 100
+     
+      vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r*2 + "," + r + ")")
+      pie = d3.layout.pie().value((d) -> return d.value)
+
+      #declare an arc generator function
+      arc = d3.svg.arc().outerRadius(r)
+
+      #select paths, use arc generator to draw
+      arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice")
+      arcs.append("svg:path")
+        .attr("fill", (d) -> return d.data.color)
+        .attr("d", (d) ->  
+          arc(d)
+        )
+      #add the text
+      
+      translated = arcs.append("svg:text").attr("transform", (d) ->
+            d.innerRadius = 0
+            d.outerRadius = r
+            arc_centroid = arc.centroid(d)
+            return "translate(" + arc_centroid + ")")
+      translated.attr("text-anchor", "middle").text( (d, i) -> return if data[i].value == 0 then "" else data[i].label)
+      translated.attr("class", "pie-label")
+
+  drawOrigPie: (data, pie_name) =>
+    if window.d3
+      w = 400
+      h = 200
+      r = 100
+     
+      vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r*2 + "," + r + ")")
+      pie = d3.layout.pie().value((d) -> return d.value)
+
+      #declare an arc generator function
+      arc = d3.svg.arc().outerRadius(r)
+
+      #select paths, use arc generator to draw
+      arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice")
+      arcs.append("svg:path")
+        .attr("fill", (d) -> return d.data.color)
+        .attr("d", (d) ->  
+          arc(d)
+        )
+      #add the text
+      
+      translated = arcs.append("svg:text").attr("transform", (d) ->
+            d.innerRadius = 0
+            d.outerRadius = r
+            arc_centroid = arc.centroid(d)
+            return "translate(" + arc_centroid + ")")
+      translated.attr("text-anchor", "middle").text( (d, i) -> return if data[i].value == 0 then "" else data[i].label)
+      translated.attr("class", "pie-label")
 
   getTotalAreaPercent: (prop_sizes) =>
     for ps in prop_sizes
@@ -137,7 +213,6 @@ class OverviewTab extends ReportTab
         return ps.MIN_DIM
 
   cleanupData: (prop_sizes) =>
-
     cleaned_props = []
     for ps in prop_sizes
       if ps.NAME != "Percent of Total Area"

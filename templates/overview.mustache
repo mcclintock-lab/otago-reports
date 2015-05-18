@@ -36,6 +36,7 @@
 {{#isCollection}}
   <div class="reportSection size">
     <h4>MPA Sizes</h4>
+    <div class="size_pie" id="size_pie"></div>
     <p class="large">
       Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{mpa_count}}</strong> meet{{^plural_mpa_count}}s{{/plural_mpa_count}} the minimum size dimension of 5km. The average minimum dimension is <strong>{{mpa_avg_size_guideline}}</strong> the 10-20km guideline.
     </p>
@@ -64,11 +65,19 @@
 
   <div class="reportSection">
     <h4>Connectivity</h4>
-    <p class="large">Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{connected_mpa_count}}</strong>{{#plural_connected_mpa_count}} are{{/plural_connected_mpa_count}}{{^plural_connected_mpa_count}} is{{/plural_connected_mpa_count}} within the connectivity range of 50 - 100 km. 
-    </p>
-    <span class="conn_values">The minimum distance between the MPAs is <strong>{{min_distance}} km</strong>.</span>
-    <span class="conn_values">The maximum distance between the MPAs is <strong>{{max_distance}} km</strong>.</span>
-    <span class="conn_values">The average distance between the MPAs is <strong>{{mean_distance}} km</strong>.</span>
+    {{#singleSketch}}
+          <p style="font-style:italic;color:gray;" class="large">
+            No connectivity information for a collection with one sketch. 
+          </p>
+    {{/singleSketch}}
+    {{^singleSketch}}
+      <div class="connectivity_pie" id="connectivity_pie"></div>
+      <p class="large">Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{connected_mpa_count}}</strong>{{#plural_connected_mpa_count}} are{{/plural_connected_mpa_count}}{{^plural_connected_mpa_count}} is{{/plural_connected_mpa_count}} within the connectivity range of 50 - 100 km. 
+      </p>
+      <span class="conn_values">The minimum distance between the MPAs is <strong>{{min_distance}} km</strong>.</span>
+      <span class="conn_values">The maximum distance between the MPAs is <strong>{{max_distance}} km</strong>.</span>
+      <span class="conn_values">The average distance between the MPAs is <strong>{{mean_distance}} km</strong>.</span>
+    {{/singleSketch}}
   </div>
 {{/isCollection}}
 
