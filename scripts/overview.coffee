@@ -167,10 +167,16 @@ class OverviewTab extends ReportTab
       #add the text
       
       translated = arcs.append("svg:text").attr("transform", (d) ->
-            d.innerRadius = 0
+            d.innerRadius = 0.1
             d.outerRadius = r
             arc_centroid = arc.centroid(d)
-            return "translate(" + arc_centroid + ")")
+
+            x = arc_centroid[0]
+            y = arc_centroid[1]
+            if (x < 0.001 and x > 0) and (y == 50.05)
+              y=0.0
+            return "translate(" + x+","+y+ ")")
+
       translated.attr("text-anchor", "middle").text( (d, i) -> return if data[i].value == 0 then "" else data[i].label)
       translated.attr("class", "pie-label")
 
