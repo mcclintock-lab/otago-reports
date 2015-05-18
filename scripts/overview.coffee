@@ -48,7 +48,7 @@ class OverviewTab extends ReportTab
     
     mpa_count = @getMinDimCount(prop_sizes)
     total_mpa_count = numSketches
-    plural_mpa_count = mpa_count > 1
+    plural_mpa_count = mpa_count != 1
 
     
     if mpa_avg_min_size < 10
@@ -146,10 +146,10 @@ class OverviewTab extends ReportTab
   drawPie: (data, pie_name) =>
     if window.d3
       w = 400
-      h = 200
+      h = 210
       r = 100
      
-      vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r*2 + "," + r + ")")
+      vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + (r*2) + "," + (r+5) + ")")
       pie = d3.layout.pie().value((d) -> return d.value)
 
       #declare an arc generator function
@@ -159,6 +159,8 @@ class OverviewTab extends ReportTab
       arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice")
       arcs.append("svg:path")
         .attr("fill", (d) -> return d.data.color)
+        .attr("stroke", (d) -> return if d.data.value == 0 then "none" else "#545454")
+        .attr("stroke-width", 0.25)
         .attr("d", (d) ->  
           arc(d)
         )
