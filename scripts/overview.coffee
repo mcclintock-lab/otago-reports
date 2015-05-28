@@ -127,16 +127,16 @@ class OverviewTab extends ReportTab
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
 
-    size_pie_values = @build_values("Meets Min. Size", mpa_count,"#b3cfa7", "Does not Meet Size Min.", 
-      total_mpa_count-mpa_count, "#e5cace")
+    #size_pie_values = @build_values("Meets Min. Size", mpa_count,"#b3cfa7", "Does not Meet Size Min.", 
+    #  total_mpa_count-mpa_count, "#e5cace")
 
 
     @drawPie(conn_pie_values, "#connectivity_pie")
-    @drawPie(size_pie_values, "#size_pie")
+    #@drawPie(size_pie_values, "#size_pie")
 
   build_values: (yes_label, yes_count, yes_color, no_label, no_count, no_color) =>
-    yes_val = {"label":yes_label+" ("+yes_count+")", "value":yes_count, "color":yes_color}
-    no_val = {"label":no_label+" ("+no_count+")", "value":no_count, "color":no_color}
+    yes_val = {"label":yes_label+" ("+yes_count+")", "value":yes_count, "color":yes_color, "yval":25}
+    no_val = {"label":no_label+" ("+no_count+")", "value":no_count, "color":no_color, "yval":50}
 
     return [yes_val, no_val]
 
@@ -145,9 +145,9 @@ class OverviewTab extends ReportTab
 
   drawPie: (data, pie_name) =>
     if window.d3
-      w = 400
-      h = 210
-      r = 100
+      w = 125
+      h = 85
+      r = 35
      
       vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + (r*2) + "," + (r+5) + ")")
       pie = d3.layout.pie().value((d) -> return d.value)
@@ -164,50 +164,24 @@ class OverviewTab extends ReportTab
         .attr("d", (d) ->  
           arc(d)
         )
-      #add the text
+
+
+      el = @$(pie_name+"_legend")[0]
+      chart = d3.select(el)
+      legends = chart.selectAll(pie_name+"_legend")
+        .data(data)
+      .enter().insert("div")
+          .attr("class", "legend-row")
+
+      legends.append("span")
+        .attr("class", "pie-label-swatch")
+        .style('background-color', (d,i) -> d.color)
       
-      translated = arcs.append("svg:text").attr("transform", (d) ->
-            d.innerRadius = 0.1
-            d.outerRadius = r
-            arc_centroid = arc.centroid(d)
+      legends.append("span")
+        .text((d,i) -> return data[i].label)
+        .attr("class", "pie-label")
 
-            x = arc_centroid[0]
-            y = arc_centroid[1]
-            if (x < 0.001 and x > 0) and (y == 50.05)
-              y=0.0
-            return "translate(" + x+","+y+ ")")
-
-      translated.attr("text-anchor", "middle").text( (d, i) -> return if data[i].value == 0 then "" else data[i].label)
-      translated.attr("class", "pie-label")
-
-  drawOrigPie: (data, pie_name) =>
-    if window.d3
-      w = 400
-      h = 200
-      r = 100
-     
-      vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r*2 + "," + r + ")")
-      pie = d3.layout.pie().value((d) -> return d.value)
-
-      #declare an arc generator function
-      arc = d3.svg.arc().outerRadius(r)
-
-      #select paths, use arc generator to draw
-      arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice")
-      arcs.append("svg:path")
-        .attr("fill", (d) -> return d.data.color)
-        .attr("d", (d) ->  
-          arc(d)
-        )
-      #add the text
       
-      translated = arcs.append("svg:text").attr("transform", (d) ->
-            d.innerRadius = 0
-            d.outerRadius = r
-            arc_centroid = arc.centroid(d)
-            return "translate(" + arc_centroid + ")")
-      translated.attr("text-anchor", "middle").text( (d, i) -> return if data[i].value == 0 then "" else data[i].label)
-      translated.attr("class", "pie-label")
 
   getTotalAreaPercent: (prop_sizes) =>
     for ps in prop_sizes

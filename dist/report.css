@@ -376,7 +376,35 @@
   stroke: #fff;
 }
 .pie-label {
-  font-size: 10px;
   font-weight: bold;
-  z-index: 10001;
+  padding-left: 5px;
+  width: 150px;
+  display: inline;
+  vertical-align: middle;
+}
+.pie-label-swatch {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #fff;
+  opacity: 1.0;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.connectivity_pie {
+  display: inline-block;
+  width: 150px;
+}
+.connectivity_pie_legend {
+  width: 240px;
+  display: inline-block;
+  height: 50px;
+  vertical-align: top;
+}
+.legend-row {
+  display: inline-block;
+  width: 220px;
 }
