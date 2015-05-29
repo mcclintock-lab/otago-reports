@@ -85,7 +85,7 @@ class OverviewTab extends ReportTab
       min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
       max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
       mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
-      conn_pie_values = @build_values("Within Distance", connected_mpa_count,"#b3cfa7", "Not Within Distance", 
+      conn_pie_values = @build_values("Within Connectivity Range", connected_mpa_count,"#b3cfa7", "Not Within Range", 
         total_mpa_count-connected_mpa_count, "#e5cace")
 
     #show tables instead of graph for IE
