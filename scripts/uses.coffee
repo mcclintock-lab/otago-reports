@@ -14,12 +14,13 @@ for key, value of ids
 
 class UsesTab extends ReportTab
   # this is the name that will be displayed in the Tab
-  name: 'Activities Uses'
+  name: 'Other'
   className: 'uses'
   timeout: 120000
   template: templates.uses
   dependencies: [
     'OverlapWithRecreationalUses'
+    'SpeciesInformation'
   ]
 
 
@@ -30,6 +31,14 @@ class UsesTab extends ReportTab
       d3IsPresent = true
     else
       d3IsPresent = false
+
+    #species info
+    seabirds = @recordSet('SpeciesInformation', 'Seabirds').toArray()
+    hasSeabirds = seabirds?.length> 0
+    mammals = @recordSet('SpeciesInformation', 'Mammals').toArray()
+    hasMammals = mammals?.length > 0
+    reef_fish = @recordSet('SpeciesInformation', 'ReefFish').toArray()
+    inHighDiversityReefFishArea = reef_fish?.length > 0
 
     smaro = "SMARO"
     rec_uses = @recordSet('OverlapWithRecreationalUses', 'RecreationalUse').toArray()
@@ -51,7 +60,9 @@ class UsesTab extends ReportTab
     infrastructure =  @recordSet('OverlapWithRecreationalUses', 'Infrastructure').toArray()
     hasInfrastructure = infrastructure?.length > 0
     attributes = @model.getAttributes()
+    
     hasUses = hasRecUses or hasHeritage or hasInfrastructure or hasCoastal
+    hasSpecies = hasMammals or hasSeabirds or inHighDiversityReefFishArea
     isCollection = @model.isCollection()
     context =
       sketch: @model.forTemplate()
@@ -71,6 +82,16 @@ class UsesTab extends ReportTab
       hasInfrastructure: hasInfrastructure
       hasUses: hasUses
       isCollection: isCollection
+
+      #species info
+      seabirds: seabirds
+      hasSeabirds: hasSeabirds
+      mammals: mammals
+      hasMammals: hasMammals
+      reef_fish: reef_fish
+      inHighDiversityReefFishArea: inHighDiversityReefFishArea
+      hasSpecies: hasSpecies
+
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
 

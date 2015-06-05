@@ -14,18 +14,15 @@ for key, value of ids
 
 class EnvironmentTab extends ReportTab
   # this is the name that will be displayed in the Tab
-  name: 'Environment'
+  name: 'Habitats'
   className: 'environment'
   timeout: 120000
   template: templates.environment
   dependencies: [
     'HabitatsEnvironment'
     'HabitatsOverview'
-    'SpeciesInformation'
     'AdjacentTerrestrial'
   ]
-
-
 
   render: () ->
 
@@ -48,16 +45,7 @@ class EnvironmentTab extends ReportTab
     adjacent_land = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
     hasAdjacent = adjacent_land?.length > 0
     
-    #species info
-    seabirds = @recordSet('SpeciesInformation', 'Seabirds').toArray()
-    hasSeabirds = seabirds?.length> 0
-    mammals = @recordSet('SpeciesInformation', 'Mammals').toArray()
-    hasMammals = mammals?.length > 0
-    reef_fish = @recordSet('SpeciesInformation', 'ReefFish').toArray()
-    inHighDiversityReefFishArea = reef_fish?.length > 0
     attributes = @model.getAttributes()
-    
-    hasSpecies = hasMammals or hasSeabirds or inHighDiversityReefFishArea
     isCollection = @model.isCollection()
     context =
       sketch: @model.forTemplate()
@@ -71,16 +59,9 @@ class EnvironmentTab extends ReportTab
       habs_plural: habs_plural
       evenness: evenness
       total_habs: total_habs
-      seabirds: seabirds
-      hasSeabirds: hasSeabirds
 
-      mammals: mammals
-      hasMammals: hasMammals
 
-      reef_fish: reef_fish
-      hasSpecies: hasSpecies
-
-      inHighDiversityReefFishArea: inHighDiversityReefFishArea
+      
       public_land: public_land
       hasPublicLand: hasPublic
       coastal_land: coastal_land
