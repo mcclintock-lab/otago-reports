@@ -37,6 +37,10 @@ class UsesTab extends ReportTab
     hasSeabirds = seabirds?.length> 0
     mammals = @recordSet('SpeciesInformation', 'Mammals').toArray()
     hasMammals = mammals?.length > 0
+    seals = @recordSet('SpeciesInformation', 'Seals').toArray()
+
+
+    hasSeals = seals?.length > 0
     reef_fish = @recordSet('SpeciesInformation', 'ReefFish').toArray()
     inHighDiversityReefFishArea = reef_fish?.length > 0
 
@@ -49,7 +53,7 @@ class UsesTab extends ReportTab
         hasSmaro = true
         break
 
-    console.log("has smaro? ", hasSmaro)
+
     non_smaro_rec_uses = rec_uses.filter (rec) -> rec.FEAT_TYPE != smaro
     hasRecUses = non_smaro_rec_uses?.length > 0
     
@@ -62,7 +66,7 @@ class UsesTab extends ReportTab
     attributes = @model.getAttributes()
     
     hasUses = hasRecUses or hasHeritage or hasInfrastructure or hasCoastal
-    hasSpecies = hasMammals or hasSeabirds or inHighDiversityReefFishArea
+    hasSpecies = hasMammals or hasSeabirds or hasSeals
     isCollection = @model.isCollection()
     context =
       sketch: @model.forTemplate()
@@ -89,6 +93,9 @@ class UsesTab extends ReportTab
       mammals: mammals
       hasMammals: hasMammals
       reef_fish: reef_fish
+      seals: seals
+      hasSeals: hasSeals
+
       inHighDiversityReefFishArea: inHighDiversityReefFishArea
       hasSpecies: hasSpecies
 

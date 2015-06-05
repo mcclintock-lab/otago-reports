@@ -161,12 +161,25 @@
           </tbody>
         </table>
       {{/hasMammals}}
-      <!--
-        {{#inHighDiversityReefFishArea}}
-          </br><p class="large"><strong>Reef Fish Diversity</strong></p>
-          <p> The sketch is located in an area predicted to <strong>have a high diversity of reef fish</strong>.</p>
-        {{/inHighDiversityReefFishArea}}
-      -->
+      {{#hasSeals}}
+        <p class="large"><strong>Seal Colonies</strong></p>
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th>Species</th>
+              <th>Number of Sightings</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#seals}}
+            <tr>
+              <td>{{Name}}</td>
+              <td>{{Count}}</td>
+            </tr>
+            {{/seals}}
+          </tbody>
+        </table>
+      {{/hasSeals}}
 </div>
 {{/hasSpecies}}
 {{^hasSpecies}}
