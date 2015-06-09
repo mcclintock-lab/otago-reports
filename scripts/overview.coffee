@@ -200,6 +200,13 @@ class OverviewTab extends ReportTab
       if ps.NAME != "Percent of Total Area"
         ps.MIN_DIM = parseFloat(ps.MIN_DIM).toFixed(1)
         ps.SIZE_IN_HA = Math.round(ps.SIZE_IN_HA)
+        ps.COAST = Number(ps.COAST).toFixed(1)
+        if ps.COAST > 0 
+          if ps.NAME != "Average"
+            ps.MIN_DIM = "--"
+        else
+          ps.COAST = "--"
+          
         cleaned_props.push(ps)
 
     return cleaned_props
