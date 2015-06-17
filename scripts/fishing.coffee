@@ -19,7 +19,7 @@ class FishingTab extends ReportTab
   timeout: 120000
   template: templates.fishing
   dependencies: [
-    'FishingAreas'
+    'FishingIntensity'
   ]
 
   render: () ->
@@ -30,6 +30,7 @@ class FishingTab extends ReportTab
     else
       d3IsPresent = false
 
+    '''
     existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
     hasExistingCustomary = existing_customary_fishing?.length > 0
     console.log("existing_customary: ", existing_customary_fishing)
@@ -38,20 +39,11 @@ class FishingTab extends ReportTab
     hasProposedCustomary = proposed_customary_fishing?.length > 0
     hasCustomary = hasExistingCustomary or hasProposedCustomary
     console.log("has customary? ", hasCustomary)
-    isCollection = @model.isCollection()
+    
     existing_fishing_areas = @recordSet('FishingAreas', 'FishingExistingArea').toArray()
     hasExistingFishing = existing_fishing_areas?.length > 0
     hasAnyFishing = hasExistingFishing or hasCustomary
 
-    attributes = @model.getAttributes()
-    
-    context =
-      sketch: @model.forTemplate()
-      sketchClass: @sketchClass.forTemplate()
-      attributes: @model.getAttributes()
-      anyAttributes: @model.getAttributes().length > 0
-      admin: @project.isAdmin window.user
-      d3IsPresent: d3IsPresent
       existing_customary_fishing: existing_customary_fishing
       hasExistingCustomary: hasExistingCustomary
       proposed_customary_fishing: proposed_customary_fishing
@@ -60,12 +52,38 @@ class FishingTab extends ReportTab
       hasExistingFishing: hasExistingFishing
       hasAnyFishing: hasAnyFishing
       hasCustomary: hasCustomary
-      isCollection: isCollection
+    
+    '''
+    setnet = @recordSet('FishingIntensity', 'SetNet').toArray()
+    @roundData(setnet)
 
+    trawl = @recordSet('FishingIntensity', 'Trawl').toArray()
+    @roundData(trawl)
+    longline = @recordSet('FishingIntensity', 'LongLine').toArray()
+    @roundData(longline)
+
+    attributes = @model.getAttributes()
+    isCollection = @model.isCollection()
+    context =
+      sketch: @model.forTemplate()
+      sketchClass: @sketchClass.forTemplate()
+      attributes: @model.getAttributes()
+      anyAttributes: @model.getAttributes().length > 0
+      admin: @project.isAdmin window.user
+      d3IsPresent: d3IsPresent
+
+      isCollection: isCollection
+      setnet: setnet
+      trawl: trawl
+      longline: longline
       
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
 
-    
+  roundData: (rec_set) =>
+    for rs in rec_set
+      rs.LOW = Number(rs.LOW).toFixed(1)
+      rs.HIGH = Number(rs.HIGH).toFixed(1)
+      rs.TOTAL = Number(rs.TOTAL).toFixed(1)
 
 module.exports = FishingTab
