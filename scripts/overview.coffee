@@ -55,12 +55,21 @@ class OverviewTab extends ReportTab
       mpa_avg_size_guideline = "below"
     else
       mpa_avg_size_guideline = "above"
+    try
+      size = @recordSet('Size', 'Size').float('SIZE_SQKM')
+      if size < 0.1
+        new_size = "< 0.1"
+      else
+        new_size =  @addCommas size
 
-    size = @recordSet('Size', 'Size').float('SIZE_IN_HA')
-    new_size =  @addCommas size
-    percent = @recordSet('Size', 'Percent').float('PERC_IN_HA')
-    if percent == 0 && mpa_avg_min_size > 0
-      percent = "< 1"
+      percent = @recordSet('Size', 'Percent').float('PERC')
+      if percent == 0 && mpa_avg_min_size > 0
+        percent = "< 1"
+    catch Error
+      new_size = 0
+      percent = 0
+
+
     coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
     
     coastline_length_percent = ((coastline_length/1000)/TOTAL_COASTLINE_LENGTH)*100
@@ -199,12 +208,11 @@ class OverviewTab extends ReportTab
     for ps in prop_sizes
       if ps.NAME != "Percent of Total Area"
         ps.MIN_DIM = parseFloat(ps.MIN_DIM).toFixed(1)
-        ps.SIZE_IN_HA = Math.round(ps.SIZE_IN_HA)
+        ps.SIZE_SQKM = parseFloat(ps.SIZE_SQKM).toFixed(1)
+        if ps.SIZE_SQKM < 0.1
+          ps.SIZE_SQKM = "< 0.1"
         ps.COAST = Number(ps.COAST).toFixed(1)
-        if ps.COAST > 0 
-          if ps.NAME != "Average"
-            ps.MIN_DIM = "--"
-        else
+        if ps.COAST == 0 
           ps.COAST = "--"
           
         cleaned_props.push(ps)
