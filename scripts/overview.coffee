@@ -43,7 +43,7 @@ class OverviewTab extends ReportTab
 
 
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
-    mpa_avg_min_size = @getTotalAreaPercent(prop_sizes)
+    total_percent = @getTotalAreaPercent(prop_sizes)
     prop_sizes = @cleanupData(prop_sizes)
     
     mpa_count = @getMinDimCount(prop_sizes)
@@ -51,24 +51,29 @@ class OverviewTab extends ReportTab
     plural_mpa_count = mpa_count != 1
 
     
-    if mpa_avg_min_size < 10
+    if mpa_avg_min_dim < 10
       mpa_avg_size_guideline = "below"
     else
       mpa_avg_size_guideline = "above"
     try
       size = @recordSet('Size', 'Size').float('SIZE_SQKM')
+      console.log(size)
       if size < 0.1
         new_size = "< 0.1"
       else
         new_size =  @addCommas size
 
+    catch Error
+      console.log('error getting size')
+      new_size = 0
+
+    try
       percent = @recordSet('Size', 'Percent').float('PERC')
-      if percent == 0 && mpa_avg_min_size > 0
+      if percent == 0 && total_percent > 0
         percent = "< 1"
     catch Error
-      new_size = 0
-      percent = 0
-
+      console.log("error getting percent")
+      percent = total_percent
 
     coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
     
@@ -193,9 +198,10 @@ class OverviewTab extends ReportTab
       
 
   getTotalAreaPercent: (prop_sizes) =>
+
     for ps in prop_sizes
       if ps.NAME == "Percent of Total Area"
-        return ps.SIZE_IN_HA
+        return ps.SIZE_SQKM
     return 0.0
 
   getAverageMinDim: (prop_sizes) =>

@@ -37,7 +37,9 @@ class UsesTab extends ReportTab
     hasSeabirds = seabirds?.length> 0
     mammals = @recordSet('SpeciesInformation', 'Mammals').toArray()
     hasMammals = mammals?.length > 0
-    seals = @recordSet('SpeciesInformation', 'Seals').toArray()
+    try
+      seals = @recordSet('SpeciesInformation', 'Seals').toArray()
+    catch Error
 
 
     hasSeals = seals?.length > 0
