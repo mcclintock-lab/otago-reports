@@ -49,11 +49,6 @@ class UsesTab extends ReportTab
     smaro = "SMARO"
     rec_uses = @recordSet('OverlapWithRecreationalUses', 'RecreationalUse').toArray()
     hasSmaro = false
-    for rec in rec_uses
-      console.log(rec.FEAT_TYPE)
-      if rec.FEAT_TYPE == smaro
-        hasSmaro = true
-        break
 
 
     non_smaro_rec_uses = rec_uses.filter (rec) -> rec.FEAT_TYPE != smaro
