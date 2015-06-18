@@ -5,13 +5,6 @@
   sketches of this type.
 </div>
 {{/sketchClass.deleted}}
-{{#anyAttributes}}
-<div class="reportSection">
-  <h4>{{sketchClass.name}}</h4>
-  {{>attributes/attributesTable}}
-  </table>
-</div>
-{{/anyAttributes}}
 {{^isGeneric}}
 <div class="reportSection tableContainer">
   <h4>Habitats Represented in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <!--<a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a>--></h4>

@@ -22,7 +22,7 @@ class EnvironmentTab extends ReportTab
     'HabitatsEnvironment'
     'HabitatsOverview'
     'AdjacentTerrestrial'
-    'HabitatsRepresentivity'
+    'HabRepsToolbox'
   ]
 
   render: () ->
@@ -51,7 +51,7 @@ class EnvironmentTab extends ReportTab
     adjacent_land = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
     hasAdjacent = adjacent_land?.length > 0
     
-    habitats_represented = @recordSet('HabitatsRepresentivity', 'RepresentedHabs').toArray()
+    habitats_represented = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
     attributes = @model.getAttributes()
     
     context =

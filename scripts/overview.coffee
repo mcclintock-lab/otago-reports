@@ -23,6 +23,7 @@ class OverviewTab extends ReportTab
     'HabitatsOverview'
     'ProposalSize'
     'ProposalConnectivity'
+    'HabRepsToolbox'
   ]
 
   render: () ->
@@ -30,6 +31,7 @@ class OverviewTab extends ReportTab
     # the monsterous RecordSet json. Checkout the seasketch-reporting-template
     # documentation for more info.
     TOTAL_COASTLINE_LENGTH = 667.594
+    TOTAL_HABS = 31
     isCollection = @model.isCollection()
     if isCollection
       numSketches = @model.getChildren().length
