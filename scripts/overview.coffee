@@ -11,8 +11,6 @@ ids = require './ids.coffee'
 for key, value of ids
   window[key] = value
 
-MIN_SIZE = 10000
-
 class OverviewTab extends ReportTab
   # this is the name that will be displayed in the Tab
   name: 'Overview'
@@ -35,9 +33,12 @@ class OverviewTab extends ReportTab
     isCollection = @model.isCollection()
     if isCollection
       numSketches = @model.getChildren().length
+      scid = @sketchClass.id
     else
       numSketches = 1
+      scid = @sketchClass.id
 
+    console.log("scid: ", scid)
 
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
 
@@ -91,7 +92,8 @@ class OverviewTab extends ReportTab
 
     #setup connectivity data
     if numSketches > 1
-      prop_conn = @recordSet('ProposalConnectivity', 'Conn').toArray()
+      res = @recordSet('ProposalConnectivity', 'ResultMsg')
+      console.log("result: ", res)
       connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
       
       plural_connected_mpa_count = true
@@ -108,6 +110,7 @@ class OverviewTab extends ReportTab
     else
       d3IsPresent = false
 
+    isMPA = false
     attributes = @model.getAttributes()
     
     context =
@@ -137,6 +140,7 @@ class OverviewTab extends ReportTab
       max_distance: max_distance
       mean_distance: mean_distance
       singleSketch: numSketches == 1
+      isMPA: isMPA
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()

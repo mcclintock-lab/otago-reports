@@ -12,12 +12,7 @@
   </table>
 </div>
 {{/anyAttributes}}
-{{^isCollection}}
-<div class="reportSection">
-  <h4>No Fishing Reports Available</h4>
-  <p class="no-data"><i>No fishing reports available at this time</i><p>
-</div>
-{{/isCollection}}
+
 {{#isCollection}}
   <div class="reportSection tableContainer">
     <h4>Set Net Fishing Intensity</h4>
@@ -103,60 +98,60 @@
 
   </div>
 {{/isCollection}}
-<!--
-{{#hasAnyFishing}}
-  {{#hasExistingFishing}}
-  <div class="reportSection tableContainer">
-    <h4>Existing Fisheries Management</h4>
-        <p><em>The {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} includes the following existing fisheries restrictions. 
-        Also shown is the extent that the fisheries restrictions apply to the {{#isCollection}}sketches{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} as a percentage of total sketch area.</em></p>
+{{^isCollection}}
+  {{#hasAnyFishing}}
+    {{#hasExistingFishing}}
+    <div class="reportSection tableContainer">
+      <h4>Existing Fisheries Management</h4>
+          <p><em>The {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} includes the following existing fisheries restrictions. 
+          Also shown is the extent that the fisheries restrictions apply to the {{#isCollection}}sketches{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} as a percentage of total sketch area.</em></p>
+          <table data-paging="10">
+            <thead>
+              <tr>
+                <th style="width:250px;">Name</th>
+                <th>Percent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#existing_fishing_areas}}
+              <tr>
+                <td>{{FEAT_TYPE}}</td>
+                <td>{{PERC_AREA}}</td>
+              </tr>
+              {{/existing_fishing_areas}}
+            </tbody>
+          </table>
+    </div>
+    {{/hasExistingFishing}}
+    {{#hasCustomary}}
+    <div class="reportSection tableContainer">
+      <h4>Customary Areas</h4>
+      {{#hasExistingCustomary}}
+        <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>existing</strong> Customary Areas:</p>
         <table data-paging="10">
-          <thead>
-            <tr>
-              <th style="width:250px;">Name</th>
-              <th>Percent</th>
-            </tr>
-          </thead>
           <tbody>
-            {{#existing_fishing_areas}}
+            {{#existing_customary_fishing}}
             <tr>
               <td>{{FEAT_TYPE}}</td>
-              <td>{{PERC_AREA}}</td>
             </tr>
-            {{/existing_fishing_areas}}
+            {{/existing_customary_fishing}}
           </tbody>
         </table>
-  </div>
-  {{/hasExistingFishing}}
-  {{#hasCustomary}}
-  <div class="reportSection tableContainer">
-    <h4>Customary Areas</h4>
-    {{#hasExistingCustomary}}
-      <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>existing</strong> Customary Areas:</p>
-      <table data-paging="10">
-        <tbody>
-          {{#existing_customary_fishing}}
-          <tr>
-            <td>{{FEAT_TYPE}}</td>
-          </tr>
-          {{/existing_customary_fishing}}
-        </tbody>
-      </table>
-    {{/hasExistingCustomary}}
-    {{#hasProposedCustomary}}
-      <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>proposed</strong> Customary Areas:</p>
-      <table data-paging="10">
-        <tbody>
-          {{#proposed_customary_fishing}}
-          <tr>
-            <td>{{FEAT_TYPE}}</td>
-          </tr>
-          {{/proposed_customary_fishing}}
-        </tbody>
-      </table>
-    {{/hasProposedCustomary}}
-  </div>
-  {{/hasCustomary}}
+      {{/hasExistingCustomary}}
+      {{#hasProposedCustomary}}
+        <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>proposed</strong> Customary Areas:</p>
+        <table data-paging="10">
+          <tbody>
+            {{#proposed_customary_fishing}}
+            <tr>
+              <td>{{FEAT_TYPE}}</td>
+            </tr>
+            {{/proposed_customary_fishing}}
+          </tbody>
+        </table>
+      {{/hasProposedCustomary}}
+    </div>
+    {{/hasCustomary}}
 
 {{/hasAnyFishing}}
 {{^hasAnyFishing}}
@@ -165,4 +160,4 @@
         <p>No information on existing fishing areas or customary use is available for this area.</p>
   </div>
 {{/hasAnyFishing}}
--->
+{{/isCollection}}

@@ -84,15 +84,16 @@
     </p>
   </div>
 {{/isCollection}}
-<!--
-<div class="reportSection size">
-  <h4>Representation of Habitats <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
-  <strong>Number of Habitat Classes</strong></br>
-  <p style="margin-top:0px;" class="large">
-    There are <strong>{{total_habs}}</strong> habitat classes in the planning region, and your {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}
-    includes <strong>{{new_habs}}</strong>. For more information on the Habitat Classification, see
-    the <a href="http://www.doc.govt.nz/Documents/conservation/marine-and-coastal/marine-protected-areas/mpa-classification-protection-standard.pdf" target="_blank">
-    Marine Protected Areas Classification and Protection Standard</a>
-  </p>
-</div>
--->
+{{#isMPA}}
+  <div class="reportSection size">
+    <h4>Representation of Habitats <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
+    <strong>Number of Habitat Classes</strong></br>
+    <p style="margin-top:0px;" class="large">
+      There are <strong>{{total_habs}}</strong> habitat classes in the planning region, and your {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}
+      includes <strong>{{new_habs}}</strong>. For more information on the Habitat Classification, see
+      the <a href="http://www.doc.govt.nz/Documents/conservation/marine-and-coastal/marine-protected-areas/mpa-classification-protection-standard.pdf" target="_blank">
+      Marine Protected Areas Classification and Protection Standard</a>
+    </p>
+  </div>
+
+{{/isMPA}}

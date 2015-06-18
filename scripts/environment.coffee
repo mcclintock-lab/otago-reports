@@ -32,7 +32,12 @@ class EnvironmentTab extends ReportTab
       d3IsPresent = true
     else
       d3IsPresent = false
-
+    isCollection = @model.isCollection()
+    scid = @sketchClass.id
+    if scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID
+      isGeneric = true
+    else
+      isGeneric = false
     habitats = @recordSet('HabitatsEnvironment', 'HabitatSize').toArray()
     habs_in_sketch = habitats?.length
     habs_plural = habs_in_sketch != 1
@@ -48,7 +53,7 @@ class EnvironmentTab extends ReportTab
     
     habitats_represented = @recordSet('HabitatsRepresentivity', 'RepresentedHabs').toArray()
     attributes = @model.getAttributes()
-    isCollection = @model.isCollection()
+    
     context =
       sketch: @model.forTemplate()
       sketchClass: @sketchClass.forTemplate()
@@ -56,22 +61,22 @@ class EnvironmentTab extends ReportTab
       anyAttributes: @model.getAttributes().length > 0
       admin: @project.isAdmin window.user
       d3IsPresent: d3IsPresent
+      isGeneric: isGeneric
+      isCollection: isCollection
+
       habitats: habitats
       habs_in_sketch: habs_in_sketch
       habs_plural: habs_plural
       evenness: evenness
       total_habs: total_habs
       habitats_represented: habitats_represented
-
-
-      
       public_land: public_land
       hasPublicLand: hasPublic
       coastal_land: coastal_land
       hasCoastalLand: hasCoastal
       adjacent_land: adjacent_land
       hasAdjacentLand: hasAdjacent
-      isCollection: isCollection
+      
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
