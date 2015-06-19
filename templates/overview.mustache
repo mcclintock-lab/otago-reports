@@ -14,6 +14,72 @@
 {{/anyAttributes}}
 
 {{#isCollection}}
+  {{#isMPA}}
+    
+    <div class="reportSection size">
+      <h4>Habitat-types Represented <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
+      {{^d3IsPresent}}
+      <strong>Number of Habitat Classes</strong></br>
+      <p style="margin-top:0px;" class="large">
+        There are <strong>{{total_habs}}</strong> habitat classes in the planning region, and your {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}
+        includes <strong>{{new_habs}}</strong>. For more information on the Habitat Classification, see
+        the <a href="http://www.doc.govt.nz/Documents/conservation/marine-and-coastal/marine-protected-areas/mpa-classification-protection-standard.pdf" target="_blank">
+        Marine Protected Areas Classification and Protection Standard</a>
+      </p>
+      {{/d3IsPresent}}
+      {{#d3IsPresent}}
+        <div>
+          <div class="represented_habs_pie" id="represented_habs_pie"></div>
+          <div class="represented_habs_pie_legend" id="represented_habs_pie_legend"></div>
+        </div>
+      {{/d3IsPresent}}
+    </div>
+    
+
+    <div class="reportSection size">
+      <h4>Habitat-types Replicated</h4>
+      {{^d3IsPresent}}
+        <strong>Number of Habitat Classes</strong></br>
+        <p style="margin-top:0px;" class="large">
+          There are <strong>{{total_habs}}</strong> habitat classes in the planning region, and your {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}
+          includes <strong>{{new_habs}}</strong>. For more information on the Habitat Classification, see
+          the <a href="http://www.doc.govt.nz/Documents/conservation/marine-and-coastal/marine-protected-areas/mpa-classification-protection-standard.pdf" target="_blank">
+          Marine Protected Areas Classification and Protection Standard</a>
+        </p>
+      {{/d3IsPresent}}
+      {{#d3IsPresent}}
+      <div>
+        <div class="replicated_habs_pie" id="replicated_habs_pie"></div>
+        <div class="replicated_habs_pie_legend" id="replicated_habs_pie_legend"></div>
+      </div>
+    {{/d3IsPresent}}
+
+    </div>
+    
+
+
+  {{/isMPA}}
+  <div class="reportSection">
+    <h4>Connectivity</h4>
+    {{#singleSketch}}
+          <p style="font-style:italic;color:gray;" class="large">
+            No connectivity information for a collection with one sketch. 
+          </p>
+    {{/singleSketch}}
+    {{^singleSketch}}
+      <div>
+        <div class="connectivity_pie" id="connectivity_pie"></div>
+        <div class="connectivity_pie_legend" id="connectivity_pie_legend"></div>
+      </div>
+      <p class="large">Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{connected_mpa_count}}</strong>{{#plural_connected_mpa_count}} are{{/plural_connected_mpa_count}}{{^plural_connected_mpa_count}} is{{/plural_connected_mpa_count}} within the connectivity range of 50 - 100 km. 
+      </p>
+      <span class="conn_values">The minimum distance between the MPAs is <strong>{{min_distance}} km</strong>.</span>
+      <span class="conn_values">The maximum distance between the MPAs is <strong>{{max_distance}} km</strong>.</span>
+      <span class="conn_values">The average distance between the MPAs is <strong>{{mean_distance}} km</strong>.</span>
+    {{/singleSketch}}
+  </div>
+{{/isCollection}}
+
   <div class="reportSection size">
     <h4>MPA Sizes</h4>
     <p class="large">
@@ -43,27 +109,6 @@
       This combined area within the network accounts for <strong>{{percent}}%</strong> of the South-East Marine area, and <strong>{{coastline_length_percent}}%</strong> of the South-East coastline.
     </p>
   </div>
-  <div class="reportSection">
-    <h4>Connectivity</h4>
-    {{#singleSketch}}
-          <p style="font-style:italic;color:gray;" class="large">
-            No connectivity information for a collection with one sketch. 
-          </p>
-    {{/singleSketch}}
-    {{^singleSketch}}
-      <div>
-        <div class="connectivity_pie" id="connectivity_pie"></div>
-        <div class="connectivity_pie_legend" id="connectivity_pie_legend"></div>
-      </div>
-      <p class="large">Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{connected_mpa_count}}</strong>{{#plural_connected_mpa_count}} are{{/plural_connected_mpa_count}}{{^plural_connected_mpa_count}} is{{/plural_connected_mpa_count}} within the connectivity range of 50 - 100 km. 
-      </p>
-      <span class="conn_values">The minimum distance between the MPAs is <strong>{{min_distance}} km</strong>.</span>
-      <span class="conn_values">The maximum distance between the MPAs is <strong>{{max_distance}} km</strong>.</span>
-      <span class="conn_values">The average distance between the MPAs is <strong>{{mean_distance}} km</strong>.</span>
-    {{/singleSketch}}
-  </div>
-{{/isCollection}}
-
 {{#isCollection}}
   <div class="reportSection">
     <h4>Collection</h4>
@@ -83,17 +128,12 @@
       This sketch includes <strong>{{coastline_length}} meters</strong> of coastline.
     </p>
   </div>
-{{/isCollection}}
-{{#isMPA}}
-  <div class="reportSection size">
-    <h4>Representation of Habitats <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
-    <strong>Number of Habitat Classes</strong></br>
-    <p style="margin-top:0px;" class="large">
-      There are <strong>{{total_habs}}</strong> habitat classes in the planning region, and your {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}
-      includes <strong>{{new_habs}}</strong>. For more information on the Habitat Classification, see
-      the <a href="http://www.doc.govt.nz/Documents/conservation/marine-and-coastal/marine-protected-areas/mpa-classification-protection-standard.pdf" target="_blank">
-      Marine Protected Areas Classification and Protection Standard</a>
-    </p>
-  </div>
+  {{#isMPA}}
+    <div class="reportSection size">
+      <h4>Number of Habitats</h4>
+      <p class="large">
+        The Marine Protected Area includes {{num_habs}} of the {{total_habs}} habitats within the SEM region.
+    </div>
+  {{/isMPA}}
 
-{{/isMPA}}
+{{/isCollection}}

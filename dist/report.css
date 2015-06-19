@@ -393,11 +393,38 @@
   display: inline-block;
   vertical-align: middle;
 }
-.connectivity_pie_legend {
+.represented_habs_pie {
+  width: 100px;
   display: inline-block;
-  height: 50px;
+}
+.replicated_habs_pie {
+  width: 100px;
+  display: inline-block;
+}
+.connectivity_pie {
+  width: 100px;
+  display: inline-block;
+}
+.connectivity_pie_legend {
+  width: 300px;
+  height: 30px;
+  padding-top: 0px;
+  display: inline-block;
   vertical-align: top;
-  padding-top: 15px;
+}
+.represented_habs_pie_legend {
+  width: 300px;
+  height: 30px;
+  padding-top: 5px;
+  vertical-align: top;
+  display: inline-block;
+}
+.replicated_habs_pie_legend {
+  width: 300px;
+  height: 30px;
+  padding-top: 5px;
+  vertical-align: top;
+  display: inline-block;
 }
 .legend-row {
   display: inline-block;

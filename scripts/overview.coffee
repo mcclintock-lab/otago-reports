@@ -31,7 +31,7 @@ class OverviewTab extends ReportTab
     # the monsterous RecordSet json. Checkout the seasketch-reporting-template
     # documentation for more info.
     TOTAL_COASTLINE_LENGTH = 667.594
-    TOTAL_HABS = 31
+    TOTAL_HABS = 30
     isCollection = @model.isCollection()
     if isCollection
       numSketches = @model.getChildren().length
@@ -43,7 +43,10 @@ class OverviewTab extends ReportTab
     console.log("scid: ", scid)
 
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
-
+    represented_habs = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
+    hab_sizes = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
+    num_habs = hab_sizes?.length
+    num_represented_habs = represented_habs?.length
 
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     total_percent = @getTotalAreaPercent(prop_sizes)
@@ -103,8 +106,20 @@ class OverviewTab extends ReportTab
       min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
       max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
       mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
-      conn_pie_values = @build_values("Within Connectivity Range", connected_mpa_count,"#b3cfa7", "Not Within Range", 
-        total_mpa_count-connected_mpa_count, "#e5cace")
+      good_color = "#b3cfa7"
+      bad_color = "#e5cace"
+      num_replicated_habs = 0
+
+      conn_pie_values = @build_values("MPAs Within Connectivity Range", connected_mpa_count,good_color, "MPAs Outside Connectivity Range", 
+        total_mpa_count-connected_mpa_count, bad_color)
+
+      not_represented = TOTAL_HABS - num_represented_habs
+      represented_habs_pie_values = @build_values("Habitat-types Represented", num_represented_habs, good_color, "Habitat-types Not Represented",
+        not_represented, bad_color)
+
+      not_replicated = TOTAL_HABS - num_replicated_habs
+      replicated_habs_pie_values = @build_values("Habitat-types Replicated", num_replicated_habs, good_color, "Habitat-types Not Replicated",
+        not_replicated, bad_color)
 
     #show tables instead of graph for IE
     if window.d3
@@ -112,10 +127,11 @@ class OverviewTab extends ReportTab
     else
       d3IsPresent = false
 
-    isMPA = false
+    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
     attributes = @model.getAttributes()
     
     context =
+      d3IsPresent: d3IsPresent
       sketch: @model.forTemplate()
       sketchClass: @sketchClass.forTemplate()
       attributes: @model.getAttributes()
@@ -143,6 +159,10 @@ class OverviewTab extends ReportTab
       mean_distance: mean_distance
       singleSketch: numSketches == 1
       isMPA: isMPA
+      num_habs: num_habs
+      total_habs: TOTAL_HABS
+      num_represented_habs: num_represented_habs
+      num_replicated_habs: num_replicated_habs
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
@@ -151,8 +171,11 @@ class OverviewTab extends ReportTab
     #  total_mpa_count-mpa_count, "#e5cace")
 
 
+    
+    @drawPie(represented_habs_pie_values, "#represented_habs_pie")
+    @drawPie(replicated_habs_pie_values, "#replicated_habs_pie")
     @drawPie(conn_pie_values, "#connectivity_pie")
-    #@drawPie(size_pie_values, "#size_pie")
+  
 
   build_values: (yes_label, yes_count, yes_color, no_label, no_count, no_color) =>
     yes_val = {"label":yes_label+" ("+yes_count+")", "value":yes_count, "color":yes_color, "yval":25}
@@ -165,9 +188,9 @@ class OverviewTab extends ReportTab
 
   drawPie: (data, pie_name) =>
     if window.d3
-      w = 125
-      h = 85
-      r = 35
+      w = 90
+      h = 75
+      r = 25
      
       vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + (r*2) + "," + (r+5) + ")")
       pie = d3.layout.pie().value((d) -> return d.value)
