@@ -7,7 +7,7 @@
 {{/sketchClass.deleted}}
 {{^isGeneric}}
 <div class="reportSection tableContainer">
-  <h4>Habitats Represented in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <!--<a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a>--></h4>
+  <h4>Habitat-types Represented in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <!--<a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a>--></h4>
       <table data-paging="20">
         <thead>
           <tr>
@@ -49,13 +49,13 @@
           </tr>
         </thead>
         <tbody>
-          {{#habitats}}
+          {{#hab_sizes}}
           <tr>
             <td>{{HAB_TYPE}}</td>
-            <td>{{SIZE_HA}}</td>
-            <td>{{SIZE_PERC}}</td>
+            <td>{{SIZE_SQKM}}</td>
+            <td>{{PERC}}</td>
           </tr>
-          {{/habitats}}
+          {{/hab_sizes}}
         </tbody>
       </table>
     {{/d3IsPresent}}

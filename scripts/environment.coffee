@@ -38,12 +38,18 @@ class EnvironmentTab extends ReportTab
       isGeneric = true
     else
       isGeneric = false
+    hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
+    '''
     habitats = @recordSet('HabitatsEnvironment', 'HabitatSize').toArray()
     habs_in_sketch = habitats?.length
     habs_plural = habs_in_sketch != 1
+    '''
+    habs_in_sketch = hab_sizes?.length
+    habs_plural = habs_in_sketch != 1
 
-    evenness = @recordSet('HabitatsOverview', 'HabitatEvenness').float('EVENNESS')
-    total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
+    #evenness = @recordSet('HabitatsOverview', 'HabitatEvenness').float('EVENNESS')
+    #total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
+    
     public_land = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
     hasPublic = public_land?.length > 0
     coastal_land = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
@@ -64,11 +70,10 @@ class EnvironmentTab extends ReportTab
       isGeneric: isGeneric
       isCollection: isCollection
 
-      habitats: habitats
+      hab_sizes: hab_sizes
       habs_in_sketch: habs_in_sketch
       habs_plural: habs_plural
-      evenness: evenness
-      total_habs: total_habs
+      
       habitats_represented: habitats_represented
       public_land: public_land
       hasPublicLand: hasPublic
@@ -80,19 +85,25 @@ class EnvironmentTab extends ReportTab
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
-    @setupHabitatSorting(habitats)
+    @roundData(hab_sizes)
+    @setupHabitatSorting(hab_sizes)
 
     @enableTablePaging()
     
+  roundData: (habitats) =>  
+    for hab in habitats
+      hab.SIZE_SQKM = Number(hab.SIZE_SQKM).toFixed(1)
+      hab.PERC = Number(hab.PERC).toFixed(1)
+
   setupHabitatSorting: (habitats) =>
     tbodyName = '.hab_values'
     tableName = '.hab_table'
     @$('.hab_type').click (event) =>
       @renderSort('hab_type', tableName, habitats, event, "HAB_TYPE", tbodyName, false, @getHabitatRowString)
     @$('.hab_new_area').click (event) =>
-      @renderSort('hab_new_area', tableName, habitats, event, "SIZE_HA", tbodyName, true, @getHabitatRowString)
+      @renderSort('hab_new_area', tableName, habitats, event, "SIZE_SQKM", tbodyName, true, @getHabitatRowString)
     @$('.hab_new_perc').click (event) =>
-      @renderSort('hab_new_perc',tableName, habitats, event, "SIZE_PERC", tbodyName, true, @getHabitatRowString)
+      @renderSort('hab_new_perc',tableName, habitats, event, "PERC", tbodyName, true, @getHabitatRowString)
     @renderSort('hab_type', tableName, habitats, undefined, "HAB_TYPE", tbodyName, false, @getHabitatRowString)
 
   #do the sorting - should be table independent
@@ -128,7 +139,7 @@ class EnvironmentTab extends ReportTab
         .enter().insert("tr", ":first-child")
         .attr("class", "hab_rows")
 
-      columns = ["HAB_TYPE", "SIZE_HA", "SIZE_PERC"]
+      columns = ["HAB_TYPE", "SIZE_SQKM", "PERC"]
       cells = rows.selectAll("td")
           .data((row, i) ->columns.map (column) -> (column: column, value: row[column]))
         .enter()
@@ -145,7 +156,7 @@ class EnvironmentTab extends ReportTab
 
   #table row for habitat representation
   getHabitatRowString: (d) =>
-    return "<td>"+d.HAB_TYPE+"</td>"+"<td>"+d.SIZE_HA+"</td>"+"<td>"+d.SIZE_PERC+"</td>"
+    return "<td>"+d.HAB_TYPE+"</td>"+"<td>"+d.SIZE_SQKM+"</td>"+"<td>"+d.PERC+"</td>"
 
   setSortingColor: (event, tableName) =>
     sortingClass = "sorting_col"
