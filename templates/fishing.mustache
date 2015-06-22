@@ -14,91 +14,93 @@
 {{/anyAttributes}}
 
 {{#isCollection}}
-  <div class="reportSection tableContainer">
-    <h4>Set Net Fishing Intensity</h4>
-      <p class="large">
-        The following table contains the percent of the total SEMPF low intensity and high intensity set net fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
-      </p>
-        <table data-paging="10">
-          <thead>
-            <tr>
-              <th>Sketch Name</th>
-              <th>% Low Intensity</th>
-              <th>% High Intensity</th>
-              <th>Total %</th>
+  {{#isMPA}}
+    <div class="reportSection tableContainer">
+      <h4>Set Net Fishing Intensity</h4>
+        <p class="large">
+          The following table contains the percent of the total SEMPF low intensity and high intensity set net fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
+        </p>
+          <table data-paging="10">
+            <thead>
+              <tr>
+                <th>Sketch Name</th>
+                <th>% Low Intensity</th>
+                <th>% High Intensity</th>
+                <th>Total %</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            {{#setnet}}
-            <tr>
-              <td>{{NAME}}</td>
-              <td>{{LOW}}</td>
-              <td>{{HIGH}}</td>
-              <td>{{TOTAL}}</td>
-            </tr>
-            {{/setnet}}
-          </tbody>
-        </table>
-  </div>
-  <div class="reportSection tableContainer">
-    <h4>Trawl Fishing Intensity</h4>
-      <p class="large">
-        The following table contains the percent of the total SEMPF low intensity and high intensity trawl fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
-      </p>
-        <table data-paging="10">
-          <thead>
-            <tr>
-              <th>Sketch Name</th>
-              <th>% Low Intensity</th>
-              <th>% High Intensity</th>
-              <th>Total %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#setnet}}
+              <tr>
+                <td>{{NAME}}</td>
+                <td>{{LOW}}</td>
+                <td>{{HIGH}}</td>
+                <td>{{TOTAL}}</td>
+              </tr>
+              {{/setnet}}
+            </tbody>
+          </table>
+    </div>
+    <div class="reportSection tableContainer">
+      <h4>Trawl Fishing Intensity</h4>
+        <p class="large">
+          The following table contains the percent of the total SEMPF low intensity and high intensity trawl fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
+        </p>
+          <table data-paging="10">
+            <thead>
+              <tr>
+                <th>Sketch Name</th>
+                <th>% Low Intensity</th>
+                <th>% High Intensity</th>
+                <th>Total %</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            {{#trawl}}
-            <tr>
-              <td>{{NAME}}</td>
-              <td>{{LOW}}</td>
-              <td>{{HIGH}}</td>
-              <td>{{TOTAL}}</td>
-            </tr>
-            {{/trawl}}
-          </tbody>
-        </table>
-  </div>
-  <div class="reportSection tableContainer">
-    <h4>Long Line Fishing Intensity</h4>
-      <p class="large">
-        The following table contains the percent of the total SEMPF low intensity and high intensity long line fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
-      </p>
+              </tr>
+            </thead>
+            <tbody>
+              {{#trawl}}
+              <tr>
+                <td>{{NAME}}</td>
+                <td>{{LOW}}</td>
+                <td>{{HIGH}}</td>
+                <td>{{TOTAL}}</td>
+              </tr>
+              {{/trawl}}
+            </tbody>
+          </table>
+    </div>
+    <div class="reportSection tableContainer">
+      <h4>Long Line Fishing Intensity</h4>
+        <p class="large">
+          The following table contains the percent of the total SEMPF low intensity and high intensity long line fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
+        </p>
 
-        <table data-paging="10">
-          <thead>
-            <tr>
-              <th>Sketch Name</th>
-              <th>% Low Intensity</th>
-              <th>% High Intensity</th>
-              <th>Total %</th>
+          <table data-paging="10">
+            <thead>
+              <tr>
+                <th>Sketch Name</th>
+                <th>% Low Intensity</th>
+                <th>% High Intensity</th>
+                <th>Total %</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            {{#longline}}
-            <tr>
-              <td>{{NAME}}</td>
-              <td>{{LOW}}</td>
-              <td>{{HIGH}}</td>
-              <td>{{TOTAL}}</td>
-            </tr>
-            {{/longline}}
-          </tbody>
-        </table>
+              </tr>
+            </thead>
+            <tbody>
+              {{#longline}}
+              <tr>
+                <td>{{NAME}}</td>
+                <td>{{LOW}}</td>
+                <td>{{HIGH}}</td>
+                <td>{{TOTAL}}</td>
+              </tr>
+              {{/longline}}
+            </tbody>
+          </table>
 
-  </div>
+    </div>
+  {{/isMPA}}
 {{/isCollection}}
-{{^isCollection}}
+{{^isMPA}}
   {{#hasAnyFishing}}
     {{#hasExistingFishing}}
     <div class="reportSection tableContainer">
@@ -160,4 +162,4 @@
         <p>No information on existing fishing areas or customary use is available for this area.</p>
   </div>
 {{/hasAnyFishing}}
-{{/isCollection}}
+{{/isMPA}}

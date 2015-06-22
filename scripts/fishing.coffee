@@ -31,6 +31,12 @@ class FishingTab extends ReportTab
       d3IsPresent = false
 
     isCollection = @model.isCollection()
+    scid = @sketchClass.id
+    if scid == MPA_ID or scid == MPA_COLLECTION_ID
+      isMPA = true
+    else
+      isMPA = false
+
     if isCollection
       setnet = @recordSet('FishingIntensity', 'SetNet').toArray()
       @roundData(setnet)
@@ -39,6 +45,7 @@ class FishingTab extends ReportTab
       @roundData(trawl)
       longline = @recordSet('FishingIntensity', 'LongLine').toArray()
       @roundData(longline)
+
     else
       existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
       hasExistingCustomary = existing_customary_fishing?.length > 0
@@ -68,6 +75,7 @@ class FishingTab extends ReportTab
         setnet: setnet
         trawl: trawl
         longline: longline
+        isMPA: isMPA
     else
       context =
         sketch: @model.forTemplate()
@@ -85,6 +93,7 @@ class FishingTab extends ReportTab
         hasExistingFishing: hasExistingFishing
         hasAnyFishing: hasAnyFishing
         hasCustomary: hasCustomary
+        isMPA: isMPA
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
