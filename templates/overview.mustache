@@ -82,7 +82,7 @@
     {{/singleSketch}}
   </div>
 {{/isCollection}}
-
+  {{^isGeneric}}
   <div class="reportSection size">
     <h4>MPA Sizes</h4>
     <p class="large">
@@ -112,6 +112,7 @@
       This combined area within the network accounts for <strong>{{percent}}%</strong> of the South-East Marine area, and <strong>{{coastline_length_percent}}%</strong> of the South-East coastline.
     </p>
   </div>
+{{/isGeneric}}
 {{#isCollection}}
   <div class="reportSection">
     <h4>Collection</h4>

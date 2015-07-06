@@ -41,6 +41,7 @@ class OverviewTab extends ReportTab
       scid = @sketchClass.id
 
     console.log("scid: ", scid)
+    isGeneric = (scid == GENERIC_ID)
 
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
     represented_habs = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
@@ -163,6 +164,7 @@ class OverviewTab extends ReportTab
       total_habs: TOTAL_HABS
       num_represented_habs: num_represented_habs
       num_replicated_habs: num_replicated_habs
+      isGeneric: isGeneric
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
