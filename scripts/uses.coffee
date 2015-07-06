@@ -34,7 +34,13 @@ class UsesTab extends ReportTab
 
     #species info
     seabirds = @recordSet('SpeciesInformation', 'Seabirds').toArray()
-    hasSeabirds = seabirds?.length> 0
+    hasSeabirdAreas = seabirds?.length > 0
+
+    seabird_colonies = @recordSet('SpeciesInformation', 'SeabirdColonies').toArray()
+    hasSeabirdColonies = seabird_colonies?.length > 0
+
+    hasSeabirds = (seabirds?.length> 0 or seabird_colonies?.length > 0)
+
     mammals = @recordSet('SpeciesInformation', 'Mammals').toArray()
     hasMammals = mammals?.length > 0
     try
@@ -63,7 +69,8 @@ class UsesTab extends ReportTab
     attributes = @model.getAttributes()
     
     hasUses = hasRecUses or hasHeritage or hasInfrastructure or hasCoastal
-    hasSpecies = hasMammals or hasSeabirds or hasSeals
+    hasMarineSpecies = hasMammals or hasSeals
+
     isCollection = @model.isCollection()
     context =
       sketch: @model.forTemplate()
@@ -86,7 +93,11 @@ class UsesTab extends ReportTab
 
       #species info
       seabirds: seabirds
+      seabird_colonies: seabird_colonies
       hasSeabirds: hasSeabirds
+      hasSeabirdAreas: hasSeabirdAreas
+      hasSeabirdColonies: hasSeabirdColonies
+      
       mammals: mammals
       hasMammals: hasMammals
       reef_fish: reef_fish
@@ -94,7 +105,7 @@ class UsesTab extends ReportTab
       hasSeals: hasSeals
 
       inHighDiversityReefFishArea: inHighDiversityReefFishArea
-      hasSpecies: hasSpecies
+      hasMarineSpecies: hasMarineSpecies
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()

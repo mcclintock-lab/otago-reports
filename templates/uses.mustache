@@ -78,7 +78,9 @@
   {{#hasHeritage}}
     {{^isCollection}}
       <div class="reportSection tableContainer">
-        <h4>Heritage</h4>
+        <h4>Archeological Information 
+          <a href="#" data-toggle-node="5578f14cff39059a583646c9" data-visible="false">show layer</a>
+        </h4>
             <p>{{#isCollection}}A sketch within the collection{{/isCollection}}{{^isCollection}}The sketch{{/isCollection}} contains or is within 200m of sites identified as having significant heritage values.</p>
             <table data-paging="10">
               <thead>
@@ -129,10 +131,10 @@
   </div>
 {{/hasUses}}
 
-{{#hasSpecies}}
+{{#hasSeabirds}}
 <div class="reportSection tableContainer">
-  <h4>Species Information</h4>
-      {{#hasSeabirds}}
+  <h4>Birds </h4>
+      {{#hasSeabirdAreas}}
         <p class="large"><strong>Important Seabird Areas</strong></p>
         <table data-paging="10">
           <tbody>
@@ -141,52 +143,50 @@
               <td>{{Name}}</td>
             </tr>
             {{/seabirds}}
+
           </tbody>
         </table>
-      {{/hasSeabirds}}
-      {{#hasMammals}}
-        <p class="large"><strong>Marine Mammals</strong></p>
+      {{/hasSeabirdAreas}}
+    
+    {{#hasSeabirdColonies}}
+      <p class="large"><strong>Seabird Colonies</strong></p>
+      <table data-paging="10">
+        <tbody>
+          {{#seabird_colonies}}
+          <tr>
+            <td>{{Name}}</td>
+          </tr>
+          {{/seabird_colonies}}
+        </tbody>
+      </table>
+    {{/hasSeabirdColonies}}
+</div>
+{{/hasSeabirds}}
+{{#hasMarineSpecies}}
+<div class="reportSection tableContainer">
+  <h4>Marine Mammals</h4>
         <table data-paging="10">
           <thead>
             <tr>
               <th>Species</th>
-              <th>Number of Sightings</th>
             </tr>
           </thead>
           <tbody>
             {{#mammals}}
             <tr>
               <td>{{Name}}</td>
-              <td>{{Count}}</td>
             </tr>
             {{/mammals}}
-          </tbody>
-        </table>
-      {{/hasMammals}}
-      {{#hasSeals}}
-        <p class="large"><strong>Seal Colonies</strong></p>
-        <table data-paging="10">
-          <thead>
-            <tr>
-              <th>Species</th>
-              <th>Number of Sightings</th>
-            </tr>
-          </thead>
-          <tbody>
             {{#seals}}
-            <tr>
               <td>{{Name}}</td>
-              <td>{{Count}}</td>
-            </tr>
             {{/seals}}
           </tbody>
         </table>
-      {{/hasSeals}}
 </div>
-{{/hasSpecies}}
-{{^hasSpecies}}
+{{/hasMarineSpecies}}
+{{^hasMarineSpecies}}
   <div class="reportSection tableContainer">
     <h4>Species Information</h4>
-        <p>The {{#isCollection}}sketches within the collection do {{/isCollection}}{{^isCollection}}sketch does{{/isCollection}} <strong>not</strong> include any <strong>important species areas</strong>.</p>
+        <p>The {{#isCollection}}sketches within the collection do {{/isCollection}}{{^isCollection}}sketch does{{/isCollection}} <strong>not</strong> include any <strong>important marine mammal areas</strong>.</p>
   </div>
-{{/hasSpecies}}
+{{/hasMarineSpecies}}
