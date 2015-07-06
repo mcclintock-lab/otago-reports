@@ -121,7 +121,6 @@
     </p>
   </div>
 {{/isCollection}}
-
 {{^isCollection}}
   <div class="reportSection size">
     <h4>Size</h4>
@@ -132,12 +131,11 @@
       This sketch includes <strong>{{coastline_length}} meters</strong> of coastline.
     </p>
   </div>
-  {{#isMPA}}
-    <div class="reportSection size">
-      <h4>Number of Habitats</h4>
-      <p class="large">
-        The Marine Protected Area includes {{num_habs}} of the {{total_habs}} habitats within the SEM region.
-    </div>
-  {{/isMPA}}
-
 {{/isCollection}}
+
+<div class="reportSection size">
+  <h4>Number of Habitats</h4>
+  <p class="large">
+    The {{#isMPA}} Marine Protected Area{{#isCollection}}s{{/isCollection}}{{/isMPA}}{{#isGeneric}}sketch{{#isCollection}}es{{/isCollection}}{{/isGeneric}} include{{^isCollection}}s{{/isCollection}} <strong>{{num_habs}}</strong> of the <strong>{{total_habs}}</strong> habitats within the SEM region.
+</div>
+

@@ -40,8 +40,7 @@ class OverviewTab extends ReportTab
       numSketches = 1
       scid = @sketchClass.id
 
-    console.log("scid: ", scid)
-    isGeneric = (scid == GENERIC_ID)
+    isGeneric = (scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID)
 
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
     represented_habs = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
