@@ -58,40 +58,42 @@
     {{/d3IsPresent}}
 
     </div>
-    
-
-
+    <div class="reportSection">
+      <h4>Connectivity</h4>
+      {{#singleSketch}}
+            <p style="font-style:italic;color:gray;" class="large">
+              No connectivity information for a collection with one sketch. 
+            </p>
+      {{/singleSketch}}
+      {{^singleSketch}}
+        <div>
+          <div class="connectivity_pie" id="connectivity_pie"></div>
+          <div class="connectivity_pie_legend" id="connectivity_pie_legend"></div>
+        </div>
+        <p class="large">Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{connected_mpa_count}}</strong>{{#plural_connected_mpa_count}} are{{/plural_connected_mpa_count}}{{^plural_connected_mpa_count}} is{{/plural_connected_mpa_count}} within the connectivity range of 50 - 100 km. 
+        </p>
+        <span class="conn_values">The minimum distance between the MPAs is <strong>{{min_distance}} km</strong>.</span>
+        <span class="conn_values">The maximum distance between the MPAs is <strong>{{max_distance}} km</strong>.</span>
+        <span class="conn_values">The average distance between the MPAs is <strong>{{mean_distance}} km</strong>.</span>
+      {{/singleSketch}}
+    </div>
   {{/isMPA}}
-  <div class="reportSection">
-    <h4>Connectivity</h4>
-    {{#singleSketch}}
-          <p style="font-style:italic;color:gray;" class="large">
-            No connectivity information for a collection with one sketch. 
-          </p>
-    {{/singleSketch}}
-    {{^singleSketch}}
-      <div>
-        <div class="connectivity_pie" id="connectivity_pie"></div>
-        <div class="connectivity_pie_legend" id="connectivity_pie_legend"></div>
-      </div>
-      <p class="large">Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{connected_mpa_count}}</strong>{{#plural_connected_mpa_count}} are{{/plural_connected_mpa_count}}{{^plural_connected_mpa_count}} is{{/plural_connected_mpa_count}} within the connectivity range of 50 - 100 km. 
-      </p>
-      <span class="conn_values">The minimum distance between the MPAs is <strong>{{min_distance}} km</strong>.</span>
-      <span class="conn_values">The maximum distance between the MPAs is <strong>{{max_distance}} km</strong>.</span>
-      <span class="conn_values">The average distance between the MPAs is <strong>{{mean_distance}} km</strong>.</span>
-    {{/singleSketch}}
-  </div>
+
 {{/isCollection}}
-  {{^isGeneric}}
   <div class="reportSection size">
-    <h4>MPA Sizes</h4>
-    <p class="large">
-      Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{mpa_count}}</strong> meet{{^plural_mpa_count}}s{{/plural_mpa_count}} the minimum size dimension of 5km. The average minimum dimension is <strong>{{mpa_avg_size_guideline}}</strong> the 10-20km guideline.
-    </p>
+    <h4>{{#isMPA}}MPA Sizes{{/isMPA}}{{#isGeneric}}Sketch Sizes{{/isGeneric}}</h4>
+    {{#isMPA}}
+      <p class="large">
+        Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{mpa_count}}</strong> meet{{^plural_mpa_count}}s{{/plural_mpa_count}} the minimum size dimension of 5km. The average minimum dimension is <strong>{{mpa_avg_size_guideline}}</strong> the 10-20km guideline.
+      </p>
+    {{/isMPA}}
+    {{#isGeneric}}
+      <p>The size of the sketches in this collection are:</p>
+    {{/isGeneric}}
       <table data-paging="10">
         <thead>
           <tr>
-            <th>MPA Name</th>
+            <th>{{#isMPA}}MPA Name{{/isMPA}}{{#isGeneric}}Sketch Name{{/isGeneric}}</th>
             <th>Area </br>(sq. km.)</th>
             <th style="width:100px;">Width (km)</th>
             <th style="width:100px;">Coastline Length (km)</th>
@@ -112,7 +114,6 @@
       This combined area within the network accounts for <strong>{{percent}}%</strong> of the South-East Marine area, and <strong>{{coastline_length_percent}}%</strong> of the South-East coastline.
     </p>
   </div>
-{{/isGeneric}}
 {{#isCollection}}
   <div class="reportSection">
     <h4>Collection</h4>

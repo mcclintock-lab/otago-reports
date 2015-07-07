@@ -48,6 +48,7 @@ class OverviewTab extends ReportTab
     num_habs = hab_sizes?.length
     num_represented_habs = represented_habs?.length
 
+  
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     total_percent = @getTotalAreaPercent(prop_sizes)
     prop_sizes = @cleanupData(prop_sizes)
