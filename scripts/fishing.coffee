@@ -37,7 +37,7 @@ class FishingTab extends ReportTab
     else
       isMPA = false
 
-    if isCollection
+    if isMPA
       setnet = @recordSet('FishingIntensity', 'SetNet').toArray()
       @roundData(setnet)
 
@@ -62,7 +62,7 @@ class FishingTab extends ReportTab
 
     attributes = @model.getAttributes()
     
-    if isCollection
+    if isMPA
       context =
         sketch: @model.forTemplate()
         sketchClass: @sketchClass.forTemplate()

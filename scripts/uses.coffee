@@ -33,22 +33,29 @@ class UsesTab extends ReportTab
       d3IsPresent = false
 
     #species info
-    seabirds = @recordSet('SpeciesInformation', 'Seabirds').toArray()
-    hasSeabirdAreas = seabirds?.length > 0
+    try
+      seabirds = @recordSet('SpeciesInformation', 'Seabirds').toArray()
+      hasSeabirdAreas = seabirds?.length > 0
+    catch Error
+      hasSeabirdAreas = false
 
-    seabird_colonies = @recordSet('SpeciesInformation', 'SeabirdColonies').toArray()
-    hasSeabirdColonies = seabird_colonies?.length > 0
+    try
+      seabird_colonies = @recordSet('SpeciesInformation', 'SeabirdColonies').toArray()
+      hasSeabirdColonies = seabird_colonies?.length > 0
+    catch Error
+      hasSeabirdColonies = false
 
+    
     hasSeabirds = (seabirds?.length> 0 or seabird_colonies?.length > 0)
-
     mammals = @recordSet('SpeciesInformation', 'Mammals').toArray()
     hasMammals = mammals?.length > 0
     try
       seals = @recordSet('SpeciesInformation', 'Seals').toArray()
+      hasSeals = seals?.length > 0
     catch Error
+      hasSeals = false
 
-
-    hasSeals = seals?.length > 0
+    
     reef_fish = @recordSet('SpeciesInformation', 'ReefFish').toArray()
     inHighDiversityReefFishArea = reef_fish?.length > 0
 

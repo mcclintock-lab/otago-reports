@@ -9,11 +9,23 @@
   <div class="reportSection">
     <h4>{{sketchClass.name}}</h4>
     {{>attributes/attributesTable}}
+    {{#isCollection}}
+    <tr><td>{{#isMPA}}Number of MPAs{{/isMPA}}{{#isGeneric}}Number of Sketches{{/isGeneric}}</td>{{numSketches}}<td>
+    {{/isCollection}}
     </table>
   </div>
 {{/anyAttributes}}
 
 {{#isCollection}}
+  {{#isGeneric}}
+    <div class="reportSection">
+      <h4>Number of Sketches in Collection</h4>
+      <p class="large">
+        This collection contains <strong>{{numSketches}}</strong> sketch{{#pluralSketches}}es{{/pluralSketches}}.
+      </p>
+    </div>
+  {{/isGeneric}}
+
   {{#isMPA}}
     
     <div class="reportSection size">
@@ -114,14 +126,7 @@
       This combined area within the network accounts for <strong>{{percent}}%</strong> of the South-East Marine area, and <strong>{{coastline_length_percent}}%</strong> of the South-East coastline.
     </p>
   </div>
-{{#isCollection}}
-  <div class="reportSection">
-    <h4>Collection</h4>
-    <p class="large">
-      This collection contains <strong>{{numSketches}}</strong> sketches.
-    </p>
-  </div>
-{{/isCollection}}
+
 {{^isCollection}}
   <div class="reportSection size">
     <h4>Size</h4>

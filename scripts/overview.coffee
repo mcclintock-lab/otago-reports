@@ -39,6 +39,7 @@ class OverviewTab extends ReportTab
     else
       numSketches = 1
       scid = @sketchClass.id
+    pluralSketches = numSketches > 1
 
     isGeneric = (scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID)
 
@@ -147,6 +148,7 @@ class OverviewTab extends ReportTab
       percent: percent
       isCollection: isCollection
       numSketches: numSketches
+      pluralSketches: pluralSketches
       prop_sizes: prop_sizes
       total_mpa_count: total_mpa_count
       mpa_count: mpa_count
