@@ -95,9 +95,11 @@
   <div class="reportSection size">
     <h4>{{#isMPA}}MPA Sizes{{/isMPA}}{{#isGeneric}}Sketch Sizes{{/isGeneric}}</h4>
     {{#isMPA}}
+      {{#isCollection}}
       <p class="large">
         Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{mpa_count}}</strong> meet{{^plural_mpa_count}}s{{/plural_mpa_count}} the minimum size dimension of 5km. The average minimum dimension is <strong>{{mpa_avg_size_guideline}}</strong> the 10-20km guideline.
       </p>
+      {{/isCollection}}
     {{/isMPA}}
     {{#isGeneric}}
       <p>The size of the sketches in this collection are:</p>
@@ -128,20 +130,22 @@
   </div>
 
 {{^isCollection}}
-  <div class="reportSection size">
-    <h4>Size</h4>
-    <p class="large">
-      This sketch area is <strong>{{size}} square kilometers</strong>, and it includes <strong>{{percent}}%</strong> of the South-East Planning Region.
-    </p>
-    <p class="large">
-      This sketch includes <strong>{{coastline_length}} meters</strong> of coastline.
-    </p>
-  </div>
+  {{#isGeneric}}
+    <div class="reportSection size">
+      <h4>Size</h4>
+      <p class="large">
+        This sketch area is <strong>{{size}} square kilometers</strong>, and it includes <strong>{{percent}}%</strong> of the South-East Planning Region.
+      </p>
+      <p class="large">
+        This sketch includes <strong>{{coastline_length}} meters</strong> of coastline.
+      </p>
+    </div>
+    {{/isGeneric}}
 {{/isCollection}}
 
 <div class="reportSection size">
   <h4>Number of Habitats</h4>
   <p class="large">
-    The {{#isMPA}} Marine Protected Area{{#isCollection}}s{{/isCollection}}{{/isMPA}}{{#isGeneric}}sketch{{#isCollection}}es{{/isCollection}}{{/isGeneric}} include{{^isCollection}}s{{/isCollection}} <strong>{{num_habs}}</strong> of the <strong>{{total_habs}}</strong> habitats within the SEM region.
+    The {{#isMPA}} Marine Protected Area{{#isCollection}}s{{/isCollection}}{{/isMPA}}{{#isGeneric}}sketch{{#isCollection}}es{{/isCollection}}{{/isGeneric}} include{{^isCollection}}s{{/isCollection}} <strong>{{num_habs}}</strong> of the <strong>{{total_habs}}</strong> classified habitats.
 </div>
 

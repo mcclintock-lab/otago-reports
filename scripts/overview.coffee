@@ -98,23 +98,23 @@ class OverviewTab extends ReportTab
     ratio = (coastline_length/size).toFixed(1)
 
     #setup connectivity data
-    if numSketches > 1
-      res = @recordSet('ProposalConnectivity', 'ResultMsg')
-      console.log("result: ", res)
-      connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
-      
-      plural_connected_mpa_count = true
-
-      min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
-      max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
-      mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
+    if isCollection
       good_color = "#b3cfa7"
       bad_color = "#e5cace"
       num_replicated_habs = 0
+      if numSketches > 1
+        try
+          connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
+          plural_connected_mpa_count = true
 
-      conn_pie_values = @build_values("MPAs Within Connectivity Range", connected_mpa_count,good_color, "MPAs Outside Connectivity Range", 
-        total_mpa_count-connected_mpa_count, bad_color)
-
+          min_distance = @recordSet('ProposalConnectivity', 'Conn').float('MIN')
+          max_distance = @recordSet('ProposalConnectivity', 'Conn').float('MAX')
+          mean_distance = @recordSet('ProposalConnectivity', 'Conn').float('MEAN')
+          conn_pie_values = @build_values("MPAs Within Connectivity Range", connected_mpa_count,good_color, "MPAs Outside Connectivity Range", 
+            total_mpa_count-connected_mpa_count, bad_color)
+        catch Error
+          console.log("error reading connectivity...")
+          
       not_represented = TOTAL_HABS - num_represented_habs
       represented_habs_pie_values = @build_values("Habitat-types Represented", num_represented_habs, good_color, "Habitat-types Not Represented",
         not_represented, bad_color)
@@ -175,7 +175,7 @@ class OverviewTab extends ReportTab
     #  total_mpa_count-mpa_count, "#e5cace")
 
 
-    
+    console.log(represented_habs_pie_values)
     @drawPie(represented_habs_pie_values, "#represented_habs_pie")
     @drawPie(replicated_habs_pie_values, "#replicated_habs_pie")
     @drawPie(conn_pie_values, "#connectivity_pie")
@@ -242,8 +242,9 @@ class OverviewTab extends ReportTab
       if ps.NAME == "Average"
         return ps.MIN_DIM
 
-  cleanupData: (prop_sizes) =>
+  cleanupData: (prop_sizes, isCollection) =>
     cleaned_props = []
+    num_sketches = prop_sizes?.length
     for ps in prop_sizes
       if ps.NAME != "Percent of Total Area"
         ps.MIN_DIM = parseFloat(ps.MIN_DIM).toFixed(1)
@@ -253,8 +254,12 @@ class OverviewTab extends ReportTab
         ps.COAST = Number(ps.COAST).toFixed(1)
         if ps.COAST == 0 
           ps.COAST = "--"
-          
-        cleaned_props.push(ps)
+        #don't include average for singe sketch
+        if num_sketches == 3 
+          if ps.NAME != "Average"
+            cleaned_props.push(ps)
+        else
+          cleaned_props.push(ps)
 
     return cleaned_props
 

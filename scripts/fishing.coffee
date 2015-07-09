@@ -46,19 +46,19 @@ class FishingTab extends ReportTab
       longline = @recordSet('FishingIntensity', 'LongLine').toArray()
       @roundData(longline)
 
-    else
-      existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
-      hasExistingCustomary = existing_customary_fishing?.length > 0
-      console.log("existing_customary: ", existing_customary_fishing)
-      proposed_customary_fishing = @recordSet('FishingAreas', 'ProposedCustomaryArea').toArray()
-      console.log("proposed customary: ", proposed_customary_fishing)
-      hasProposedCustomary = proposed_customary_fishing?.length > 0
-      hasCustomary = hasExistingCustomary or hasProposedCustomary
-      console.log("has customary? ", hasCustomary)
-      
-      existing_fishing_areas = @recordSet('FishingAreas', 'FishingExistingArea').toArray()
-      hasExistingFishing = existing_fishing_areas?.length > 0
-      hasAnyFishing = hasExistingFishing or hasCustomary
+
+    existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
+    hasExistingCustomary = existing_customary_fishing?.length > 0
+    console.log("existing_customary: ", existing_customary_fishing)
+    proposed_customary_fishing = @recordSet('FishingAreas', 'ProposedCustomaryArea').toArray()
+    console.log("proposed customary: ", proposed_customary_fishing)
+    hasProposedCustomary = proposed_customary_fishing?.length > 0
+    hasCustomary = hasExistingCustomary or hasProposedCustomary
+    console.log("has customary? ", hasCustomary)
+    
+    existing_fishing_areas = @recordSet('FishingAreas', 'FishingExistingArea').toArray()
+    hasExistingFishing = existing_fishing_areas?.length > 0
+    hasAnyFishing = hasExistingFishing or hasCustomary
 
     attributes = @model.getAttributes()
     
@@ -76,6 +76,15 @@ class FishingTab extends ReportTab
         trawl: trawl
         longline: longline
         isMPA: isMPA
+        existing_customary_fishing: existing_customary_fishing
+        hasExistingCustomary: hasExistingCustomary
+        proposed_customary_fishing: proposed_customary_fishing
+        hasProposedCustomary: hasProposedCustomary
+        existing_fishing_areas: existing_fishing_areas
+        hasExistingFishing: hasExistingFishing
+        hasAnyFishing: hasAnyFishing
+        hasCustomary: hasCustomary
+        isMPA: isMPA
     else
       context =
         sketch: @model.forTemplate()
@@ -84,7 +93,7 @@ class FishingTab extends ReportTab
         anyAttributes: @model.getAttributes().length > 0
         admin: @project.isAdmin window.user
         d3IsPresent: d3IsPresent
-        
+        isCollection: isCollection
         existing_customary_fishing: existing_customary_fishing
         hasExistingCustomary: hasExistingCustomary
         proposed_customary_fishing: proposed_customary_fishing
