@@ -40,7 +40,7 @@ class OverviewTab extends ReportTab
       numSketches = 1
       scid = @sketchClass.id
     pluralSketches = numSketches > 1
-
+    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
     isGeneric = (scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID)
 
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
@@ -129,7 +129,7 @@ class OverviewTab extends ReportTab
     else
       d3IsPresent = false
 
-    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
+    
     attributes = @model.getAttributes()
     
     context =

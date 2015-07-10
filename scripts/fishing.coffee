@@ -40,26 +40,21 @@ class FishingTab extends ReportTab
     if isMPA
       setnet = @recordSet('FishingIntensity', 'SetNet').toArray()
       @roundData(setnet)
-
       trawl = @recordSet('FishingIntensity', 'Trawl').toArray()
       @roundData(trawl)
       longline = @recordSet('FishingIntensity', 'LongLine').toArray()
       @roundData(longline)
 
-
     existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
     hasExistingCustomary = existing_customary_fishing?.length > 0
-    console.log("existing_customary: ", existing_customary_fishing)
     proposed_customary_fishing = @recordSet('FishingAreas', 'ProposedCustomaryArea').toArray()
-    console.log("proposed customary: ", proposed_customary_fishing)
     hasProposedCustomary = proposed_customary_fishing?.length > 0
+
     hasCustomary = hasExistingCustomary or hasProposedCustomary
-    console.log("has customary? ", hasCustomary)
-    
+
     existing_fishing_areas = @recordSet('FishingAreas', 'FishingExistingArea').toArray()
     hasExistingFishing = existing_fishing_areas?.length > 0
     hasAnyFishing = hasExistingFishing or hasCustomary
-
     attributes = @model.getAttributes()
     
     if isMPA
@@ -108,9 +103,16 @@ class FishingTab extends ReportTab
     @enableLayerTogglers()
 
   roundData: (rec_set) =>
+    low_total = 0.0
+    high_total = 0.0
     for rs in rec_set
       rs.LOW = Number(rs.LOW).toFixed(1)
+      low_total+=Number(rs.LOW)
       rs.HIGH = Number(rs.HIGH).toFixed(1)
+      high_total+=Number(rs.HIGH)
       rs.TOTAL = Number(rs.TOTAL).toFixed(1)
+    if rec_set?.length > 0
+      tot_row = {"NAME":"Total", "LOW":low_total, "HIGH":high_total}
+      rec_set.push(tot_row)
 
 module.exports = FishingTab

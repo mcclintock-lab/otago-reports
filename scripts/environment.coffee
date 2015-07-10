@@ -38,6 +38,8 @@ class EnvironmentTab extends ReportTab
       isGeneric = true
     else
       isGeneric = false
+
+    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
     hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
     '''
     habitats = @recordSet('HabitatsEnvironment', 'HabitatSize').toArray()
@@ -54,8 +56,12 @@ class EnvironmentTab extends ReportTab
     hasPublic = public_land?.length > 0
     coastal_land = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
     hasCoastal = coastal_land?.length > 0
-    adjacent_land = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
-    hasAdjacent = adjacent_land?.length > 0
+
+    if isGeneric or (!isCollection and isMPA)
+      adjacent_land = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
+      showAdjacent = true
+    else
+      showAdjacent = false
     
     habitats_represented = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
     attributes = @model.getAttributes()
@@ -80,7 +86,7 @@ class EnvironmentTab extends ReportTab
       coastal_land: coastal_land
       hasCoastalLand: hasCoastal
       adjacent_land: adjacent_land
-      hasAdjacentLand: hasAdjacent
+      showAdjacent: showAdjacent
       
 
     @$el.html @template.render(context, partials)

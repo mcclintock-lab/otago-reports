@@ -32,33 +32,33 @@
     </div>
     {{/hasExistingFishing}}
     {{#hasCustomary}}
-    <div class="reportSection tableContainer">
-      <h4>Customary Areas</h4>
-      {{#hasExistingCustomary}}
-        <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>existing</strong> Customary Areas:</p>
-        <table data-paging="10">
-          <tbody>
-            {{#existing_customary_fishing}}
-            <tr>
-              <td>{{FEAT_TYPE}}</td>
-            </tr>
-            {{/existing_customary_fishing}}
-          </tbody>
-        </table>
-      {{/hasExistingCustomary}}
-      {{#hasProposedCustomary}}
-        <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>proposed</strong> Customary Areas:</p>
-        <table data-paging="10">
-          <tbody>
-            {{#proposed_customary_fishing}}
-            <tr>
-              <td>{{FEAT_TYPE}}</td>
-            </tr>
-            {{/proposed_customary_fishing}}
-          </tbody>
-        </table>
-      {{/hasProposedCustomary}}
-    </div>
+      <div class="reportSection tableContainer">
+        <h4>Customary Areas</h4>
+        {{#hasExistingCustomary}}
+          <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>existing</strong> Customary Areas:</p>
+          <table data-paging="10">
+            <tbody>
+              {{#existing_customary_fishing}}
+              <tr>
+                <td>{{FEAT_TYPE}}</td>
+              </tr>
+              {{/existing_customary_fishing}}
+            </tbody>
+          </table>
+        {{/hasExistingCustomary}}
+        {{#hasProposedCustomary}}
+          <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>proposed</strong> Customary Areas:</p>
+          <table data-paging="10">
+            <tbody>
+              {{#proposed_customary_fishing}}
+              <tr>
+                <td>{{FEAT_TYPE}}</td>
+              </tr>
+              {{/proposed_customary_fishing}}
+            </tbody>
+          </table>
+        {{/hasProposedCustomary}}
+      </div>
     {{/hasCustomary}}
 
 {{/hasAnyFishing}}
@@ -71,44 +71,38 @@
 
 {{#isMPA}}
   <div class="reportSection tableContainer">
-    <h4>Trawl Fishing Intensity</h4>
+    <h4>Fishing Intensity</h4>
       <p class="large">
-        The following table contains the percent of the total SEMPF low intensity and high intensity trawl fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
+        The following tables contains the percent of the total SEMPF low intensity and high intensity fishing that may be displaced by the sketch. <strong>High intensity</strong> is greater than an average of 5 events per annum, <strong>Low</strong> is 5 or less events per annum.
       </p>
-        <table data-paging="10">
-          <thead>
-            <tr>
-              <th>Sketch Name</th>
-              <th>% Low Intensity</th>
-              <th>% High Intensity</th>
-              <th>Total %</th>
+      <p class="in-report-header">Trawl Fishing Intensity</p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Sketch Name</th>
+            <th>% Low Intensity</th>
+            <th>% High Intensity</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            {{#trawl}}
-            <tr>
-              <td>{{NAME}}</td>
-              <td>{{LOW}}</td>
-              <td>{{HIGH}}</td>
-              <td>{{TOTAL}}</td>
-            </tr>
-            {{/trawl}}
-          </tbody>
-        </table>
-  </div>
-  <div class="reportSection tableContainer">
-    <h4>Set Net Fishing Intensity</h4>
-      <p class="large">
-        The following table contains the percent of the total SEMPF low intensity and high intensity set net fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
-      </p>
+          </tr>
+        </thead>
+        <tbody>
+          {{#trawl}}
+          <tr>
+            <td>{{NAME}}</td>
+            <td>{{LOW}}</td>
+            <td>{{HIGH}}</td>
+          </tr>
+          {{/trawl}}
+        </tbody>
+      </table>
+
+      <p class="in-report-header">Set Net Fishing Intensity</p>
         <table data-paging="10">
           <thead>
             <tr>
               <th>Sketch Name</th>
               <th>% Low Intensity</th>
               <th>% High Intensity</th>
-              <th>Total %</th>
 
             </tr>
           </thead>
@@ -118,38 +112,29 @@
               <td>{{NAME}}</td>
               <td>{{LOW}}</td>
               <td>{{HIGH}}</td>
-              <td>{{TOTAL}}</td>
             </tr>
             {{/setnet}}
           </tbody>
         </table>
-  </div>
-  <div class="reportSection tableContainer">
-    <h4>Long Line Fishing Intensity</h4>
-      <p class="large">
-        The following table contains the percent of the total SEMPF low intensity and high intensity long line fishing that may be displaced by the sketch. <i>High intensity is greater than an average of 5 events per annum, Low is 5 or less events per annum.</i>
-      </p>
-        <table data-paging="10">
-          <thead>
-            <tr>
-              <th>Sketch Name</th>
-              <th>% Low Intensity</th>
-              <th>% High Intensity</th>
-              <th>Total %</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            {{#longline}}
-            <tr>
-              <td>{{NAME}}</td>
-              <td>{{LOW}}</td>
-              <td>{{HIGH}}</td>
-              <td>{{TOTAL}}</td>
-            </tr>
-            {{/longline}}
-          </tbody>
-        </table>
+      <p class="in-report-header">Long Line Fishing Intensity</p>
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>Sketch Name</th>
+            <th>% Low Intensity</th>
+            <th>% High Intensity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#longline}}
+          <tr>
+            <td>{{NAME}}</td>
+            <td>{{LOW}}</td>
+            <td>{{HIGH}}</td>
+          </tr>
+          {{/longline}}
+        </tbody>
+      </table>
 
   </div>
 {{/isMPA}}
