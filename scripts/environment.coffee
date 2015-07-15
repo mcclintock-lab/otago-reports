@@ -41,31 +41,36 @@ class EnvironmentTab extends ReportTab
 
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
     hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
-    '''
-    habitats = @recordSet('HabitatsEnvironment', 'HabitatSize').toArray()
-    habs_in_sketch = habitats?.length
-    habs_plural = habs_in_sketch != 1
-    '''
+
     habs_in_sketch = hab_sizes?.length
     habs_plural = habs_in_sketch != 1
 
-    #evenness = @recordSet('HabitatsOverview', 'HabitatEvenness').float('EVENNESS')
-    #total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
-    
-    public_land = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
-    hasPublic = public_land?.length > 0
-    coastal_land = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
-    hasCoastal = coastal_land?.length > 0
+    protected_areas = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
+    hasProtected = protectedAreas?.length > 0
+
+    qe2_covenants = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
+    hasQE2covenants = qe2_covenants?.length > 0
+
+    napalis_covenants = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
+    hasNapalisCovenants = napalis_covenants?.length > 0
+
+    hasCovenants = (hasQE2covenants or hasNapalisCovenants)
 
     if isGeneric or (!isCollection and isMPA)
-      adjacent_land = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
       showAdjacent = true
     else
       showAdjacent = false
     
     habitats_represented = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
+    @roundData habitats_represented
+    all_habs = @processHabitats(habitats_represented)
+ 
+    hab_types = all_habs[0]
+    hasHabTypes = hab_types?.length > 0
+    sig_habs = all_habs[1]
+    hasSigHabs = sig_habs?.length > 0
     attributes = @model.getAttributes()
-    
+ 
     context =
       sketch: @model.forTemplate()
       sketchClass: @sketchClass.forTemplate()
@@ -76,16 +81,25 @@ class EnvironmentTab extends ReportTab
       isGeneric: isGeneric
       isCollection: isCollection
 
-      hab_sizes: hab_sizes
-      habs_in_sketch: habs_in_sketch
+      hab_types: hab_types
+      hasHabTypes: hasHabTypes
+      sig_habs: sig_habs
+      hasSigHabs: hasSigHabs
+
       habs_plural: habs_plural
       
       habitats_represented: habitats_represented
-      public_land: public_land
-      hasPublicLand: hasPublic
-      coastal_land: coastal_land
-      hasCoastalLand: hasCoastal
-      adjacent_land: adjacent_land
+
+      protected_areas: protected_areas
+      hasProtected: hasProtected
+
+      qe2_covenants: qe2_covenants
+      hasQE2covenants: hasQE2covenants
+
+      napalis_covenants: napalis_covenants
+      hasNapalisCovenants: hasNapalisCovenants
+
+      hasCovenants: hasCovenants
       showAdjacent: showAdjacent
       
 
@@ -96,6 +110,17 @@ class EnvironmentTab extends ReportTab
 
     @enableTablePaging()
     
+  processHabitats: (habs_represented) =>
+    hab_types = []
+    critical_habitats = []
+    for hab in habs_represented
+      if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed"
+        critical_habitats.push(hab)
+      else
+        hab_types.push(hab)
+
+    return [hab_types, critical_habitats]
+
   roundData: (habitats) =>  
     for hab in habitats
       hab.SIZE_SQKM = Number(hab.SIZE_SQKM).toFixed(1)

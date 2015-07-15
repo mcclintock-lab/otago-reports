@@ -7,121 +7,127 @@
 {{/sketchClass.deleted}}
 {{^isGeneric}}
 <div class="reportSection tableContainer">
-  <h4>Habitat-types Represented in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} 
-  <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
-      <table data-paging="20">
-        <thead>
-          <tr>
-            <th style="width:250px;">Habitat</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#habitats_represented}}
-          <tr>
-            <td>{{HAB_TYPE}}</td>
-          </tr>
-          {{/habitats_represented}}
-        </tbody>
-      </table>
-</div>
-{{/isGeneric}}
-
-<div class="reportSection tableContainer">
   <h4>Habitats Present in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
     <p>
       <i>
         Area (%) refers to the percentage of the habitat contained within the 
-        {{#isCollection}}{{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}{{/isCollection}}
-        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region.
+        {{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}
+        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. Only habitats that meet criteria for a viable habitat size are included as a ‘represented’ habitat.
       </i>
     </p>
-    {{#d3IsPresent}}
-      <table data-paging="20" class="hab_table"> 
-        <thead>
-          <tr>
-            <th class="sorting_col" style="width:250px;"><a class="hab_type sort_up" href="#">Habitat Classification Type</a></th>
-            <th><a  class="hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
-            <th><a class="hab_new_perc sort_down" href="#">Area (%)</a></th>
-          </tr>
-        </thead>
-        <tbody class="hab_values"></tbody>
-      </table>
-    {{/d3IsPresent}}
-    {{^d3IsPresent}}
-      <table data-paging="10">
-        <thead>
-          <tr>
-            <th style="width:250px;">Habitats</th>
-            <th>Area (<sup>2</sup>)</th>
-            <th>Area (%)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#hab_sizes}}
+
+    <p class="in-report-header">Habitat types</p>
+    <table data-paging="10">
+      <thead>
+        <tr>
+          <th style="width:180px;">Habitat</th>
+          <th>Area (km<sup>2</sup>)</th>
+          <th>Area (%)</th>
+          <th>Represented</th>
+          {{#isCollection}}<th>Replicated</th>{{/isCollection}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#hasHabTypes}}
+          {{#hab_types}}
           <tr>
             <td>{{HAB_TYPE}}</td>
             <td>{{SIZE_SQKM}}</td>
             <td>{{PERC}}</td>
+            <td>{{REPRESENT}}</td>
+            {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
           </tr>
-          {{/hab_sizes}}
-        </tbody>
-      </table>
-    {{/d3IsPresent}}
-    <!---  
-      </br>
-      <p>
-        <p class="large">
-          <strong>Habitat Evenness</strong></br>
-          The measure of 'evenness' for the <strong>{{habs_in_sketch}}</strong> habitat{{#habs_plural}}s{{/habs_plural}} present in the Sketch is <strong>{{evenness}}</strong>.
-        </p>
-        <p>
-          <em>Evenness is a measure of the relative abundance of habitats within an area, where a high number approaching 
-          1 means all the habitats are relatively similar in size, and a low number indicating that the habitats are varied 
-          in their size. A higher habitat evenness score generally indicates a higher species diversity. 
-          Evenness has been calculated using the Simpson's E index.</em>
-        </p>
-      </p>
-    -->
-</div>
+          {{/hab_types}}
+        {{/hasHabTypes}}
+        
+        {{^hasHabTypes}}
+          <tr>
+            <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
+              <i>There are no habitat types.</i>
+            </td>
+          </tr>
+        {{/hasHabTypes}}
+    
+      </tbody>
+    </table>
+    <p class="in-report-header">Habitats of Significance</p>
+    <table data-paging="10">
+      <thead>
+        <tr>
+          <th style="width:180px;">Habitat</th>
+          <th>Area (km<sup>2</sup>)</th>
+          <th>Area (%)</th>
+          <th>Represented</th>
+          {{#isCollection}}<th>Replicated</th>{{/isCollection}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#hasSigHabs}}
+          {{#sig_habs}}
+            <tr>
+              <td>{{HAB_TYPE}}</td>
+              <td>{{SIZE_SQKM}}</td>
+              <td>{{PERC}}</td>
+              <td>{{REPRESENT}}</td>
+              {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
+            </tr>
+          {{/sig_habs}}
+        {{/hasSigHabs}}
+        {{^hasSigHabs}}
+        <tr>
+            <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
+              <i>There are no habitats of significance.</i>
+            </td>
+        </tr>
+        {{/hasSigHabs}}
+      </tbody>
+    </table>
+  </div>
+{{/isGeneric}}
+
 {{#showAdjacent}}
   <div class="reportSection tableContainer">
     <h4>Adjacent Terrestrial Information</h4>
         <p><em>MPA Guidelines: "Consider adjacent terrestrial environment" (areas shown below are within 100m of {{#isCollection}}a sketch in the collection{{/isCollection}}{{^isCollection}} the sketch {{/isCollection}})</em></p>
-        <p class="large"><strong>Public Conservation Land</strong></p>
+        <p class="large"><strong>Protected Areas</strong></p>
         <table data-paging="10">
           <tbody>
-            {{#hasPublicLand}}
-              {{#public_land}}
+            {{#hasProtected}}
+              {{#protected_areas}}
               <tr>
                 <td>{{NAME}}</td>
               </tr>
-              {{/public_land}}
-            {{/hasPublicLand}}
-            {{^hasPublicLand}}
+              {{/protected_areas}}
+            {{/hasProtected}}
+            {{^hasProtected}}
               <tr>
                 <td><em>None Present</em></td>
               </tr>
-            {{/hasPublicLand}}
+            {{/hasProtected}}
           </tbody>
         </table>
-        <p class="large"><strong>Coastal Protection and Recreation Areas (CPA & CRA)</strong></p>
+        <p class="large"><strong>Conservation Covenants</strong></p>
         <table data-paging="10">
           <tbody>
-            {{#hasCoastalLand}}
-              {{#coastal_land}}
+            {{#hasCovenants}}
+              {{#qe2_covenants}}
               <tr>
                 <td>{{NAME}}</td>
               </tr>
-              {{/coastal_land}}
-            {{/hasCoastalLand}}
-            {{^hasCoastalLand}}
+              {{/qe2_covenants}}
+              {{#napalis_covenants}}
+              <tr>
+                <td>{{NAME}}</td>
+              </tr>
+              {{/napalis_covenants}}
+            {{/hasCovenants}}
+            {{^hasCovenants}}
               <tr>
                 <td><em>None Present</em></td>
               </tr>
-            {{/hasCoastalLand}}
+            {{/hasCovenants}}
           </tbody>
         </table>
   </div>
 {{/showAdjacent}}
-
 
