@@ -5,6 +5,18 @@
   sketches of this type.
 </div>
 {{/sketchClass.deleted}}
+
+{{#isCollection}}
+  {{#isMPA}}
+    <div class="reportSection size">
+      <h4>MPA Network</h4>
+      <p class="large">
+        This Collection has <strong>{{num_reserves}} Marine Reserves</strong> and <strong>{{num_type2}} Type-2 MPA</strong>.
+      </p>
+    </div>
+  {{/isMPA}}
+{{/isCollection}}
+
 {{#anyAttributes}}
   <div class="reportSection">
     <h4>{{sketchClass.name}}</h4>
@@ -150,6 +162,8 @@
     </div>
     {{/isGeneric}}
 {{/isCollection}}
+
+
 
 <div class="reportSection size">
   <h4>Number of Habitats</h4>

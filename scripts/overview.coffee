@@ -32,13 +32,22 @@ class OverviewTab extends ReportTab
     # documentation for more info.
     TOTAL_COASTLINE_LENGTH = 667.594
     TOTAL_HABS = 30
+    scid = @sketchClass.id
     isCollection = @model.isCollection()
+    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
+    num_reserves = 0
+    num_type2 = 0
+
     if isCollection
       numSketches = @model.getChildren().length
-      scid = @sketchClass.id
+      if isMPA
+        reserve_types = @getReserveValues @model.getChildren()
+        num_reserves = reserve_types[0]
+        num_type2 = reserve_types[1]
     else
       numSketches = 1
-      scid = @sketchClass.id
+
+
     pluralSketches = numSketches > 1
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
     isGeneric = (scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID)
@@ -65,7 +74,6 @@ class OverviewTab extends ReportTab
       mpa_avg_size_guideline = "above"
     try
       size = @recordSet('Size', 'Size').float('SIZE_SQKM')
-      console.log(size)
       if size < 0.1
         new_size = "< 0.1"
       else
@@ -80,7 +88,6 @@ class OverviewTab extends ReportTab
       if percent == 0 && total_percent > 0
         percent = "< 1"
     catch Error
-      console.log("error getting percent")
       percent = total_percent
 
     coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
@@ -167,6 +174,9 @@ class OverviewTab extends ReportTab
       num_represented_habs: num_represented_habs
       num_replicated_habs: num_replicated_habs
       isGeneric: isGeneric
+      isMPA: isMPA
+      num_reserves: num_reserves
+      num_type2: num_type2
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
@@ -174,8 +184,6 @@ class OverviewTab extends ReportTab
     #size_pie_values = @build_values("Meets Min. Size", mpa_count,"#b3cfa7", "Does not Meet Size Min.", 
     #  total_mpa_count-mpa_count, "#e5cace")
 
-
-    console.log(represented_habs_pie_values)
     @drawPie(represented_habs_pie_values, "#represented_habs_pie")
     @drawPie(replicated_habs_pie_values, "#replicated_habs_pie")
     @drawPie(conn_pie_values, "#connectivity_pie")
@@ -186,6 +194,23 @@ class OverviewTab extends ReportTab
     no_val = {"label":no_label+" ("+no_count+")", "value":no_count, "color":no_color, "yval":50}
 
     return [yes_val, no_val]
+
+  getReserveValues: (reserves) =>
+    num_reserves = 0
+    num_type2 = 0
+    try
+      for res in reserves
+        attrs = res.getAttributes()
+        for att in attrs
+          if att.exportid == "MANAGEMENT"
+            if att.value[0] == "Type2"
+              num_type2+=1
+            else if att.value[0] == "MR"
+              num_reserves+=1
+    catch Error
+      console.log('ran into problem getting mpa types')
+
+    return [num_reserves, num_type2]
 
   getDataValue: (data) =>
     return data.value
