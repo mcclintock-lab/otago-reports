@@ -28,18 +28,20 @@
   </div>
 {{/anyAttributes}}
 
-{{#isCollection}}
+
   {{#isGeneric}}
+    {{#isCollection}}
     <div class="reportSection">
       <h4>Number of Sketches in Collection</h4>
       <p class="large">
         This collection contains <strong>{{numSketches}}</strong> sketch{{#pluralSketches}}es{{/pluralSketches}}.
       </p>
     </div>
+    {{/isCollection}}
   {{/isGeneric}}
 
   {{#isMPA}}
-    
+    {{#isCollection}}
     <div class="reportSection size">
       <h4>Habitats Represented in a fully Protected Area
         <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
@@ -81,47 +83,75 @@
       </div>
     {{/d3IsPresent}}
     </div>
-  {{/isMPA}}
-{{/isCollection}}
-
-
-
-<div class="reportSection size">
-  <h4>{{#isMPA}}MPA Sizes{{/isMPA}}{{#isGeneric}}Sketch Sizes{{/isGeneric}}</h4>
-  {{#isMPA}}
-    {{#isCollection}}
-    <p class="large">
-      Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{mpa_count}}</strong> meet{{^plural_mpa_count}}s{{/plural_mpa_count}} the minimum size dimension of 5km. The average minimum dimension is <strong>{{mpa_avg_size_guideline}}</strong> the 10-20km guideline.
-    </p>
     {{/isCollection}}
   {{/isMPA}}
-  {{#isGeneric}}
-    <p>The size of the sketches in this collection are:</p>
-  {{/isGeneric}}
-    <table data-paging="10">
-      <thead>
-        <tr>
-          <th>{{#isMPA}}MPA Name{{/isMPA}}{{#isGeneric}}Sketch Name{{/isGeneric}}</th>
-          <th>Area </br>(sq. km.)</th>
-          <th style="width:100px;">Width (km)</th>
-          <th style="width:100px;">Coastline Length (km)</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#prop_sizes}}
-        <tr>
-          <td>{{NAME}}</td>
-          <td>{{SIZE_SQKM}}</td>
-          <td>{{MIN_DIM}}</td>
-          <td>{{COAST}}
-        </tr>
-        {{/prop_sizes}}
-      </tbody>
-    </table>
-  <p class="large">
-    This combined area within the network accounts for <strong>{{percent}}%</strong> of the South-East Marine area, and <strong>{{coastline_length_percent}}%</strong> of the South-East coastline.
-  </p>
-</div>
+
+{{#isCollection}}
+  <div class="reportSection size">
+    <h4>{{#isMPA}}MPA Sizes{{/isMPA}}{{#isGeneric}}Sketch Sizes{{/isGeneric}}</h4>
+    {{#isMPA}}
+      <p class="large">
+        Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{mpa_count}}</strong> meet{{^plural_mpa_count}}s{{/plural_mpa_count}} the minimum size dimension of 5km. The average minimum dimension is <strong>{{mpa_avg_size_guideline}}</strong> the 10-20km guideline.
+      </p>
+    {{/isMPA}}
+    {{#isGeneric}}
+      <p>The size of the sketches in this collection are:</p>
+    {{/isGeneric}}
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th>{{#isMPA}}MPA Name{{/isMPA}}{{#isGeneric}}Sketch Name{{/isGeneric}}</th>
+            <th>Area </br>(sq. km.)</th>
+            <th style="width:100px;">Width (km)</th>
+            <th style="width:100px;">Coastline Length (km)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#prop_sizes}}
+          <tr>
+            <td>{{NAME}}</td>
+            <td>{{SIZE_SQKM}}</td>
+            <td>{{MIN_DIM}}</td>
+            <td>{{COAST}}
+          </tr>
+          {{/prop_sizes}}
+        </tbody>
+      </table>
+    <p class="large">
+      This combined area within the network accounts for <strong>{{percent}}%</strong> of the South-East Marine area, and <strong>{{coastline_length_percent}}%</strong> of the South-East coastline.
+    </p>
+  </div>
+{{/isCollection}}
+{{^isCollection}}
+  {{#isMPA}}
+    <div class="reportSection size">
+      <h4>MPA Size</h4>
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th>MPA Name</th>
+              <th>Area </br>(sq. km.)</th>
+              <th style="width:100px;">Width (km)</th>
+              <th style="width:100px;">Coastline Length (km)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#prop_sizes}}
+            <tr>
+              <td>{{NAME}}</td>
+              <td>{{SIZE_SQKM}}</td>
+              <td>{{MIN_DIM}}</td>
+              <td>{{COAST}}
+            </tr>
+            {{/prop_sizes}}
+          </tbody>
+        </table>
+      <p class="large">
+        This area within the MPA accounts for <strong>{{percent}}%</strong> of the South-East Marine area, and <strong>{{coastline_length_percent}}%</strong> of the South-East coastline.
+      </p>
+    </div>
+  {{/isMPA}}
+{{/isCollection}}
 
 {{#isMPA}}
   {{#isCollection}}

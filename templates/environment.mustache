@@ -5,14 +5,14 @@
   sketches of this type.
 </div>
 {{/sketchClass.deleted}}
-{{^isGeneric}}
+
 <div class="reportSection tableContainer">
   <h4>Habitats Present in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
     <p>
       <i>
         Area (%) refers to the percentage of the habitat contained within the 
         {{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}
-        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. Only habitats that meet criteria for a viable habitat size are included as a ‘represented’ habitat.
+        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. {{#isMPA}}Only habitats that meet criteria for a viable habitat size are included as a ‘represented’ habitat.{{/isMPA}}
       </i>
     </p>
 
@@ -23,30 +23,38 @@
           <th style="width:180px;">Habitat</th>
           <th>Area (km<sup>2</sup>)</th>
           <th>Area (%)</th>
+          {{#isMPA}}
           <th>Represented</th>
-          {{#isCollection}}<th>Replicated</th>{{/isCollection}}
+            {{#isCollection}}
+              <th>Replicated</th>
+            {{/isCollection}}
+          {{/isMPA}}
         </tr>
       </thead>
       <tbody>
-        {{#hasHabTypes}}
-          {{#hab_types}}
-          <tr>
-            <td>{{HAB_TYPE}}</td>
-            <td>{{SIZE_SQKM}}</td>
-            <td>{{PERC}}</td>
-            <td>{{REPRESENT}}</td>
-            {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
-          </tr>
-          {{/hab_types}}
-        {{/hasHabTypes}}
-        
-        {{^hasHabTypes}}
-          <tr>
-            <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
-              <i>There are no habitat types.</i>
-            </td>
-          </tr>
-        {{/hasHabTypes}}
+
+          {{#hasHabTypes}}
+            {{#hab_types}}
+            <tr>
+              <td>{{HAB_TYPE}}</td>
+              <td>{{SIZE_SQKM}}</td>
+              <td>{{PERC}}</td>
+              {{#isMPA}}
+                <td>{{REPRESENT}}</td>
+                {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
+              {{/isMPA}}
+            </tr>
+            {{/hab_types}}
+          {{/hasHabTypes}}
+          
+          {{^hasHabTypes}}
+            <tr>
+              <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
+                <i>There are no habitat types.</i>
+              </td>
+            </tr>
+          {{/hasHabTypes}}
+
     
       </tbody>
     </table>
@@ -57,33 +65,39 @@
           <th style="width:180px;">Habitat</th>
           <th>Area (km<sup>2</sup>)</th>
           <th>Area (%)</th>
+          {{#isMPA}}
           <th>Represented</th>
           {{#isCollection}}<th>Replicated</th>{{/isCollection}}
+          {{/isMPA}}
         </tr>
       </thead>
       <tbody>
-        {{#hasSigHabs}}
-          {{#sig_habs}}
+
+          {{#hasSigHabs}}
+            {{#sig_habs}}
+              <tr>
+                <td>{{HAB_TYPE}}</td>
+                <td>{{SIZE_SQKM}}</td>
+                <td>{{PERC}}</td>
+                {{#isMPA}}
+                  <td>{{REPRESENT}}</td>
+                  {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
+                {{/isMPA}}
+              </tr>
+            {{/sig_habs}}
+          {{/hasSigHabs}}
+          {{^hasSigHabs}}
+
             <tr>
-              <td>{{HAB_TYPE}}</td>
-              <td>{{SIZE_SQKM}}</td>
-              <td>{{PERC}}</td>
-              <td>{{REPRESENT}}</td>
-              {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
+                <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
+                  <i>There are no habitats of significance.</i>
+                </td>
             </tr>
-          {{/sig_habs}}
-        {{/hasSigHabs}}
-        {{^hasSigHabs}}
-        <tr>
-            <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
-              <i>There are no habitats of significance.</i>
-            </td>
-        </tr>
-        {{/hasSigHabs}}
+          {{/hasSigHabs}}
+
       </tbody>
     </table>
   </div>
-{{/isGeneric}}
 
 {{#showAdjacent}}
   <div class="reportSection tableContainer">
