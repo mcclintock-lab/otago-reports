@@ -32,28 +32,27 @@
         </tr>
       </thead>
       <tbody>
-
-          {{#hasHabTypes}}
-            {{#hab_types}}
-            <tr>
-              <td>{{HAB_TYPE}}</td>
-              <td>{{SIZE_SQKM}}</td>
-              <td>{{PERC}}</td>
-              {{#isMPA}}
-                <td>{{REPRESENT}}</td>
-                {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
-              {{/isMPA}}
-            </tr>
-            {{/hab_types}}
-          {{/hasHabTypes}}
-          
-          {{^hasHabTypes}}
-            <tr>
-              <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
-                <i>There are no habitat types.</i>
-              </td>
-            </tr>
-          {{/hasHabTypes}}
+        {{#hasHabTypes}}
+          {{#hab_types}}
+          <tr>
+            <td>{{HAB_TYPE}}</td>
+            <td>{{SIZE_SQKM}}</td>
+            <td>{{PERC}}</td>
+            {{#isMPA}}
+              <td>{{REPRESENT}}</td>
+              {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
+            {{/isMPA}}
+          </tr>
+          {{/hab_types}}
+        {{/hasHabTypes}}
+        
+        {{^hasHabTypes}}
+          <tr>
+            <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
+              <i>There are no habitat types.</i>
+            </td>
+          </tr>
+        {{/hasHabTypes}}
 
     
       </tbody>

@@ -80,6 +80,7 @@ class EnvironmentTab extends ReportTab
       d3IsPresent: d3IsPresent
       isGeneric: isGeneric
       isCollection: isCollection
+      isMPA: isMPA
 
       hab_types: hab_types
       hasHabTypes: hasHabTypes
