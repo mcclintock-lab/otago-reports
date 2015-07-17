@@ -107,7 +107,8 @@ class EnvironmentTab extends ReportTab
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
     @roundData(hab_sizes)
-    @setupHabitatSorting(hab_sizes)
+    @setupHabitatSorting(hab_types, isMPA, isCollection)
+    @setupSigHabitatSorting(sig_habs, isMPA, isCollection)
 
     @enableTablePaging()
     
@@ -127,20 +128,44 @@ class EnvironmentTab extends ReportTab
       hab.SIZE_SQKM = Number(hab.SIZE_SQKM).toFixed(1)
       hab.PERC = Number(hab.PERC).toFixed(1)
 
-  setupHabitatSorting: (habitats) =>
+  setupSigHabitatSorting: (habitats, isMPA, isCollection) =>
+    tbodyName = '.sig_hab_values'
+    tableName = '.sig_hab_table'
+    @$('.sig_hab_type').click (event) =>
+      @renderSort('sig_hab_type', tableName, habitats, event, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.sig_hab_new_area').click (event) =>
+      @renderSort('sig_hab_new_area', tableName, habitats, event, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+    @$('.sig_hab_new_perc').click (event) =>
+      @renderSort('sig_hab_new_perc',tableName, habitats, event, "PERC", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+    
+    @$('.sig_hab_represent').click (event) =>
+      @renderSort('sig_hab_represent',tableName, habitats, event, "REPRESENT", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.sig_hab_replicate').click (event) =>
+      @renderSort('sig_hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    
+    @renderSort('sig_hab_type', tableName, habitats, undefined, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+
+  setupHabitatSorting: (habitats, isMPA, isCollection) =>
     tbodyName = '.hab_values'
     tableName = '.hab_table'
     @$('.hab_type').click (event) =>
-      @renderSort('hab_type', tableName, habitats, event, "HAB_TYPE", tbodyName, false, @getHabitatRowString)
+      @renderSort('hab_type', tableName, habitats, event, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
     @$('.hab_new_area').click (event) =>
-      @renderSort('hab_new_area', tableName, habitats, event, "SIZE_SQKM", tbodyName, true, @getHabitatRowString)
+      @renderSort('hab_new_area', tableName, habitats, event, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
     @$('.hab_new_perc').click (event) =>
-      @renderSort('hab_new_perc',tableName, habitats, event, "PERC", tbodyName, true, @getHabitatRowString)
-    @renderSort('hab_type', tableName, habitats, undefined, "HAB_TYPE", tbodyName, false, @getHabitatRowString)
+      @renderSort('hab_new_perc',tableName, habitats, event, "PERC", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+    
+    @$('.hab_represent').click (event) =>
+      @renderSort('hab_represent',tableName, habitats, event, "REPRESENT", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.hab_replicate').click (event) =>
+      @renderSort('hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+        
+
+    @renderSort('hab_type', tableName, habitats, undefined, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
 
   #do the sorting - should be table independent
   #skip any that are less than 0.00
-  renderSort: (name, tableName, pdata, event, sortBy, tbodyName, isFloat, getRowStringValue) =>
+  renderSort: (name, tableName, pdata, event, sortBy, tbodyName, isFloat, getRowStringValue, isMPA, isCollection) =>
     if event
       event.preventDefault()
 
@@ -171,7 +196,14 @@ class EnvironmentTab extends ReportTab
         .enter().insert("tr", ":first-child")
         .attr("class", "hab_rows")
 
-      columns = ["HAB_TYPE", "SIZE_SQKM", "PERC"]
+      if isMPA
+        if isCollection
+          columns = ["HAB_TYPE", "SIZE_SQKM", "PERC", "REPRESENT", "REPLIC"]
+        else
+          columns = ["HAB_TYPE", "SIZE_SQKM", "PERC", "REPRESENT"]
+      else
+        columns = ["HAB_TYPE", "SIZE_SQKM", "PERC"]
+
       cells = rows.selectAll("td")
           .data((row, i) ->columns.map (column) -> (column: column, value: row[column]))
         .enter()
@@ -181,14 +213,24 @@ class EnvironmentTab extends ReportTab
 
       @setNewSortDir(targetColumn, sortUp)
       @setSortingColor(event, tableName)
+
       #fire the event for the active page if pagination is present
       @firePagination(tableName)
       if event
         event.stopPropagation()
 
   #table row for habitat representation
-  getHabitatRowString: (d) =>
-    return "<td>"+d.HAB_TYPE+"</td>"+"<td>"+d.SIZE_SQKM+"</td>"+"<td>"+d.PERC+"</td>"
+  getHabitatRowString: (d, isMPA, isCollection) =>
+    if d is undefined
+      return ""
+    represented_str = ""
+    replicated_str = ""
+    if isMPA
+      represented_str = "<td">+d.REPRESENT+"</td>"
+      if isCollection
+        replicated_str = "<td>"+d.REPLIC+"</td>"
+
+    return "<td>"+d.HAB_TYPE+"</td>"+"<td>"+d.SIZE_SQKM+"</td>"+"<td>"+d.PERC+"</td>"+represented_str+replicated_str
 
   setSortingColor: (event, tableName) =>
     sortingClass = "sorting_col"
@@ -213,10 +255,15 @@ class EnvironmentTab extends ReportTab
     if event
       #get sort order
       targetColumn = event.currentTarget.className
+
       multiClasses = targetColumn.split(' ')
       #protectedMammals = _.sortBy protectedMammals, (row) -> parseInt(row.Count)
       habClassName =_.find multiClasses, (classname) -> 
-        classname.lastIndexOf('hab',0) == 0
+        classname.lastIndexOf('hab',0) == 0 
+      if habClassName is undefined
+        habClassName =_.find multiClasses, (classname) -> 
+          classname.lastIndexOf('sig',0) == 0 
+
       targetColumn = habClassName
     else
       #when there is no event, first time table is filled

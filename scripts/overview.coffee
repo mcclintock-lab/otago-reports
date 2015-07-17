@@ -56,9 +56,14 @@ class OverviewTab extends ReportTab
     represented_habs = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
     hab_sizes = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
     num_habs = hab_sizes?.length
-    num_represented_habs = represented_habs?.length
 
+
+    num_represented_habs = @getNumHabs("REPRESENT", represented_habs)
+    num_replicated_habs = @getNumHabs("REPLIC", represented_habs)
   
+    console.log("num represented: ", num_represented_habs)
+    console.log("num replicated: ", num_replicated_habs)
+
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     total_percent = @getTotalAreaPercent(prop_sizes)
     prop_sizes = @cleanupData(prop_sizes)
@@ -108,7 +113,6 @@ class OverviewTab extends ReportTab
     if isCollection
       good_color = "#b3cfa7"
       bad_color = "#e5cace"
-      num_replicated_habs = 0
       if numSketches > 1
         try
           connected_mpa_count = @recordSet('ProposalConnectivity', 'Conn').float('NUMBER')
@@ -194,6 +198,16 @@ class OverviewTab extends ReportTab
     no_val = {"label":no_label+" ("+no_count+")", "value":no_count, "color":no_color, "yval":50}
 
     return [yes_val, no_val]
+
+  getNumHabs: (attr_name, habitats) =>
+    if habitats?.length == 0
+      return 0
+
+    count = 0
+    for hab in habitats
+      if hab[attr_name] == "Yes"
+        count+=1
+    return count
 
   getReserveValues: (reserves) =>
     num_reserves = 0

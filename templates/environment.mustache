@@ -7,7 +7,7 @@
 {{/sketchClass.deleted}}
 
 <div class="reportSection tableContainer">
-  <h4>Habitats Present in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
+  <h4>Habitats Present in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <a href="#" data-toggle-node="5536dbb48c5b43eb0facbc5a" data-visible="false">show layer</a></h4>
     <p>
       <i>
         Area (%) refers to the percentage of the habitat contained within the 
@@ -15,65 +15,43 @@
         {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. {{#isMPA}}Only habitats that meet criteria for a viable habitat size are included as a ‘represented’ habitat.{{/isMPA}}
       </i>
     </p>
-
     <p class="in-report-header">Habitat types</p>
-    <table data-paging="10">
-      <thead>
-        <tr>
-          <th style="width:180px;">Habitat</th>
-          <th>Area (km<sup>2</sup>)</th>
-          <th>Area (%)</th>
-          {{#isMPA}}
-          <th>Represented</th>
-            {{#isCollection}}
-              <th>Replicated</th>
-            {{/isCollection}}
-          {{/isMPA}}
-        </tr>
-      </thead>
-      <tbody>
-        {{#hasHabTypes}}
-          {{#hab_types}}
-          <tr>
-            <td>{{HAB_TYPE}}</td>
-            <td>{{SIZE_SQKM}}</td>
-            <td>{{PERC}}</td>
-            {{#isMPA}}
-              <td>{{REPRESENT}}</td>
-              {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
-            {{/isMPA}}
-          </tr>
-          {{/hab_types}}
-        {{/hasHabTypes}}
-        
-        {{^hasHabTypes}}
-          <tr>
-            <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
-              <i>There are no habitat types.</i>
-            </td>
-          </tr>
-        {{/hasHabTypes}}
-
-    
-      </tbody>
-    </table>
-    <p class="in-report-header">Habitats of Significance</p>
-    <table data-paging="10">
-      <thead>
-        <tr>
-          <th style="width:180px;">Habitat</th>
-          <th>Area (km<sup>2</sup>)</th>
-          <th>Area (%)</th>
-          {{#isMPA}}
-          <th>Represented</th>
-          {{#isCollection}}<th>Replicated</th>{{/isCollection}}
-          {{/isMPA}}
-        </tr>
-      </thead>
-      <tbody>
-
-          {{#hasSigHabs}}
-            {{#sig_habs}}
+      {{#d3IsPresent}}
+        <table data-paging="20" class="hab_table"> 
+          <thead>
+            <tr>
+              <th class="sorting_col" style="width:250px;"><a class="hab_type sort_up" href="#">Habitat</a></th>
+              <th><a  class="hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
+              <th><a class="hab_new_perc sort_down" href="#">Area (%)</a></th>
+              {{#isMPA}}
+              <th><a class="hab_represent sort_down" href="#" >Represented</th>
+                {{#isCollection}}
+                  <th><a class="hab_replicate sort_down" href="#" >Replicated</th>
+                {{/isCollection}}
+              {{/isMPA}}
+            </tr>
+          </thead>
+         <tbody class="hab_values"></tbody>
+       </table>
+      {{/d3IsPresent}}
+      {{^d3IsPresent}}
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th style="width:180px;">Habitat</th>
+              <th>Area (km<sup>2</sup>)</th>
+              <th>Area (%)</th>
+              {{#isMPA}}
+              <th>Represented</th>
+                {{#isCollection}}
+                  <th>Replicated</th>
+                {{/isCollection}}
+              {{/isMPA}}
+            </tr>
+          </thead>
+          <tbody>
+            {{#hasHabTypes}}
+              {{#hab_types}}
               <tr>
                 <td>{{HAB_TYPE}}</td>
                 <td>{{SIZE_SQKM}}</td>
@@ -83,21 +61,75 @@
                   {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
                 {{/isMPA}}
               </tr>
-            {{/sig_habs}}
-          {{/hasSigHabs}}
-          {{^hasSigHabs}}
-
-            <tr>
+              {{/hab_types}}
+            {{/hasHabTypes}}
+            {{^hasHabTypes}}
+              <tr>
                 <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
-                  <i>There are no habitats of significance.</i>
+                  <i>There are no habitat types.</i>
                 </td>
+              </tr>
+            {{/hasHabTypes}}
+          </tbody>
+        </table>
+    {{/d3IsPresent}}
+    <p class="in-report-header">Habitats of Significance</p>
+      {{#d3IsPresent}}
+      <table data-paging="20" class="sig_hab_table"> 
+        <thead>
+          <tr>
+            <th class="sorting_col" style="width:250px;"><a class="sig_hab_type sort_up" href="#">Habitat</a></th>
+            <th><a  class="sig_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
+            <th><a class="sig_hab_new_perc sort_down" href="#">Area (%)</a></th>
+            {{#isMPA}}
+              <th><a class="sig_hab_represent sort_down" href="#">Represented</th>
+              {{#isCollection}}
+                <th><a class="sig_hab_replicate sort_down" href="#">Replicated</th>
+              {{/isCollection}}
+            {{/isMPA}}
+          </tr>
+        </thead>
+       <tbody class="sig_hab_values"></tbody>
+     </table>
+    {{/d3IsPresent}}
+    {{^d3IsPresent}}
+      <table data-paging="10">
+        <thead>
+          <tr>
+            <th style="width:180px;">Habitat</th>
+            <th>Area (km<sup>2</sup>)</th>
+            <th>Area (%)</th>
+            {{#isMPA}}
+            <th>Represented</th>
+            {{#isCollection}}<th>Replicated</th>{{/isCollection}}
+            {{/isMPA}}
+          </tr>
+        </thead>
+        <tbody>
+        {{#hasSigHabs}}
+          {{#sig_habs}}
+            <tr>
+              <td>{{HAB_TYPE}}</td>
+              <td>{{SIZE_SQKM}}</td>
+              <td>{{PERC}}</td>
+              {{#isMPA}}
+                <td>{{REPRESENT}}</td>
+                {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
+              {{/isMPA}}
             </tr>
-          {{/hasSigHabs}}
-
-      </tbody>
-    </table>
+          {{/sig_habs}}
+        {{/hasSigHabs}}
+        {{^hasSigHabs}}
+          <tr>
+              <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
+                <i>There are no habitats of significance.</i>
+              </td>
+          </tr>
+        {{/hasSigHabs}}
+        </tbody>
+      </table>
+    {{/d3IsPresent}}
   </div>
-
 {{#showAdjacent}}
   <div class="reportSection tableContainer">
     <h4>Adjacent Terrestrial Information</h4>
