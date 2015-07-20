@@ -46,7 +46,7 @@ class EnvironmentTab extends ReportTab
     habs_plural = habs_in_sketch != 1
 
     protected_areas = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
-    hasProtected = protectedAreas?.length > 0
+    hasProtected = protected_areas?.length > 0
 
     qe2_covenants = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
     hasQE2covenants = qe2_covenants?.length > 0
@@ -88,7 +88,6 @@ class EnvironmentTab extends ReportTab
       hasSigHabs: hasSigHabs
 
       habs_plural: habs_plural
-      
       habitats_represented: habitats_represented
 
       protected_areas: protected_areas
