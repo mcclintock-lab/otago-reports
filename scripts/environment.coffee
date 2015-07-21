@@ -142,7 +142,7 @@ class EnvironmentTab extends ReportTab
     @$('.sig_hab_replicate').click (event) =>
       @renderSort('sig_hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
     
-    @renderSort('sig_hab_type', tableName, habitats, undefined, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @renderSort('sig_hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
 
   setupHabitatSorting: (habitats, isMPA, isCollection) =>
     tbodyName = '.hab_values'
@@ -160,7 +160,7 @@ class EnvironmentTab extends ReportTab
       @renderSort('hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
         
 
-    @renderSort('hab_type', tableName, habitats, undefined, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @renderSort('hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
 
   #do the sorting - should be table independent
   #skip any that are less than 0.00

@@ -54,15 +54,12 @@ class OverviewTab extends ReportTab
 
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
     represented_habs = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
-    hab_sizes = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
+    hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
     num_habs = hab_sizes?.length
 
 
     num_represented_habs = @getNumHabs("REPRESENT", represented_habs)
     num_replicated_habs = @getNumHabs("REPLIC", represented_habs)
-  
-    console.log("num represented: ", num_represented_habs)
-    console.log("num replicated: ", num_replicated_habs)
 
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     total_percent = @getTotalAreaPercent(prop_sizes)
@@ -85,7 +82,7 @@ class OverviewTab extends ReportTab
         new_size =  @addCommas size
 
     catch Error
-      console.log('error getting size')
+
       new_size = 0
 
     try
@@ -212,14 +209,17 @@ class OverviewTab extends ReportTab
   getReserveValues: (reserves) =>
     num_reserves = 0
     num_type2 = 0
+    t2_str = "Type2"
+    mr_str = "MR"
     try
       for res in reserves
         attrs = res.getAttributes()
         for att in attrs
-          if att.exportid == "MANAGEMENT"
-            if att.value[0] == "Type2"
+          if att.exportid == "MANAGEMENT" 
+            res_type = att.value
+            if res_type == t2_str or res_type.indexOf(t2_str) >=0
               num_type2+=1
-            else if att.value[0] == "MR"
+            else if res_type == mr_str or res_type.indexOf(mr_str) >=0
               num_reserves+=1
     catch Error
       console.log('ran into problem getting mpa types')

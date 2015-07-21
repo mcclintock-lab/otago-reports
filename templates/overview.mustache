@@ -17,16 +17,21 @@
   {{/isMPA}}
 {{/isCollection}}
 
-{{#anyAttributes}}
-  <div class="reportSection">
-    <h4>{{sketchClass.name}}</h4>
-    {{>attributes/attributesTable}}
-    {{#isCollection}}
-    <tr><td>{{#isMPA}}Number of MPAs{{/isMPA}}{{#isGeneric}}Number of Sketches{{/isGeneric}}</td>{{numSketches}}<td>
-    {{/isCollection}}
-    </table>
-  </div>
-{{/anyAttributes}}
+{{^isCollection}}
+  {{^isMPA}}
+    {{#anyAttributes}}
+      <div class="reportSection">
+        <h4>{{sketchClass.name}}</h4>
+        {{>attributes/attributesTable}}
+        {{#isCollection}}
+        <tr><td>{{#isMPA}}Number of MPAs{{/isMPA}}{{#isGeneric}}Number of Sketches{{/isGeneric}}</td>{{numSketches}}<td>
+        {{/isCollection}}
+        </table>
+      </div>
+  {{/anyAttributes}}
+  {{/isMPA}}
+{{/isCollection}}
+
 
 
   {{#isGeneric}}
