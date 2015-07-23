@@ -235,7 +235,13 @@ class OverviewTab extends ReportTab
       h = 75
       r = 25
      
-      vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + (r*2) + "," + (r+5) + ")")
+      vis_el = @$(pie_name)[0]
+      console.log("vis el: ", vis_el)
+      #vis = d3.select(vis_el)
+      vis = d3.select(vis_el).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + (r*2) + "," + (r+5) + ")")
+      
+      #vis = d3.select(pie_name).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + (r*2) + "," + (r+5) + ")")
+      
       pie = d3.layout.pie().value((d) -> return d.value)
 
       #declare an arc generator function
@@ -250,8 +256,15 @@ class OverviewTab extends ReportTab
         .attr("d", (d) ->  
           arc(d)
         )
-
-
+      '''
+      el = @$('.viz')[index]
+      x = d3.scale.linear()
+        .domain([0, max_value])
+        .range([0, 400])
+      chart = d3.select(el)
+      chart.selectAll("div.range")
+        .data(t2ranges)
+      '''
       el = @$(pie_name+"_legend")[0]
       chart = d3.select(el)
       legends = chart.selectAll(pie_name+"_legend")
