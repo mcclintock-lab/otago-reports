@@ -31,7 +31,7 @@ class OverviewTab extends ReportTab
     # the monsterous RecordSet json. Checkout the seasketch-reporting-template
     # documentation for more info.
     TOTAL_COASTLINE_LENGTH = 667.594
-    TOTAL_HABS = 30
+    TOTAL_HABS = 31
     scid = @sketchClass.id
     isCollection = @model.isCollection()
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
@@ -93,6 +93,7 @@ class OverviewTab extends ReportTab
       percent = total_percent
 
     coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
+
     
     coastline_length_percent = ((coastline_length/1000)/TOTAL_COASTLINE_LENGTH)*100
     if coastline_length_percent > 0 && coastline_length_percent < 1
@@ -236,7 +237,6 @@ class OverviewTab extends ReportTab
       r = 25
      
       vis_el = @$(pie_name)[0]
-      console.log("vis el: ", vis_el)
       #vis = d3.select(vis_el)
       vis = d3.select(vis_el).append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + (r*2) + "," + (r+5) + ")")
       

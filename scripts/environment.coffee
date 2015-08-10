@@ -115,7 +115,7 @@ class EnvironmentTab extends ReportTab
     hab_types = []
     critical_habitats = []
     for hab in habs_represented
-      if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed"
+      if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed" or hab.HAB_TYPE == "Seagrass bed"
         critical_habitats.push(hab)
       else
         hab_types.push(hab)
