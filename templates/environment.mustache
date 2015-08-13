@@ -20,13 +20,14 @@
         <table data-paging="20" class="hab_table"> 
           <thead>
             <tr>
-              <th class="sorting_col" style="width:250px;"><a class="hab_type sort_up" href="#">Habitat</a></th>
+              <th class="sorting_col" style="width:200px;"><a class="hab_type sort_up" href="#">Habitat</a></th>
               <th><a  class="hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
               <th><a class="hab_new_perc sort_down" href="#">Area (%)</a></th>
               {{#isMPA}}
               <th><a class="hab_represent sort_down" href="#" >Represented</th>
                 {{#isCollection}}
                   <th><a class="hab_replicate sort_down" href="#" >Replicated</th>
+                  <th><a class="hab_connected sort_down" href="#">Connected</th>
                 {{/isCollection}}
               {{/isMPA}}
             </tr>
@@ -45,6 +46,7 @@
               <th>Represented</th>
                 {{#isCollection}}
                   <th>Replicated</th>
+                  <th>Connected</th>
                 {{/isCollection}}
               {{/isMPA}}
             </tr>
@@ -58,7 +60,7 @@
                 <td>{{PERC}}</td>
                 {{#isMPA}}
                   <td>{{REPRESENT}}</td>
-                  {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
+                  {{#isCollection}}<td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
                 {{/isMPA}}
               </tr>
               {{/hab_types}}
@@ -78,13 +80,14 @@
       <table data-paging="20" class="sig_hab_table"> 
         <thead>
           <tr>
-            <th class="sorting_col" style="width:250px;"><a class="sig_hab_type sort_up" href="#">Habitat</a></th>
+            <th class="sorting_col" style="width:200px;"><a class="sig_hab_type sort_up" href="#">Habitat</a></th>
             <th><a  class="sig_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
             <th><a class="sig_hab_new_perc sort_down" href="#">Area (%)</a></th>
             {{#isMPA}}
               <th><a class="sig_hab_represent sort_down" href="#">Represented</th>
               {{#isCollection}}
                 <th><a class="sig_hab_replicate sort_down" href="#">Replicated</th>
+                <th><a class="sig_hab_connected sort_down" href="#">Connected</th>
               {{/isCollection}}
             {{/isMPA}}
           </tr>
@@ -114,7 +117,7 @@
               <td>{{PERC}}</td>
               {{#isMPA}}
                 <td>{{REPRESENT}}</td>
-                {{#isCollection}}<td>{{REPLIC}}</td>{{/isCollection}}
+                {{#isCollection}}<td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
               {{/isMPA}}
             </tr>
           {{/sig_habs}}

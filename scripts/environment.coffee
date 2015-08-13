@@ -141,6 +141,8 @@ class EnvironmentTab extends ReportTab
       @renderSort('sig_hab_represent',tableName, habitats, event, "REPRESENT", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
     @$('.sig_hab_replicate').click (event) =>
       @renderSort('sig_hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.sig_hab_connected').click (event) =>
+      @renderSort('sig_hab_connected',tableName, habitats, event, "CONN", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
     
     @renderSort('sig_hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
 
@@ -158,6 +160,8 @@ class EnvironmentTab extends ReportTab
       @renderSort('hab_represent',tableName, habitats, event, "REPRESENT", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
     @$('.hab_replicate').click (event) =>
       @renderSort('hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.hab_connected').click (event) =>
+      @renderSort('hab_connected',tableName, habitats, event, "CONN", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
         
 
     @renderSort('hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
@@ -197,7 +201,7 @@ class EnvironmentTab extends ReportTab
 
       if isMPA
         if isCollection
-          columns = ["HAB_TYPE", "SIZE_SQKM", "PERC", "REPRESENT", "REPLIC"]
+          columns = ["HAB_TYPE", "SIZE_SQKM", "PERC", "REPRESENT", "REPLIC", "CONN"]
         else
           columns = ["HAB_TYPE", "SIZE_SQKM", "PERC", "REPRESENT"]
       else
@@ -224,10 +228,12 @@ class EnvironmentTab extends ReportTab
       return ""
     represented_str = ""
     replicated_str = ""
+    connected_str = ""
     if isMPA
       represented_str = "<td">+d.REPRESENT+"</td>"
       if isCollection
         replicated_str = "<td>"+d.REPLIC+"</td>"
+        connected_str = "<td>"+d.CONN+"</td>"
 
     return "<td>"+d.HAB_TYPE+"</td>"+"<td>"+d.SIZE_SQKM+"</td>"+"<td>"+d.PERC+"</td>"+represented_str+replicated_str
 
