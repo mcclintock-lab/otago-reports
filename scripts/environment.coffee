@@ -120,6 +120,11 @@ class EnvironmentTab extends ReportTab
       else
         hab_types.push(hab)
 
+    na_habs = ["Brachiopod beds", "Calcareous tube worm thickets", "Chaetopteridae worm fields",
+               "Rhodolith beds", "Sea pen fields", "Sponge gardens", "Stony coral thickets"]
+    for nh in na_habs
+      new_hab = {"HAB_TYPE": nh, "SIZE_SQKM":"NA", "PERC":"NA", "REPRESENT":"NA", "REPLIC":"NA", "CONN":"NA"}
+      critical_habitats.push(new_hab)
     return [hab_types, critical_habitats]
 
   roundData: (habitats) =>  

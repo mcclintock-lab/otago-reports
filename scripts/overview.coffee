@@ -37,13 +37,21 @@ class OverviewTab extends ReportTab
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
     num_reserves = 0
     num_type2 = 0
+    num_other = 0
+    plural_type1 = true
+    plural_type2 = true
+    plural_other = true
 
     if isCollection
       numSketches = @model.getChildren().length
       if isMPA
         reserve_types = @getReserveValues @model.getChildren()
         num_reserves = reserve_types[0]
+        plural_type1 = num_reserves != 1
         num_type2 = reserve_types[1]
+        plural_type2 = num_type2 != 1
+        num_other = reserve_types[2]
+        plural_other = num_other != 1
     else
       numSketches = 1
 
@@ -178,7 +186,11 @@ class OverviewTab extends ReportTab
       isGeneric: isGeneric
       isMPA: isMPA
       num_reserves: num_reserves
+      plural_type1: plural_type1
       num_type2: num_type2
+      plural_type2: plural_type2
+      num_other: num_other
+      plural_other: plural_other
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
@@ -210,8 +222,10 @@ class OverviewTab extends ReportTab
   getReserveValues: (reserves) =>
     num_reserves = 0
     num_type2 = 0
+    num_other = 0
     t2_str = "Type2"
     mr_str = "MR"
+    other_str = "Other"
     try
       for res in reserves
         attrs = res.getAttributes()
@@ -222,10 +236,12 @@ class OverviewTab extends ReportTab
               num_type2+=1
             else if res_type == mr_str or res_type.indexOf(mr_str) >=0
               num_reserves+=1
+            else if res_type == other_str or res_type.indexOf(other_str) >= 0
+              num_other+=1
     catch Error
       console.log('ran into problem getting mpa types')
 
-    return [num_reserves, num_type2]
+    return [num_reserves, num_type2, num_other]
 
   getDataValue: (data) =>
     return data.value
@@ -312,6 +328,10 @@ class OverviewTab extends ReportTab
             cleaned_props.push(ps)
         else
           cleaned_props.push(ps)
+      if ps.NAME == "Average"
+        ps.CSS_CLASS = "is_avg"
+      else
+        ps.CSS_CLASS = "not_avg"
 
     return cleaned_props
 

@@ -11,14 +11,14 @@
     <div class="reportSection size">
       <h4>MPA Network</h4>
       <p class="large">
-        This Collection has <strong>{{num_reserves}} Marine Reserves</strong> and <strong>{{num_type2}} Type-2 MPA</strong>.
+        This Collection has: <strong>{{num_reserves}} Type-1 MPA{{#plural_type1}}s{{/plural_type1}}, {{num_type2}} Type-2 MPA{{#plural_type2}}s{{/plural_type2}}, and {{num_other}} Other MPA{{#plural_other}}s{{/plural_other}}</strong> .
+        <em>Other MPA types are not included in further reporting.</em>
       </p>
     </div>
   {{/isMPA}}
 {{/isCollection}}
 
 {{^isCollection}}
-  {{^isMPA}}
     {{#anyAttributes}}
       <div class="reportSection">
         <h4>{{sketchClass.name}}</h4>
@@ -29,10 +29,7 @@
         </table>
       </div>
   {{/anyAttributes}}
-  {{/isMPA}}
 {{/isCollection}}
-
-
 
   {{#isGeneric}}
     {{#isCollection}}
@@ -48,7 +45,7 @@
   {{#isMPA}}
     {{#isCollection}}
     <div class="reportSection size">
-      <h4>Habitats Represented in a fully Protected Area
+      <h4>Habitats Represented in Type-1 MPA
         <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a></h4>
       {{^d3IsPresent}}
       <strong>Number of Habitat Classes</strong></br>
@@ -69,7 +66,7 @@
     
 
     <div class="reportSection size">
-      <h4>Habitats Represented in at Least 2 Prot. Areas
+      <h4>Habitats Represented in at Least 2 MPA
         <a href="#" data-toggle-node="53a0a31cd3f6064d2c17580c" data-visible="false">show layer</a>
       </h4>
       {{^d3IsPresent}}
@@ -94,6 +91,7 @@
 {{#isCollection}}
   <div class="reportSection size">
     <h4>{{#isMPA}}MPA Sizes{{/isMPA}}{{#isGeneric}}Sketch Sizes{{/isGeneric}}</h4>
+    <!--
     {{#isMPA}}
       <p class="large">
         Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{mpa_count}}</strong> meet{{^plural_mpa_count}}s{{/plural_mpa_count}} the minimum size dimension of 5km. The average minimum dimension is <strong>{{mpa_avg_size_guideline}}</strong> the 10-20km guideline.
@@ -102,6 +100,7 @@
     {{#isGeneric}}
       <p>The size of the sketches in this collection are:</p>
     {{/isGeneric}}
+    -->
       <table data-paging="10">
         <thead>
           <tr>
@@ -113,11 +112,11 @@
         </thead>
         <tbody>
           {{#prop_sizes}}
-          <tr>
+          <tr class={{CSS_CLASS}}>
             <td>{{NAME}}</td>
             <td>{{SIZE_SQKM}}</td>
             <td>{{MIN_DIM}}</td>
-            <td>{{COAST}}
+            <td>{{COAST}}</td>
           </tr>
           {{/prop_sizes}}
         </tbody>
@@ -168,11 +167,13 @@
               </p>
         {{/singleSketch}}
         {{^singleSketch}}
+          <!--
           <div>
             <div class="connectivity_pie" id="connectivity_pie"></div>
             <div class="connectivity_pie_legend" id="connectivity_pie_legend"></div>
           </div>
-          <p class="large">Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{connected_mpa_count}}</strong>{{#plural_connected_mpa_count}} are{{/plural_connected_mpa_count}}{{^plural_connected_mpa_count}} is{{/plural_connected_mpa_count}} within the connectivity range of 50 - 100 km. 
+          -->
+          <p class="large">Of the <strong>{{total_mpa_count}}</strong> MPAs in the network, <strong>{{connected_mpa_count}}</strong>{{#plural_connected_mpa_count}} are{{/plural_connected_mpa_count}}{{^plural_connected_mpa_count}} is{{/plural_connected_mpa_count}} within 100 km of each other. 
           </p>
           <span class="conn_values">The minimum distance between the MPAs is <strong>{{min_distance}} km</strong>.</span>
           <span class="conn_values">The maximum distance between the MPAs is <strong>{{max_distance}} km</strong>.</span>
@@ -199,10 +200,11 @@
 {{/isCollection}}
 
 
-
+<!--
 <div class="reportSection size">
   <h4>Number of Habitats</h4>
   <p class="large">
     The {{#isMPA}} Marine Protected Area{{#isCollection}}s{{/isCollection}}{{/isMPA}}{{#isGeneric}}sketch{{#isCollection}}es{{/isCollection}}{{/isGeneric}} include{{^isCollection}}s{{/isCollection}} <strong>{{num_habs}}</strong> of the <strong>{{total_habs}}</strong> classified habitats.
 </div>
+-->
 

@@ -12,7 +12,7 @@
       <i>
         Area (%) refers to the percentage of the habitat contained within the 
         {{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}
-        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. {{#isMPA}}Only habitats that meet criteria for a viable habitat size are included as a ‘represented’ habitat.{{/isMPA}}
+        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region.d
       </i>
     </p>
     <p class="in-report-header">Habitat types</p>
@@ -75,13 +75,13 @@
           </tbody>
         </table>
     {{/d3IsPresent}}
-    <p class="in-report-header">Habitats of Significance</p>
+    <p class="in-report-header">Sensitive Marine Habitats</p>
       {{#d3IsPresent}}
       <table data-paging="20" class="sig_hab_table"> 
         <thead>
           <tr>
-            <th class="sorting_col" style="width:200px;"><a class="sig_hab_type sort_up" href="#">Habitat</a></th>
-            <th><a  class="sig_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
+            <th class="sorting_col" style="width:200px;"><a class="sig_hab_type sort_down" href="#">Habitat</a></th>
+            <th><a  class="sig_hab_new_area sort_up" href="#" >Area (km<sup>2</sup>)</a></th>
             <th><a class="sig_hab_new_perc sort_down" href="#">Area (%)</a></th>
             {{#isMPA}}
               <th><a class="sig_hab_represent sort_down" href="#">Represented</th>
@@ -94,6 +94,7 @@
         </thead>
        <tbody class="sig_hab_values"></tbody>
      </table>
+
     {{/d3IsPresent}}
     {{^d3IsPresent}}
       <table data-paging="10">
@@ -132,6 +133,9 @@
         </tbody>
       </table>
     {{/d3IsPresent}}
+    <p>
+      <em>Sensitive habitats are defined in the report '<a href="https://www.mfe.govt.nz/sites/default/files/sensitive-marine-benthic-habitats-defined.pdf" target="_blank">Sensitive marine benthic habitats defined</a>.'</em>
+    </p>
   </div>
 {{#showAdjacent}}
   <div class="reportSection tableContainer">
