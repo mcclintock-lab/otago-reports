@@ -19,7 +19,6 @@ class OverviewTab extends ReportTab
   template: templates.overview
   dependencies: [
     'Size'
-    'CoastlineLength'
     'HabitatsOverview'
     'ProposalSize'
     'ProposalConnectivity'
@@ -54,7 +53,6 @@ class OverviewTab extends ReportTab
         plural_other = num_other != 1
     else
       numSketches = 1
-
 
     pluralSketches = numSketches > 1
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
@@ -100,6 +98,7 @@ class OverviewTab extends ReportTab
     catch Error
       percent = total_percent
 
+    '''
     coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
 
     
@@ -110,6 +109,19 @@ class OverviewTab extends ReportTab
       coastline_length_percent = parseFloat(coastline_length_percent).toFixed(1)
 
     coastline_length = @addCommas coastline_length
+    '''
+    if prop_sizes?.length > 0
+      coastline_length = prop_sizes[0].COAST
+      coastline_length_percent = (coastline_length/TOTAL_COASTLINE_LENGTH)*100
+      if coastline_length_percent > 0 && coastline_length_percent < 1
+        coastline_length_percent = "< 1"
+      else
+        coastline_length_percent = parseFloat(coastline_length_percent).toFixed(1)
+
+      coastline_length = @addCommas coastline_length
+      #need size
+
+
     new_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('NEW_HABS')
     total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
     
