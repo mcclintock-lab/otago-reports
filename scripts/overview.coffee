@@ -31,7 +31,7 @@ class OverviewTab extends ReportTab
     # the monsterous RecordSet json. Checkout the seasketch-reporting-template
     # documentation for more info.
     TOTAL_COASTLINE_LENGTH = 667.594
-    TOTAL_HABS = 31
+    TOTAL_HABS = 38
     scid = @sketchClass.id
     isCollection = @model.isCollection()
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)

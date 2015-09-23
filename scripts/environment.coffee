@@ -19,7 +19,6 @@ class EnvironmentTab extends ReportTab
   timeout: 120000
   template: templates.environment
   dependencies: [
-    'HabitatsEnvironment'
     'HabitatsOverview'
     'AdjacentTerrestrial'
     'HabRepsToolbox'
