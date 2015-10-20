@@ -19,7 +19,7 @@ class FishingTab extends ReportTab
   timeout: 120000
   template: templates.fishing
   dependencies: [
-    'FishingIntensity', 'FishingAreas'
+    'FishingAreas', 'FisheryIntensity'
   ]
 
   render: () ->
@@ -38,12 +38,15 @@ class FishingTab extends ReportTab
       isMPA = false
 
     if isMPA
+      '''
       setnet = @recordSet('FishingIntensity', 'SetNet').toArray()
       @roundData(setnet)
       trawl = @recordSet('FishingIntensity', 'Trawl').toArray()
       @roundData(trawl)
       longline = @recordSet('FishingIntensity', 'LongLine').toArray()
       @roundData(longline)
+      '''
+      fishery_intensity = @recordSet('FisheryIntensity', 'FisheryIntensity').toArray()
 
     existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
     hasExistingCustomary = existing_customary_fishing?.length > 0
@@ -65,11 +68,7 @@ class FishingTab extends ReportTab
         anyAttributes: @model.getAttributes().length > 0
         admin: @project.isAdmin window.user
         d3IsPresent: d3IsPresent
-
         isCollection: isCollection
-        setnet: setnet
-        trawl: trawl
-        longline: longline
         isMPA: isMPA
         existing_customary_fishing: existing_customary_fishing
         hasExistingCustomary: hasExistingCustomary
@@ -79,7 +78,7 @@ class FishingTab extends ReportTab
         hasExistingFishing: hasExistingFishing
         hasAnyFishing: hasAnyFishing
         hasCustomary: hasCustomary
-        isMPA: isMPA
+        fishery_intensity: fishery_intensity
     else
       context =
         sketch: @model.forTemplate()

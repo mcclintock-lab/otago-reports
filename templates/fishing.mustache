@@ -69,7 +69,39 @@
         <p>No information on existing fishing areas or customary use is available for this area.</p>
   </div>
 {{/hasAnyFishing}}
+{{#isMPA}}
+    <div class="reportSection tableContainer">
+      <h4>Fishing Intensity</h4>
+          <p>
+            <em>
+            Your {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes areas identified as having high, moderate or low intensity fishing grounds for the following fisheries. The percentage of the regions high, moderate and low intensity fishing grounds covered by your {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} is given below. Fishery displacement shows the percentage of the regions fishery that would be displaced by your {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}.
+            </em>
+          </p>
+          <table data-paging="10">
+            <thead>
+              <tr>
 
+                <th style="width:125px;">Fishery</th>
+                <th>High (%)</th>
+                <th>Moderate (%)</th>
+                <th>Low (%)</th>
+                <th>Fishery displacement (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#fishery_intensity}}
+              <tr>
+                <td>{{FISH_TYPE}}</td>
+                <td>{{HIGH}}</td>
+                <td>{{MODERATE}}</td>
+                <td>{{LOW}}</td>
+                <td>{{DISP}}</td>
+              </tr>
+              {{/fishery_intensity}}
+            </tbody>
+          </table>
+    </div>
+{{/isMPA}}
 <!--
 {{#isMPA}}
   <div class="reportSection tableContainer">
