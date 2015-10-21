@@ -27,13 +27,22 @@
               <th><a class="hab_represent sort_down" href="#" >Represented</th>
                 {{#isCollection}}
                   <th><a class="hab_replicate sort_down" href="#" >Replicated</th>
-                  <th><a class="hab_connected sort_down" href="#">Connectivity</th>
+                  <th><a class="hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup></th>
                 {{/isCollection}}
               {{/isMPA}}
             </tr>
           </thead>
          <tbody class="hab_values"></tbody>
        </table>
+      {{#isMPA}}
+        {{#isCollection}}
+          <p>
+            <i>
+              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
+            </i>
+          </p>
+        {{/isCollection}}
+      {{/isMPA}}
       {{/d3IsPresent}}
       {{^d3IsPresent}}
         <table data-paging="10">
@@ -43,11 +52,11 @@
               <th>Area (km<sup>2</sup>)</th>
               <th>Area (%)</th>
               {{#isMPA}}
-              <th>Represented</th>
-                {{#isCollection}}
-                  <th>Replicated</th>
-                  <th>Connectivity</th>
-                {{/isCollection}}
+                <th>Represented</th>
+                  {{#isCollection}}
+                    <th>Replicated</th>
+                    <th>Connectivity (in km)<sup>*</sup></th>
+                  {{/isCollection}}
               {{/isMPA}}
             </tr>
           </thead>
@@ -74,6 +83,15 @@
             {{/hasHabTypes}}
           </tbody>
         </table>
+        {{#isMPA}}
+        {{#isCollection}}
+          <p>
+            <i>
+              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
+            </i>
+          </p>
+        {{/isCollection}}
+      {{/isMPA}}
     {{/d3IsPresent}}
     <p class="in-report-header">Sensitive Marine Habitats</p>
       {{#d3IsPresent}}
@@ -87,14 +105,22 @@
               <th><a class="sig_hab_represent sort_down" href="#">Represented</th>
               {{#isCollection}}
                 <th><a class="sig_hab_replicate sort_down" href="#">Replicated</th>
-                <th><a class="sig_hab_connected sort_down" href="#">Connectivity</th>
+                <th><a class="sig_hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup> </th>
               {{/isCollection}}
             {{/isMPA}}
           </tr>
         </thead>
        <tbody class="sig_hab_values"></tbody>
      </table>
-
+      {{#isMPA}}
+        {{#isCollection}}
+          <p>
+            <i>
+              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
+            </i>
+          </p>
+        {{/isCollection}}
+      {{/isMPA}}
     {{/d3IsPresent}}
     {{^d3IsPresent}}
       <table data-paging="10">
@@ -103,10 +129,13 @@
             <th style="width:180px;">Habitat</th>
             <th>Area (km<sup>2</sup>)</th>
             <th>Area (%)</th>
-            {{#isMPA}}
-            <th>Represented</th>
-            {{#isCollection}}<th>Replicated</th>{{/isCollection}}
-            {{/isMPA}}
+              {{#isMPA}}
+                <th>Represented</th>
+                  {{#isCollection}}
+                    <th>Replicated</th>
+                    <th>Connectivity (in km)<sup>*</sup></th>
+                  {{/isCollection}}
+              {{/isMPA}}
           </tr>
         </thead>
         <tbody>
@@ -132,6 +161,17 @@
         {{/hasSigHabs}}
         </tbody>
       </table>
+      {{#hasSigHabs}}
+        {{#isMPA}}
+          {{#isCollection}}
+            <p>
+              <i>
+                <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
+              </i>
+            </p>
+          {{/isCollection}}
+        {{/isMPA}}
+      {{/hasSigHabs}}
     {{/d3IsPresent}}
     <p>
       <em>Sensitive habitats are defined in the report '<a href="https://www.mfe.govt.nz/sites/default/files/sensitive-marine-benthic-habitats-defined.pdf" target="_blank">Sensitive marine benthic habitats defined</a>.' ’NA’ indicates that the habitat is likely to be present in the region but not mapped.</em>

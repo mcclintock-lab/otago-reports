@@ -31,6 +31,8 @@ class EnvironmentTab extends ReportTab
       d3IsPresent = true
     else
       d3IsPresent = false
+
+
     isCollection = @model.isCollection()
     scid = @sketchClass.id
     if scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID
