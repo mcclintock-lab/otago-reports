@@ -12,7 +12,7 @@
       <i>
         Area (%) refers to the percentage of the habitat contained within the 
         {{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}
-        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region.d
+        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region.
       </i>
     </p>
     <p class="in-report-header">Habitat types</p>
@@ -27,7 +27,7 @@
               <th><a class="hab_represent sort_down" href="#" >Represented</th>
                 {{#isCollection}}
                   <th><a class="hab_replicate sort_down" href="#" >Replicated</th>
-                  <th><a class="hab_connected sort_down" href="#">Connected</th>
+                  <th><a class="hab_connected sort_down" href="#">Connectivity</th>
                 {{/isCollection}}
               {{/isMPA}}
             </tr>
@@ -46,7 +46,7 @@
               <th>Represented</th>
                 {{#isCollection}}
                   <th>Replicated</th>
-                  <th>Connected</th>
+                  <th>Connectivity</th>
                 {{/isCollection}}
               {{/isMPA}}
             </tr>
@@ -87,7 +87,7 @@
               <th><a class="sig_hab_represent sort_down" href="#">Represented</th>
               {{#isCollection}}
                 <th><a class="sig_hab_replicate sort_down" href="#">Replicated</th>
-                <th><a class="sig_hab_connected sort_down" href="#">Connected</th>
+                <th><a class="sig_hab_connected sort_down" href="#">Connectivity</th>
               {{/isCollection}}
             {{/isMPA}}
           </tr>
@@ -134,7 +134,7 @@
       </table>
     {{/d3IsPresent}}
     <p>
-      <em>Sensitive habitats are defined in the report '<a href="https://www.mfe.govt.nz/sites/default/files/sensitive-marine-benthic-habitats-defined.pdf" target="_blank">Sensitive marine benthic habitats defined</a>.' ‘NA’ indicates that the habitat is currently not mapped for the study region.</em>
+      <em>Sensitive habitats are defined in the report '<a href="https://www.mfe.govt.nz/sites/default/files/sensitive-marine-benthic-habitats-defined.pdf" target="_blank">Sensitive marine benthic habitats defined</a>.' ’NA’ indicates that the habitat is likely to be present in the region but not mapped.</em>
     </p>
   </div>
 {{#showAdjacent}}

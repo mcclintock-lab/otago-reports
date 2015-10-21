@@ -11,7 +11,7 @@
     {{#hasExistingFishing}}
     <div class="reportSection tableContainer">
       <h4>Existing Fisheries Management</h4>
-          <p><em>The {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} includes the following existing fisheries restrictions. 
+          <p><em>The {{#isCollection}}network{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} includes the following existing fisheries restrictions. 
           Also shown is the extent that the fisheries restrictions apply to the {{#isCollection}}sketches{{/isCollection}}
           {{^isCollection}}sketch{{/isCollection}} as a percentage of total sketch area. For example, 100% means no fishing of that type is currently allowed within the sketch.</em></p>
           <table data-paging="10">
@@ -36,7 +36,7 @@
       <div class="reportSection tableContainer">
         <h4>Customary Areas</h4>
         {{#hasExistingCustomary}}
-          <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>existing</strong> Customary Areas:</p>
+          <p> The {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>existing</strong> Customary Areas:</p>
           <table data-paging="10">
             <tbody>
               {{#existing_customary_fishing}}
@@ -48,7 +48,7 @@
           </table>
         {{/hasExistingCustomary}}
         {{#hasProposedCustomary}}
-          <p> The {{#isCollection}}collection{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>proposed</strong> Customary Areas:</p>
+          <p> The {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>proposed</strong> Customary Areas:</p>
           <table data-paging="10">
             <tbody>
               {{#proposed_customary_fishing}}

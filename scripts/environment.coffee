@@ -146,7 +146,7 @@ class EnvironmentTab extends ReportTab
     @$('.sig_hab_replicate').click (event) =>
       @renderSort('sig_hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
     @$('.sig_hab_connected').click (event) =>
-      @renderSort('sig_hab_connected',tableName, habitats, event, "CONN", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+      @renderSort('sig_hab_connected',tableName, habitats, event, "CONN", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
     
     @renderSort('sig_hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
 
@@ -165,10 +165,12 @@ class EnvironmentTab extends ReportTab
     @$('.hab_replicate').click (event) =>
       @renderSort('hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
     @$('.hab_connected').click (event) =>
-      @renderSort('hab_connected',tableName, habitats, event, "CONN", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+      @renderSort('hab_connected',tableName, habitats, event, "CONN", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
         
 
     @renderSort('hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+
+
 
   #do the sorting - should be table independent
   #skip any that are less than 0.00
@@ -182,7 +184,12 @@ class EnvironmentTab extends ReportTab
       sortUp = @getSortDir(targetColumn)
 
       if isFloat
-        data = _.sortBy pdata, (row) ->  parseFloat(row[sortBy])
+        data = _.sortBy pdata, (row) -> 
+            if isNaN(row[sortBy])
+              val = 0.0
+            else
+              val = parseFloat(row[sortBy])
+            return val
       else
         data = _.sortBy pdata, (row) -> row[sortBy]
 
@@ -225,6 +232,12 @@ class EnvironmentTab extends ReportTab
       @firePagination(tableName)
       if event
         event.stopPropagation()
+
+  getFloat: (val) =>
+    try
+      return parseFloat(val)
+    catch error
+      return 0.0
 
   #table row for habitat representation
   getHabitatRowString: (d, isMPA, isCollection) =>
