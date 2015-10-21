@@ -29,7 +29,7 @@ class OverviewTab extends ReportTab
     # The @recordSet method contains some useful means to get data out of 
     # the monsterous RecordSet json. Checkout the seasketch-reporting-template
     # documentation for more info.
-    TOTAL_COASTLINE_LENGTH = 667.594
+    TOTAL_COASTLINE_LENGTH = 764.6
     TOTAL_HABS = 38
     scid = @sketchClass.id
     isCollection = @model.isCollection()
@@ -95,6 +95,8 @@ class OverviewTab extends ReportTab
       percent = @recordSet('Size', 'Percent').float('PERC')
       if percent == 0 && total_percent > 0
         percent = "< 1"
+      if percent > 100
+        percent = 100.0
     catch Error
       percent = total_percent
 
@@ -117,6 +119,8 @@ class OverviewTab extends ReportTab
         coastline_length_percent = "< 1"
       else
         coastline_length_percent = parseFloat(coastline_length_percent).toFixed(1)
+        if coastline_length_percent > 100
+          coastline_length_percent = 100
 
       coastline_length = @addCommas coastline_length
       #need size
