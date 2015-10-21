@@ -18,7 +18,6 @@ class OverviewTab extends ReportTab
   timeout: 120000
   template: templates.overview
   dependencies: [
-    'Size'
     'HabitatsOverview'
     'ProposalSize'
     'ProposalConnectivity'
@@ -29,7 +28,9 @@ class OverviewTab extends ReportTab
     # The @recordSet method contains some useful means to get data out of 
     # the monsterous RecordSet json. Checkout the seasketch-reporting-template
     # documentation for more info.
-    TOTAL_COASTLINE_LENGTH = 764.6
+    TOTAL_COASTLINE_LENGTH = 766.466917
+    TOT_SIZE_SQKM = 8930.662893
+
     TOTAL_HABS = 38
     scid = @sketchClass.id
     isCollection = @model.isCollection()
@@ -58,7 +59,10 @@ class OverviewTab extends ReportTab
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
     isGeneric = (scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID)
 
+    total_sizes = @recordSet('ProposalSize', 'SizeTotals').toArray()
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
+
+    
     represented_habs = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
     hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
     num_habs = hab_sizes?.length
@@ -80,51 +84,26 @@ class OverviewTab extends ReportTab
       mpa_avg_size_guideline = "below"
     else
       mpa_avg_size_guideline = "above"
-    try
-      size = @recordSet('Size', 'Size').float('SIZE_SQKM')
-      if size < 0.1
-        new_size = "< 0.1"
-      else
-        new_size =  @addCommas size
 
-    catch Error
 
-      new_size = 0
-
-    try
-      percent = @recordSet('Size', 'Percent').float('PERC')
-      if percent == 0 && total_percent > 0
-        percent = "< 1"
-      if percent > 100
-        percent = 100.0
-    catch Error
-      percent = total_percent
-
-    '''
-    coastline_length = @recordSet('CoastlineLength', 'CoastlineLength').float('LGTH_IN_M')
-
-    
-    coastline_length_percent = ((coastline_length/1000)/TOTAL_COASTLINE_LENGTH)*100
-    if coastline_length_percent > 0 && coastline_length_percent < 1
-      coastline_length_percent = "< 1"
-    else
-      coastline_length_percent = parseFloat(coastline_length_percent).toFixed(1)
-
-    coastline_length = @addCommas coastline_length
-    '''
-    if prop_sizes?.length > 0
-      coastline_length = prop_sizes[0].COAST
-      coastline_length_percent = (coastline_length/TOTAL_COASTLINE_LENGTH)*100
+    if total_sizes?.length > 0
+      coastline_length = total_sizes[0].COAST
+      coastline_length_percent = (coastline_length/TOTAL_COASTLINE_LENGTH)*100.0
       if coastline_length_percent > 0 && coastline_length_percent < 1
         coastline_length_percent = "< 1"
       else
         coastline_length_percent = parseFloat(coastline_length_percent).toFixed(1)
         if coastline_length_percent > 100
           coastline_length_percent = 100
+      size = total_sizes[0].SIZE_SQKM
 
-      coastline_length = @addCommas coastline_length
-      #need size
+      coastline_length = parseFloat(coastline_length).toFixed(1)
+      area_percent = parseFloat((size/TOT_SIZE_SQKM)*100).toFixed(1)
+      if area_percent > 100
+        area_percent = 100.0
 
+      if area_percent < 0.1
+        area_percent = "< 1"
 
     new_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('NEW_HABS')
     total_habs = @recordSet('HabitatsOverview', 'HabitatSize').float('TOT_HABS')
@@ -172,13 +151,13 @@ class OverviewTab extends ReportTab
       attributes: @model.getAttributes()
       anyAttributes: @model.getAttributes().length > 0
       admin: @project.isAdmin window.user
-      size: new_size
+      size: size
       coastline_length: coastline_length
       coastline_length_percent:coastline_length_percent
       new_habs: new_habs
       total_habs: total_habs
       ratio: ratio
-      percent: percent
+      area_percent: area_percent
       isCollection: isCollection
       numSketches: numSketches
       pluralSketches: pluralSketches
