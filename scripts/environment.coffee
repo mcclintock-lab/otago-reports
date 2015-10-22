@@ -188,7 +188,7 @@ class EnvironmentTab extends ReportTab
       if isFloat
         data = _.sortBy pdata, (row) -> 
             if isNaN(row[sortBy])
-              val = 0.0
+              val = -1.0
             else
               val = parseFloat(row[sortBy])
             return val
