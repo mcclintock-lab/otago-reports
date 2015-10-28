@@ -40,7 +40,8 @@ class EnvironmentTab extends ReportTab
     else
       isGeneric = false
 
-    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
+    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID or scid == MPA_CONFID_COLLECTION_ID)
+    
     hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
 
     habs_in_sketch = hab_sizes?.length
@@ -102,6 +103,7 @@ class EnvironmentTab extends ReportTab
 
       hasCovenants: hasCovenants
       showAdjacent: showAdjacent
+      
       
 
     @$el.html @template.render(context, partials)

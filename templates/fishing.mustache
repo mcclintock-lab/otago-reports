@@ -69,9 +69,8 @@
         <p>No information on existing fishing areas or customary use is available for this area.</p>
   </div>
 {{/hasAnyFishing}}
-<!--
-{{#isMPA}}
-  {{#isCollection}}
+
+{{#isConfidentialMPANetwork}}
     <div class="reportSection tableContainer">
       <h4>Fishing Intensity</h4>
           <p>
@@ -103,9 +102,9 @@
             </tbody>
           </table>
     </div>
-  {{/isCollection}}
-{{/isMPA}}
+{{/isConfidentialMPANetwork}}
 
+<!--
 {{#isMPA}}
   <div class="reportSection tableContainer">
     <h4>Fishing Intensity</h4>

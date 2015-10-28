@@ -34,7 +34,10 @@ class OverviewTab extends ReportTab
     TOTAL_HABS = 38
     scid = @sketchClass.id
     isCollection = @model.isCollection()
-    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
+
+    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID or scid == MPA_CONFID_COLLECTION_ID)
+    console.log("scid: ", scid)
+    console.log("ismpa ", isMPA)
     num_reserves = 0
     num_type2 = 0
     num_other = 0
@@ -56,7 +59,7 @@ class OverviewTab extends ReportTab
       numSketches = 1
 
     pluralSketches = numSketches > 1
-    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID)
+
     isGeneric = (scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID)
 
     total_sizes = @recordSet('ProposalSize', 'SizeTotals').toArray()

@@ -32,20 +32,15 @@ class FishingTab extends ReportTab
 
     isCollection = @model.isCollection()
     scid = @sketchClass.id
-    if scid == MPA_ID or scid == MPA_COLLECTION_ID
+    console.log("scid:",scid)
+    if (scid == MPA_ID or scid == MPA_COLLECTION_ID or scid == MPA_CONFID_COLLECTION_ID)
       isMPA = true
     else
       isMPA = false
 
+    isConfidentialMPANetwork = (scid == MPA_CONFID_COLLECTION_ID)
     if isMPA
-      '''
-      setnet = @recordSet('FishingIntensity', 'SetNet').toArray()
-      @roundData(setnet)
-      trawl = @recordSet('FishingIntensity', 'Trawl').toArray()
-      @roundData(trawl)
-      longline = @recordSet('FishingIntensity', 'LongLine').toArray()
-      @roundData(longline)
-      '''
+      
       fishery_intensity = @recordSet('FisheryIntensity', 'FisheryIntensity').toArray()
 
     existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
@@ -79,6 +74,7 @@ class FishingTab extends ReportTab
         hasAnyFishing: hasAnyFishing
         hasCustomary: hasCustomary
         fishery_intensity: fishery_intensity
+        isConfidentialMPANetwork: isConfidentialMPANetwork
     else
       context =
         sketch: @model.forTemplate()
@@ -97,6 +93,7 @@ class FishingTab extends ReportTab
         hasAnyFishing: hasAnyFishing
         hasCustomary: hasCustomary
         isMPA: isMPA
+        isConfidentialMPANetwork: isConfidentialMPANetwork
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
