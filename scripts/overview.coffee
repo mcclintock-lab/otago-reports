@@ -31,7 +31,10 @@ class OverviewTab extends ReportTab
     TOTAL_COASTLINE_LENGTH = 766.466917
     TOT_SIZE_SQKM = 8930.662893
 
-    TOTAL_HABS = 38
+    ALL_TOTAL_HABS = 37
+    SIG_HABS = 11#10 sig habs and deep water gravel removed
+    TOTAL_HABS = ALL_TOTAL_HABS-SIG_HABS
+
     scid = @sketchClass.id
     isCollection = @model.isCollection()
 

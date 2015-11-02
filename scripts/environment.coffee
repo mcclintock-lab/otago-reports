@@ -125,13 +125,17 @@ class EnvironmentTab extends ReportTab
     estuarine_hab_types = []
     critical_habitats = []
     for hab in habs_represented
+
       if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed" or hab.HAB_TYPE == "Seagrass bed"
         critical_habitats.push(hab)
       else
+
         if hab.HAB_TYPE.startsWith("Estuarine") or hab.HAB_TYPE == "Mud Flat"
           estuarine_hab_types.push(hab)
         else
-          coastal_hab_types.push(hab)
+          #skipping this one because its so small
+          if hab.HAB_TYPE != "Deep Water Gravel"
+            coastal_hab_types.push(hab)
 
     na_habs = ["Brachiopod beds", "Calcareous tube worm thickets", "Chaetopteridae worm fields",
                "Rhodolith beds", "Sea pen fields", "Sponge gardens", "Stony coral thickets"]
