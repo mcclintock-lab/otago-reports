@@ -67,9 +67,11 @@ class EnvironmentTab extends ReportTab
     @roundData habitats_represented
     all_habs = @processHabitats(habitats_represented)
  
-    hab_types = all_habs[0]
-    hasHabTypes = hab_types?.length > 0
-    sig_habs = all_habs[1]
+    coastal_hab_types = all_habs[0]
+    hasCoastalHabTypes = coastal_hab_types?.length > 0
+    estuarine_hab_types = all_habs[1]
+    hasEstuarineHabTypes = estuarine_hab_types?.length > 0
+    sig_habs = all_habs[2]
     hasSigHabs = sig_habs?.length > 0
     attributes = @model.getAttributes()
  
@@ -84,8 +86,11 @@ class EnvironmentTab extends ReportTab
       isCollection: isCollection
       isMPA: isMPA
 
-      hab_types: hab_types
-      hasHabTypes: hasHabTypes
+      coastal_hab_types: coastal_hab_types
+      hasCoastalHabTypes: hasCoastalHabTypes
+      estuarine_hab_types: estuarine_hab_types
+      hasEstuarineHabTypes: hasEstuarineHabTypes
+
       sig_habs: sig_habs
       hasSigHabs: hasSigHabs
 
@@ -109,26 +114,31 @@ class EnvironmentTab extends ReportTab
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
     @roundData(hab_sizes)
-    @setupHabitatSorting(hab_types, isMPA, isCollection)
+    @setupCoastalHabitatSorting(coastal_hab_types, isMPA, isCollection)
+    @setupEstuarineHabitatSorting(estuarine_hab_types, isMPA, isCollection)
     @setupSigHabitatSorting(sig_habs, isMPA, isCollection)
 
     @enableTablePaging()
     
   processHabitats: (habs_represented) =>
-    hab_types = []
+    coastal_hab_types = []
+    estuarine_hab_types = []
     critical_habitats = []
     for hab in habs_represented
       if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed" or hab.HAB_TYPE == "Seagrass bed"
         critical_habitats.push(hab)
       else
-        hab_types.push(hab)
+        if hab.HAB_TYPE.startsWith("Estuarine") or hab.HAB_TYPE == "Mud Flat"
+          estuarine_hab_types.push(hab)
+        else
+          coastal_hab_types.push(hab)
 
     na_habs = ["Brachiopod beds", "Calcareous tube worm thickets", "Chaetopteridae worm fields",
                "Rhodolith beds", "Sea pen fields", "Sponge gardens", "Stony coral thickets"]
     for nh in na_habs
       new_hab = {"HAB_TYPE": nh, "SIZE_SQKM":"NA", "PERC":"NA", "REPRESENT":"NA", "REPLIC":"NA", "CONN":"NA"}
       critical_habitats.push(new_hab)
-    return [hab_types, critical_habitats]
+    return [coastal_hab_types, estuarine_hab_types, critical_habitats]
 
   roundData: (habitats) =>  
     for hab in habitats
@@ -154,25 +164,41 @@ class EnvironmentTab extends ReportTab
     
     @renderSort('sig_hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
 
-  setupHabitatSorting: (habitats, isMPA, isCollection) =>
-    tbodyName = '.hab_values'
-    tableName = '.hab_table'
-    @$('.hab_type').click (event) =>
-      @renderSort('hab_type', tableName, habitats, event, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
-    @$('.hab_new_area').click (event) =>
-      @renderSort('hab_new_area', tableName, habitats, event, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
-    @$('.hab_new_perc').click (event) =>
-      @renderSort('hab_new_perc',tableName, habitats, event, "PERC", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+  setupCoastalHabitatSorting: (habitats, isMPA, isCollection) =>
+    tbodyName = '.coastal_hab_values'
+    tableName = '.coastal_hab_table'
+    @$('.coastal_hab_type').click (event) =>
+      @renderSort('coastal_hab_type', tableName, habitats, event, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.coastal_hab_new_area').click (event) =>
+      @renderSort('coastal_hab_new_area', tableName, habitats, event, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+    @$('.coastal_hab_new_perc').click (event) =>
+      @renderSort('coastal_hab_new_perc',tableName, habitats, event, "PERC", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
     
-    @$('.hab_represent').click (event) =>
-      @renderSort('hab_represent',tableName, habitats, event, "REPRESENT", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
-    @$('.hab_replicate').click (event) =>
-      @renderSort('hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
-    @$('.hab_connected').click (event) =>
-      @renderSort('hab_connected',tableName, habitats, event, "CONN", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
-        
+    @$('.coastal_hab_represent').click (event) =>
+      @renderSort('coastal_hab_represent',tableName, habitats, event, "REPRESENT", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.coastal_hab_replicate').click (event) =>
+      @renderSort('coastal_hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.coastal_hab_connected').click (event) =>
+      @renderSort('coastal_hab_connected',tableName, habitats, event, "CONN", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+    @renderSort('coastal_hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
 
-    @renderSort('hab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+  setupEstuarineHabitatSorting: (habitats, isMPA, isCollection) =>
+    tbodyName = '.estuarine_hab_values'
+    tableName = '.estuarine_hab_table'
+    @$('.estuarine_hab_type').click (event) =>
+      @renderSort('estuarine_hab_type', tableName, habitats, event, "HAB_TYPE", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.estuarine_hab_new_area').click (event) =>
+      @renderSort('estuarine_hab_new_area', tableName, habitats, event, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+    @$('.estuarine_hab_new_perc').click (event) =>
+      @renderSort('estuarine_hab_new_perc',tableName, habitats, event, "PERC", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+    
+    @$('.estuarine_hab_represent').click (event) =>
+      @renderSort('estuarine_hab_represent',tableName, habitats, event, "REPRESENT", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.estuarine_hab_replicate').click (event) =>
+      @renderSort('estuarine_hab_replicate',tableName, habitats, event, "REPLIC", tbodyName, false, @getHabitatRowString, isMPA, isCollection)
+    @$('.estuarine_hab_connected').click (event) =>
+      @renderSort('estuarine_hab_connected',tableName, habitats, event, "CONN", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
+    @renderSort('estuarinehab_new_area', tableName, habitats, undefined, "SIZE_SQKM", tbodyName, true, @getHabitatRowString, isMPA, isCollection)
 
 
 
@@ -285,7 +311,7 @@ class EnvironmentTab extends ReportTab
       multiClasses = targetColumn.split(' ')
       #protectedMammals = _.sortBy protectedMammals, (row) -> parseInt(row.Count)
       habClassName =_.find multiClasses, (classname) -> 
-        classname.lastIndexOf('hab',0) == 0 
+        classname.lastIndexOf('coastal_hab',0) == 0 or classname.lastIndexOf('estuarine_hab',0) == 0
       if habClassName is undefined
         habClassName =_.find multiClasses, (classname) -> 
           classname.lastIndexOf('sig',0) == 0 

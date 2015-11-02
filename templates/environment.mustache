@@ -15,24 +15,25 @@
         {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region.
       </i>
     </p>
-    <p class="in-report-header">Habitat types</p>
+
+    <p class="in-report-header">Coastal Habitat Types</p>
       {{#d3IsPresent}}
-        <table data-paging="20" class="hab_table"> 
+        <table data-paging="20" class="coastal_hab_table"> 
           <thead>
             <tr>
-              <th class="sorting_col" style="width:200px;"><a class="hab_type sort_up" href="#">Habitat</a></th>
-              <th><a  class="hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
-              <th><a class="hab_new_perc sort_down" href="#">Area (%)</a></th>
+              <th class="sorting_col" style="width:200px;"><a class="coastal_hab_type sort_up" href="#">Habitat</a></th>
+              <th><a  class="coastal_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
+              <th><a class="coastal_hab_new_perc sort_down" href="#">Area (%)</a></th>
               {{#isMPA}}
-              <th><a class="hab_represent sort_down" href="#" >Represented</th>
+              <th><a class="coastal_hab_represent sort_down" href="#" >Represented</th>
                 {{#isCollection}}
-                  <th><a class="hab_replicate sort_down" href="#" >Replicated</th>
-                  <th><a class="hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup></th>
+                  <th><a class="coastal_hab_replicate sort_down" href="#" >Replicated</th>
+                  <th><a class="coastal_hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup></th>
                 {{/isCollection}}
               {{/isMPA}}
             </tr>
           </thead>
-         <tbody class="hab_values"></tbody>
+         <tbody class="coastal_hab_values"></tbody>
        </table>
       {{#isMPA}}
         {{#isCollection}}
@@ -61,8 +62,8 @@
             </tr>
           </thead>
           <tbody>
-            {{#hasHabTypes}}
-              {{#hab_types}}
+            {{#hasCoastalHabTypes}}
+              {{#coastal_hab_types}}
               <tr>
                 <td>{{HAB_TYPE}}</td>
                 <td>{{SIZE_SQKM}}</td>
@@ -72,15 +73,15 @@
                   {{#isCollection}}<td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
                 {{/isMPA}}
               </tr>
-              {{/hab_types}}
-            {{/hasHabTypes}}
-            {{^hasHabTypes}}
+              {{/coastal_hab_types}}
+            {{/hasCoastalHabTypes}}
+            {{^hasCoastalHabTypes}}
               <tr>
                 <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
-                  <i>There are no habitat types.</i>
+                  <i>There are no coastal habitat types.</i>
                 </td>
               </tr>
-            {{/hasHabTypes}}
+            {{/hasCoastalHabTypes}}
           </tbody>
         </table>
         {{#isMPA}}
@@ -93,6 +94,87 @@
         {{/isCollection}}
       {{/isMPA}}
     {{/d3IsPresent}}
+
+    <p class="in-report-header">Estuarine Habitat Types</p>
+      {{#d3IsPresent}}
+        <table data-paging="20" class="estuarine_hab_table"> 
+          <thead>
+            <tr>
+              <th class="sorting_col" style="width:200px;"><a class="estuarine_hab_type sort_up" href="#">Habitat</a></th>
+              <th><a  class="estuarine_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
+              <th><a class="estuarine_hab_new_perc sort_down" href="#">Area (%)</a></th>
+              {{#isMPA}}
+              <th><a class="estuarine_hab_represent sort_down" href="#" >Represented</th>
+                {{#isCollection}}
+                  <th><a class="estuarine_hab_replicate sort_down" href="#" >Replicated</th>
+                  <th><a class="estuarine_hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup></th>
+                {{/isCollection}}
+              {{/isMPA}}
+            </tr>
+          </thead>
+         <tbody class="estuarine_hab_values"></tbody>
+       </table>
+      {{#isMPA}}
+        {{#isCollection}}
+          <p>
+            <i>
+              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
+            </i>
+          </p>
+        {{/isCollection}}
+      {{/isMPA}}
+      {{/d3IsPresent}}
+      {{^d3IsPresent}}
+        <table data-paging="10">
+          <thead>
+            <tr>
+              <th style="width:180px;">Habitat</th>
+              <th>Area (km<sup>2</sup>)</th>
+              <th>Area (%)</th>
+              {{#isMPA}}
+                <th>Represented</th>
+                  {{#isCollection}}
+                    <th>Replicated</th>
+                    <th>Connectivity (in km)<sup>*</sup></th>
+                  {{/isCollection}}
+              {{/isMPA}}
+            </tr>
+          </thead>
+          <tbody>
+            {{#hasEstuarineHabTypes}}
+              {{#estuarine_hab_types}}
+              <tr>
+                <td>{{HAB_TYPE}}</td>
+                <td>{{SIZE_SQKM}}</td>
+                <td>{{PERC}}</td>
+                {{#isMPA}}
+                  <td>{{REPRESENT}}</td>
+                  {{#isCollection}}<td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
+                {{/isMPA}}
+              </tr>
+              {{/estuarine_hab_types}}
+            {{/hasEstuarineHabTypes}}
+            {{^hasEstuarineHabTypes}}
+              <tr>
+                <td colspan="{{#isCollection}}5{{/isCollection}}{{^isCollection}}4{{/isCollection}}">
+                  <i>There are no estuarine habitat types.</i>
+                </td>
+              </tr>
+            {{/hasEstuarineHabTypes}}
+          </tbody>
+        </table>
+        {{#isMPA}}
+        {{#isCollection}}
+          <p>
+            <i>
+              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
+            </i>
+          </p>
+        {{/isCollection}}
+      {{/isMPA}}
+    {{/d3IsPresent}}
+
+
     <p class="in-report-header">Sensitive Marine Habitats</p>
       {{#d3IsPresent}}
       <table data-paging="20" class="sig_hab_table"> 
