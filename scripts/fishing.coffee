@@ -43,6 +43,7 @@ class FishingTab extends ReportTab
       
       fishery_intensity = @recordSet('FisheryIntensity', 'FisheryIntensity').toArray()
 
+
     existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
     hasExistingCustomary = existing_customary_fishing?.length > 0
     proposed_customary_fishing = @recordSet('FishingAreas', 'ProposedCustomaryArea').toArray()
