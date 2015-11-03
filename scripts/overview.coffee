@@ -31,9 +31,8 @@ class OverviewTab extends ReportTab
     TOTAL_COASTLINE_LENGTH = 766.466917
     TOT_SIZE_SQKM = 8930.662893
 
-    ALL_TOTAL_HABS = 37
-    SIG_HABS = 11#10 sig habs and deep water gravel removed
-    TOTAL_HABS = ALL_TOTAL_HABS-SIG_HABS
+    
+    TOTAL_HABS =22
 
     scid = @sketchClass.id
     isCollection = @model.isCollection()
@@ -72,7 +71,6 @@ class OverviewTab extends ReportTab
     represented_habs = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
     hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
     num_habs = hab_sizes?.length
-
 
     num_represented_habs = @getNumHabs("REPRESENT", represented_habs)
     num_replicated_habs = @getNumHabs("REPLIC", represented_habs)
@@ -217,8 +215,18 @@ class OverviewTab extends ReportTab
     count = 0
     for hab in habitats
       if hab[attr_name] == "Yes"
-        count+=1
+        if @isCoastalHab(hab)
+          count+=1
     return count
+
+  isCoastalHab: (hab) =>
+    if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed" or hab.HAB_TYPE == "Seagrass bed"
+      return false
+    if hab.HAB_TYPE.startsWith("Estuarine")
+      return false
+    if hab.HAB_TYPE == "Mud Flat"
+      return false
+    return true
 
   getReserveValues: (reserves) =>
     num_reserves = 0
