@@ -35,15 +35,6 @@
           </thead>
          <tbody class="coastal_hab_values"></tbody>
        </table>
-      {{#isMPA}}
-        {{#isCollection}}
-          <p>
-            <i>
-              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
-            </i>
-          </p>
-        {{/isCollection}}
-      {{/isMPA}}
       {{/d3IsPresent}}
       {{^d3IsPresent}}
         <table data-paging="10">
@@ -56,7 +47,7 @@
                 <th>Represented</th>
                   {{#isCollection}}
                     <th>Replicated</th>
-                    <th>Connectivity (in km)<sup>*</sup></th>
+                    <th>Connectivity (in km)</th>
                   {{/isCollection}}
               {{/isMPA}}
             </tr>
@@ -84,15 +75,6 @@
             {{/hasCoastalHabTypes}}
           </tbody>
         </table>
-        {{#isMPA}}
-        {{#isCollection}}
-          <p>
-            <i>
-              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
-            </i>
-          </p>
-        {{/isCollection}}
-      {{/isMPA}}
     {{/d3IsPresent}}
 
     <p class="in-report-header">Estuarine Habitat Types</p>
@@ -107,22 +89,13 @@
               <th><a class="estuarine_hab_represent sort_down" href="#" >Represented</th>
                 {{#isCollection}}
                   <th><a class="estuarine_hab_replicate sort_down" href="#" >Replicated</th>
-                  <th><a class="estuarine_hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup></th>
+                  <th><a class="estuarine_hab_connected sort_down" href="#">Connectivity (in km)</th>
                 {{/isCollection}}
               {{/isMPA}}
             </tr>
           </thead>
          <tbody class="estuarine_hab_values"></tbody>
        </table>
-      {{#isMPA}}
-        {{#isCollection}}
-          <p>
-            <i>
-              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
-            </i>
-          </p>
-        {{/isCollection}}
-      {{/isMPA}}
       {{/d3IsPresent}}
       {{^d3IsPresent}}
         <table data-paging="10">
@@ -135,7 +108,7 @@
                 <th>Represented</th>
                   {{#isCollection}}
                     <th>Replicated</th>
-                    <th>Connectivity (in km)<sup>*</sup></th>
+                    <th>Connectivity (in km)</th>
                   {{/isCollection}}
               {{/isMPA}}
             </tr>
@@ -163,15 +136,7 @@
             {{/hasEstuarineHabTypes}}
           </tbody>
         </table>
-        {{#isMPA}}
-        {{#isCollection}}
-          <p>
-            <i>
-              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
-            </i>
-          </p>
-        {{/isCollection}}
-      {{/isMPA}}
+
     {{/d3IsPresent}}
 
 
@@ -187,22 +152,13 @@
               <th><a class="sig_hab_represent sort_down" href="#">Represented</th>
               {{#isCollection}}
                 <th><a class="sig_hab_replicate sort_down" href="#">Replicated</th>
-                <th><a class="sig_hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup> </th>
+                <th><a class="sig_hab_connected sort_down" href="#">Connectivity (in km) </th>
               {{/isCollection}}
             {{/isMPA}}
           </tr>
         </thead>
        <tbody class="sig_hab_values"></tbody>
      </table>
-      {{#isMPA}}
-        {{#isCollection}}
-          <p>
-            <i>
-              <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
-            </i>
-          </p>
-        {{/isCollection}}
-      {{/isMPA}}
     {{/d3IsPresent}}
     {{^d3IsPresent}}
       <table data-paging="10">
@@ -215,7 +171,7 @@
                 <th>Represented</th>
                   {{#isCollection}}
                     <th>Replicated</th>
-                    <th>Connectivity (in km)<sup>*</sup></th>
+                    <th>Connectivity (in km)</th>
                   {{/isCollection}}
               {{/isMPA}}
           </tr>
@@ -243,17 +199,7 @@
         {{/hasSigHabs}}
         </tbody>
       </table>
-      {{#hasSigHabs}}
-        {{#isMPA}}
-          {{#isCollection}}
-            <p>
-              <i>
-                <sup>*</sup>General guidelines for MPA network design suggest MPA of similar habitat types to be 50-100km apart.
-              </i>
-            </p>
-          {{/isCollection}}
-        {{/isMPA}}
-      {{/hasSigHabs}}
+
     {{/d3IsPresent}}
     <p>
       <em>Sensitive habitats are defined in the report '<a href="https://www.mfe.govt.nz/sites/default/files/sensitive-marine-benthic-habitats-defined.pdf" target="_blank">Sensitive marine benthic habitats defined</a>.' ’NA’ indicates that the habitat is likely to be present in the region but not mapped.</em>
@@ -262,7 +208,7 @@
 {{#showAdjacent}}
   <div class="reportSection tableContainer">
     <h4>Adjacent Terrestrial Information</h4>
-        <p><em>MPA Guidelines: "Consider adjacent terrestrial environment" (areas shown below are within 100m of {{#isCollection}}a sketch in the collection{{/isCollection}}{{^isCollection}} the sketch {{/isCollection}})</em></p>
+        <p><em>Areas shown below are within 100m of {{#isCollection}}a sketch in the collection{{/isCollection}}{{^isCollection}} the sketch {{/isCollection}}</em></p>
         <p class="large"><strong>Protected Areas</strong></p>
         <table data-paging="20">
           <tbody>
