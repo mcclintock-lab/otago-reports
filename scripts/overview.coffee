@@ -281,6 +281,7 @@ class OverviewTab extends ReportTab
         .attr("d", (d) ->  
           arc(d)
         )
+        
       '''
       el = @$('.viz')[index]
       x = d3.scale.linear()

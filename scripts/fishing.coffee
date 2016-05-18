@@ -35,12 +35,13 @@ class FishingTab extends ReportTab
     console.log("scid:",scid)
     if (scid == MPA_ID or scid == MPA_COLLECTION_ID or scid == MPA_CONFID_COLLECTION_ID)
       isMPA = true
+      isConfidentialMPANetwork = true
     else
       isMPA = false
+      isConfidentialMPANetwork = false
 
-    isConfidentialMPANetwork = (scid == MPA_CONFID_COLLECTION_ID)
+    
     if isMPA
-      
       fishery_intensity = @recordSet('FisheryIntensity', 'FisheryIntensity').toArray()
 
 
