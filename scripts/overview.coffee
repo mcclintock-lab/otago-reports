@@ -132,7 +132,7 @@ class OverviewTab extends ReportTab
           console.log("error reading connectivity...")
           
       not_represented = TOTAL_HABS - num_represented_habs
-      represented_habs_pie_values = @build_values("Habitat-types Represented", num_represented_habs, good_color, "Habitat-types Not Represented",
+      represented_habs_pie_values = @build_values("Habitat-types Included", num_represented_habs, good_color, "Habitat-types Not Included",
         not_represented, bad_color)
 
       not_replicated = TOTAL_HABS - num_replicated_habs

@@ -10,9 +10,8 @@
   <h4>Habitats Present in {{#isCollection}}Collection{{/isCollection}}{{^isCollection}}Sketch{{/isCollection}} <a href="#" data-toggle-node="5536dbb48c5b43eb0facbc5a" data-visible="false">show layer</a></h4>
     <p>
       <i>
-        Area (%) refers to the percentage of the habitat contained within the 
-        {{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}
-        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region.
+        Area (%) refers to the percentage of the habitat contained within the {{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}
+        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. A habitat-type listed as ”Included” does not necessarily mean that it meets the requirement of being viable and therefore representative of that habitat type in the network. This will need to be assessed on a case by case basis, taking into account such things as individual patch size and proportion of habitat.
       </i>
     </p>
 
@@ -25,7 +24,7 @@
               <th><a  class="coastal_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
               <th><a class="coastal_hab_new_perc sort_down" href="#">Area (%)</a></th>
               {{#isMPA}}
-              <th><a class="coastal_hab_represent sort_down" href="#" >Represented</th>
+              <th><a class="coastal_hab_represent sort_down" href="#" >Included</th>
                 {{#isCollection}}
                   <th><a class="coastal_hab_replicate sort_down" href="#" >Replicated</th>
                   <th><a class="coastal_hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup></th>
@@ -44,7 +43,7 @@
               <th>Area (km<sup>2</sup>)</th>
               <th>Area (%)</th>
               {{#isMPA}}
-                <th>Represented</th>
+                <th>Included</th>
                   {{#isCollection}}
                     <th>Replicated</th>
                     <th>Connectivity (in km)</th>
@@ -86,7 +85,7 @@
               <th><a  class="estuarine_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
               <th><a class="estuarine_hab_new_perc sort_down" href="#">Area (%)</a></th>
               {{#isMPA}}
-              <th><a class="estuarine_hab_represent sort_down" href="#" >Represented</th>
+              <th><a class="estuarine_hab_represent sort_down" href="#" >Included</th>
                 {{#isCollection}}
                   <th><a class="estuarine_hab_replicate sort_down" href="#" >Replicated</th>
                   <th><a class="estuarine_hab_connected sort_down" href="#">Connectivity (in km)</th>
@@ -105,7 +104,7 @@
               <th>Area (km<sup>2</sup>)</th>
               <th>Area (%)</th>
               {{#isMPA}}
-                <th>Represented</th>
+                <th>Included</th>
                   {{#isCollection}}
                     <th>Replicated</th>
                     <th>Connectivity (in km)</th>
@@ -149,7 +148,7 @@
             <th><a  class="sig_hab_new_area sort_up" href="#" >Area (km<sup>2</sup>)</a></th>
             <th><a class="sig_hab_new_perc sort_down" href="#">Area (%)</a></th>
             {{#isMPA}}
-              <th><a class="sig_hab_represent sort_down" href="#">Represented</th>
+              <th><a class="sig_hab_represent sort_down" href="#">Included</th>
               {{#isCollection}}
                 <th><a class="sig_hab_replicate sort_down" href="#">Replicated</th>
                 <th><a class="sig_hab_connected sort_down" href="#">Connectivity (in km) </th>
@@ -168,7 +167,7 @@
             <th>Area (km<sup>2</sup>)</th>
             <th>Area (%)</th>
               {{#isMPA}}
-                <th>Represented</th>
+                <th>Included</th>
                   {{#isCollection}}
                     <th>Replicated</th>
                     <th>Connectivity (in km)</th>
