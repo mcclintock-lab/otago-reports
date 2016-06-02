@@ -22,6 +22,7 @@ class EnvironmentTab extends ReportTab
     'HabitatsOverview'
     'AdjacentTerrestrial'
     'HabRepsToolbox'
+    'NewHabRepsToolbox'
   ]
 
   render: () ->
@@ -32,9 +33,9 @@ class EnvironmentTab extends ReportTab
     else
       d3IsPresent = false
 
-
     isCollection = @model.isCollection()
     scid = @sketchClass.id
+
     if scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID
       isGeneric = true
     else
@@ -63,7 +64,15 @@ class EnvironmentTab extends ReportTab
     else
       showAdjacent = false
     
-    habitats_represented = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
+    if scid == MPA_CONFID_COLLECTION_ID
+      REP_NAME = "Included"
+      isConfid = true
+      habitats_represented = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
+    else
+      REP_NAME = "Patch Size"
+      isConfid = false
+      habitats_represented = @recordSet('NewHabRepsToolbox', 'RepresentedHabs').toArray()
+
     @roundData habitats_represented
     all_habs = @processHabitats(habitats_represented)
  
@@ -109,7 +118,9 @@ class EnvironmentTab extends ReportTab
       hasCovenants: hasCovenants
       showAdjacent: showAdjacent
       
-      
+      #only needed while we have Included/Patch Size behaving differently for MPA (confid) and MPA
+      REP_NAME: REP_NAME
+      isConfid: isConfid
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()
