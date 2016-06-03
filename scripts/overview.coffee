@@ -38,8 +38,7 @@ class OverviewTab extends ReportTab
     isCollection = @model.isCollection()
 
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID or scid == MPA_CONFID_COLLECTION_ID)
-    console.log("scid: ", scid)
-    console.log("ismpa ", isMPA)
+
     num_reserves = 0
     num_type2 = 0
     num_other = 0
