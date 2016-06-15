@@ -21,7 +21,6 @@ class EnvironmentTab extends ReportTab
   dependencies: [
     'HabitatsOverview'
     'AdjacentTerrestrial'
-    'HabRepsToolbox'
     'NewHabRepsToolbox'
   ]
 
@@ -43,7 +42,7 @@ class EnvironmentTab extends ReportTab
 
     isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID or scid == MPA_CONFID_COLLECTION_ID)
     
-    hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
+    hab_sizes = @recordSet('NewHabRepsToolbox', 'HabSizes').toArray()
 
     habs_in_sketch = hab_sizes?.length
     habs_plural = habs_in_sketch != 1
@@ -64,14 +63,10 @@ class EnvironmentTab extends ReportTab
     else
       showAdjacent = false
     
-    if scid == MPA_CONFID_COLLECTION_ID
-      REP_NAME = "Included"
-      isConfid = true
-      habitats_represented = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
-    else
-      REP_NAME = "Patch Size"
-      isConfid = false
-      habitats_represented = @recordSet('NewHabRepsToolbox', 'RepresentedHabs').toArray()
+
+    REP_NAME = "Patch Size"
+    isConfid = false
+    habitats_represented = @recordSet('NewHabRepsToolbox', 'RepresentedHabs').toArray()
 
     @roundData habitats_represented
     all_habs = @processHabitats(habitats_represented)

@@ -21,7 +21,7 @@ class OverviewTab extends ReportTab
     'HabitatsOverview'
     'ProposalSize'
     'ProposalConnectivity'
-    'HabRepsToolbox'
+    'NewHabRepsToolbox'
   ]
 
   render: () ->
@@ -67,8 +67,8 @@ class OverviewTab extends ReportTab
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
 
     
-    represented_habs = @recordSet('HabRepsToolbox', 'RepresentedHabs').toArray()
-    hab_sizes = @recordSet('HabRepsToolbox', 'HabSizes').toArray()
+    represented_habs = @recordSet('NewHabRepsToolbox', 'RepresentedHabs').toArray()
+    hab_sizes = @recordSet('NewHabRepsToolbox', 'HabSizes').toArray()
     num_habs = hab_sizes?.length
 
     num_represented_habs = @getNumHabs("REPRESENT", represented_habs)
