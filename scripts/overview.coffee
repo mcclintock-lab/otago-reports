@@ -228,6 +228,13 @@ class OverviewTab extends ReportTab
       return false
     return true
 
+  isType2Only: (reserves) =>
+    rescounts = @getReserveValues(reserves)
+    if rescounts[0] == 0
+      return true
+    else
+      return false
+      
   getReserveValues: (reserves) =>
     num_reserves = 0
     num_type2 = 0

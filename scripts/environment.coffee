@@ -69,7 +69,9 @@ class EnvironmentTab extends ReportTab
     habitats_represented = @recordSet('NewHabRepsToolbox', 'RepresentedHabs').toArray()
 
     @roundData habitats_represented
-    all_habs = @processHabitats(habitats_represented)
+    noReserveTypes = @hasNoReserveTypes @model.getChildren()
+    console.log("does this have no Marine Reserves? ", noReserveTypes)
+    all_habs = @processHabitats(habitats_represented, noReserveTypes)
  
     coastal_hab_types = all_habs[0]
     hasCoastalHabTypes = coastal_hab_types?.length > 0
@@ -126,11 +128,17 @@ class EnvironmentTab extends ReportTab
 
     @enableTablePaging()
     
-  processHabitats: (habs_represented) =>
+  processHabitats: (habs_represented, noReserves) =>
     coastal_hab_types = []
     estuarine_hab_types = []
     critical_habitats = []
     for hab in habs_represented
+      #if there are only type 2 and other reserves, show patch size as NA if its 0
+      if noReserves
+        try
+          if Number.parseFloat(hab.REPRESENT) == 0.0
+            hab.REPRESENT="NA"
+        catch Error
 
       if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed" or hab.HAB_TYPE == "Seagrass bed"
         critical_habitats.push(hab)
@@ -332,6 +340,28 @@ class EnvironmentTab extends ReportTab
       targetColumn = name
 
     return targetColumn
+
+  hasNoReserveTypes: (reserves) =>
+    try
+      t2_str = "Type2"
+      mr_str = "MR"
+      other_str = "Other"
+      numreserves = 0
+
+      for res in reserves
+        attrs = res.getAttributes()
+        for att in attrs
+          if att.exportid == "MANAGEMENT" 
+            res_type = att.value
+            if res_type == mr_str or res_type.indexOf(mr_str) >=0
+                numreserves+=1
+
+      return (numreserves == 0)
+
+    catch Error
+      console.log("something went wrong looking for reserve attribute...")
+      return false    
+      
 
   setNewSortDir: (targetColumn, sortUp) =>
     #and switch it
