@@ -71,7 +71,8 @@ class OverviewTab extends ReportTab
     hab_sizes = @recordSet('NewHabRepsToolbox', 'HabSizes').toArray()
     num_habs = hab_sizes?.length
 
-    num_represented_habs = @getNumHabs("REPRESENT", represented_habs)
+    console.log("represented habs:  ", represented_habs)
+    num_represented_habs = @getNumHabs("REPYES", represented_habs)
     num_replicated_habs = @getNumHabs("REPLIC", represented_habs)
 
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
