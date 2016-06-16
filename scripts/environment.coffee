@@ -64,7 +64,7 @@ class EnvironmentTab extends ReportTab
       showAdjacent = false
     
 
-    REP_NAME = "Patch Size"
+    REP_NAME = "Patch Size (Type-1)"
     isConfid = false
     habitats_represented = @recordSet('NewHabRepsToolbox', 'RepresentedHabs').toArray()
 
