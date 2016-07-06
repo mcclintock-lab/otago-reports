@@ -78,10 +78,24 @@
             Your {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes areas identified as having high, moderate or low intensity fishing grounds for the following fisheries. The percentage of the regions high, moderate and low intensity fishing grounds covered by your {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} is given below. Fishery displacement shows the percentage of the regions fishery that would be displaced by your {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}}.
             </em>
           </p>
+          {{#d3IsPresent}}
+            <table data-paging="20" class="fishery_table"> 
+              <thead>
+                <tr>
+                  <th class="sorting_col" style="width:150px;"><a class="fishery_type sort_up" href="#">Fishery</a></th>
+                  <th><a class="fishery_high sort_down" href="#" >High (%)</th>
+                  <th><a class="fishery_moderate sort_down" href="#">Moderate (%)</a></th>
+                  <th><a class="fishery_low sort_down" style="width:80px;" href="#" >Low (%)</th>
+                  <th><a class="fishery_disp sort_down" style="width:80px;" href="#" >Fishery displacement (%)</th>
+                </tr>
+              </thead>
+             <tbody class="fishery_values"></tbody>
+           </table>
+          {{/d3IsPresent}}
+          {{^d3IsPresent}}
           <table data-paging="10">
             <thead>
               <tr>
-
                 <th style="width:125px;">Fishery</th>
                 <th>High (%)</th>
                 <th>Moderate (%)</th>
@@ -101,6 +115,7 @@
               {{/fishery_intensity}}
             </tbody>
           </table>
+      {{/d3IsPresent}}
     </div>
 {{/isConfidentialMPANetwork}}
 

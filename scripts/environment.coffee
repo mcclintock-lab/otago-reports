@@ -70,7 +70,7 @@ class EnvironmentTab extends ReportTab
 
     @roundData habitats_represented
     noReserveTypes = @hasNoReserveTypes @model.getChildren()
-    console.log("does this have no Marine Reserves? ", noReserveTypes)
+    
     all_habs = @processHabitats(habitats_represented, noReserveTypes)
  
     coastal_hab_types = all_habs[0]
@@ -330,6 +330,7 @@ class EnvironmentTab extends ReportTab
       #protectedMammals = _.sortBy protectedMammals, (row) -> parseInt(row.Count)
       habClassName =_.find multiClasses, (classname) -> 
         classname.lastIndexOf('coastal_hab',0) == 0 or classname.lastIndexOf('estuarine_hab',0) == 0
+      
       if habClassName is undefined
         habClassName =_.find multiClasses, (classname) -> 
           classname.lastIndexOf('sig',0) == 0 
@@ -361,7 +362,6 @@ class EnvironmentTab extends ReportTab
     catch Error
       console.log("something went wrong looking for reserve attribute...")
       return false    
-      
 
   setNewSortDir: (targetColumn, sortUp) =>
     #and switch it
