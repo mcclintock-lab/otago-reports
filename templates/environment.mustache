@@ -11,7 +11,7 @@
     <p>
       <i>
         Area (%) refers to the percentage of the habitat contained within the {{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}
-        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. {{^isConfid}}‘Patch size’ for subtidal habitats refers to the width of the largest patch included in a Type-1 MPA. For intertidal habitats this refers to the maximum length. Whether a habitat is considered ‘Representative’ under the Policy will need to be assessed on a case by case basis, taking into account such things as individual patch size and proportion of habitat. ’Replicate Count’ refers to there being 2 examples of the habitat type included in at least two Type-2 MPA.{{/isConfid}}
+        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. {{^isConfid}}‘Patch size’ for subtidal habitats refers to the width of the largest patch included in a Type-1 MPA. For intertidal habitats this refers to the maximum length. Whether a habitat is considered ‘Representative’ under the Policy will need to be assessed on a case by case basis, taking into account such things as individual patch size and proportion of habitat. ’Replicates’ refers to there being 2 examples of the habitat type included in at least two Type-2 MPA.{{/isConfid}}
         {{#isConfid}}Area (%) refers to the percentage of the habitat contained within the network as a proportion of the total area of habitat within the South-East Marine region. A habitat-type listed as ”Included” does not necessarily mean that it meets the requirement of being viable and therefore representative of that habitat type in the network. This will need to be assessed on a case by case basis, taking into account such things as individual patch size and proportion of habitat.{{/isConfid}}
       </i>
     </p>
@@ -27,7 +27,7 @@
               {{#isMPA}}
               <th><a class="coastal_hab_represent sort_down" href="#" >{{REP_NAME}}</th>
                 {{#isCollection}}
-                  <th><a class="coastal_hab_replicate sort_down" href="#">Replicate Count</th>
+                  <th><a class="coastal_hab_replicate sort_down" href="#">Replicates</th>
                   <th><a class="coastal_hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup></th>
                 {{/isCollection}}
               {{/isMPA}}
@@ -46,7 +46,7 @@
               {{#isMPA}}
                 <th>Patch Size (Type-1)</th>
                   {{#isCollection}}
-                    <th>Replicate Count</th>
+                    <th>Replicates</th>
                     <th>Connectivity (in km)</th>
                   {{/isCollection}}
               {{/isMPA}}
@@ -88,7 +88,7 @@
               {{#isMPA}}
               <th><a class="estuarine_hab_represent sort_down" style="width:80px;" href="#" >{{REP_NAME}}</th>
                 {{#isCollection}}
-                  <th><a class="estuarine_hab_replicate sort_down" href="#" >Replicate Count</th>
+                  <th><a class="estuarine_hab_replicate sort_down" href="#" >Replicates</th>
                   <th><a class="estuarine_hab_connected sort_down" href="#">Connectivity (in km)</th>
                 {{/isCollection}}
               {{/isMPA}}
@@ -107,7 +107,7 @@
               {{#isMPA}}
                 <th>Patch Size (Type-1)</th>
                   {{#isCollection}}
-                    <th>Replicate Count</th>
+                    <th>Replicates</th>
                     <th>Connectivity (in km)</th>
                   {{/isCollection}}
               {{/isMPA}}
@@ -136,10 +136,7 @@
             {{/hasEstuarineHabTypes}}
           </tbody>
         </table>
-
     {{/d3IsPresent}}
-
-
     <p class="in-report-header">Sensitive Marine Habitats</p>
       {{#d3IsPresent}}
       <table data-paging="20" class="sig_hab_table"> 
@@ -151,7 +148,7 @@
             {{#isMPA}}
               <th><a class="sig_hab_represent sort_down" style="width:80px;" href="#">{{REP_NAME}}</th>
               {{#isCollection}}
-                <th><a class="sig_hab_replicate sort_down" href="#">Replicate Count</th>
+                <th><a class="sig_hab_replicate sort_down" href="#">Replicates</th>
                 <th><a class="sig_hab_connected sort_down" href="#">Connectivity (in km) </th>
               {{/isCollection}}
             {{/isMPA}}
@@ -170,7 +167,7 @@
               {{#isMPA}}
                 <th>Patch Size</th>
                   {{#isCollection}}
-                    <th>Replicate Count</th>
+                    <th>Replicates</th>
                     <th>Connectivity (in km)</th>
                   {{/isCollection}}
               {{/isMPA}}
