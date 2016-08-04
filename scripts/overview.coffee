@@ -71,7 +71,7 @@ class OverviewTab extends ReportTab
     num_habs = hab_sizes?.length
 
     num_represented_habs = @getNumHabs("REPYES", represented_habs, "Yes")
-    num_replicated_habs = @getNumHabs("REPLIC", represented_habs, "1")
+    num_replicated_habs = @getNumberReplicatedHabs("REPLIC", represented_habs)
 
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     total_percent = @getTotalAreaPercent(prop_sizes)
@@ -206,15 +206,31 @@ class OverviewTab extends ReportTab
 
     return [yes_val, no_val]
 
-  getNumHabs: (attr_name, habitats, tgt) =>
+  getNumberReplicatedHabs: (attr_name, habitats) =>
     if habitats?.length == 0
       return 0
 
     count = 0
     for hab in habitats
+      try
+        num_reps = Number.parseInt(hab[attr_name])
+        if num_reps > 1
+          if @isCoastalHab(hab)
+            count+=1
+      catch e
+        #do nothing - guard in case a non-number comes back  
+      
+    return count
+
+  getNumHabs: (attr_name, habitats, tgt) =>
+    if habitats?.length == 0
+      return 0
+    count = 0
+    for hab in habitats
       if hab[attr_name] == tgt
         if @isCoastalHab(hab)
           count+=1
+
     return count
 
   isCoastalHab: (hab) =>
