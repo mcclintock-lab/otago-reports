@@ -65,14 +65,13 @@ class OverviewTab extends ReportTab
 
     total_sizes = @recordSet('ProposalSize', 'SizeTotals').toArray()
     prop_sizes = @recordSet('ProposalSize', 'Sizes').toArray()
-
     
     represented_habs = @recordSet('NewHabRepsToolbox', 'RepresentedHabs').toArray()
     hab_sizes = @recordSet('NewHabRepsToolbox', 'HabSizes').toArray()
     num_habs = hab_sizes?.length
 
-    num_represented_habs = @getNumHabs("REPYES", represented_habs)
-    num_replicated_habs = @getNumHabs("REPLIC", represented_habs)
+    num_represented_habs = @getNumHabs("REPYES", represented_habs, "Yes")
+    num_replicated_habs = @getNumHabs("REPLIC", represented_habs, "1")
 
     mpa_avg_min_dim = @getAverageMinDim(prop_sizes)
     total_percent = @getTotalAreaPercent(prop_sizes)
@@ -207,13 +206,13 @@ class OverviewTab extends ReportTab
 
     return [yes_val, no_val]
 
-  getNumHabs: (attr_name, habitats) =>
+  getNumHabs: (attr_name, habitats, tgt) =>
     if habitats?.length == 0
       return 0
 
     count = 0
     for hab in habitats
-      if hab[attr_name] == "Yes"
+      if hab[attr_name] == tgt
         if @isCoastalHab(hab)
           count+=1
     return count
