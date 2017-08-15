@@ -100,7 +100,7 @@ class OverviewTab extends ReportTab
       size = total_sizes[0].SIZE_SQKM
 
       coastline_length = parseFloat(coastline_length).toFixed(1)
-      area_percent = parseFloat((size/TOT_SIZE_SQKM)*100).toFixed(1)
+      area_percent = parseFloat((size/TOT_SIZE_SQKM)*100).toFixed(2)
       if area_percent > 100
         area_percent = 100.0
 
@@ -347,7 +347,7 @@ class OverviewTab extends ReportTab
     for ps in prop_sizes
       if ps.NAME != "Percent of Total Area"
         ps.MIN_DIM = parseFloat(ps.MIN_DIM).toFixed(1)
-        ps.SIZE_SQKM = parseFloat(ps.SIZE_SQKM).toFixed(1)
+        ps.SIZE_SQKM = parseFloat(ps.SIZE_SQKM).toFixed(2)
         if ps.SIZE_SQKM < 0.1
           ps.SIZE_SQKM = "< 0.1"
         ps.COAST = Number(ps.COAST).toFixed(1)

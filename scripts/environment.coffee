@@ -67,7 +67,7 @@ class EnvironmentTab extends ReportTab
     REP_NAME = "Patch Size (Type-1)"
     isConfid = false
     habitats_represented = @recordSet('NewHabRepsToolbox', 'RepresentedHabs').toArray()
-
+    console.log("habs::::", habitats_represented)
     @roundData habitats_represented
     noReserveTypes = @hasNoReserveTypes @model.getChildren()
     
