@@ -236,7 +236,7 @@ class OverviewTab extends ReportTab
   isCoastalHab: (hab) =>
     if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed" or hab.HAB_TYPE == "Seagrass bed"
       return false
-    if hab.HAB_TYPE.startsWith("Estuarine")
+    if hab.HAB_TYPE.indexOf("Estuarine") == 0
       return false
     if hab.HAB_TYPE == "Mud Flat"
       return false

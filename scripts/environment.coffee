@@ -144,7 +144,7 @@ class EnvironmentTab extends ReportTab
         critical_habitats.push(hab)
       else
 
-        if hab.HAB_TYPE.startsWith("Estuarine") or hab.HAB_TYPE == "Mud Flat"
+        if hab.HAB_TYPE.indexOf("Estuarine") == 0 or hab.HAB_TYPE == "Mud Flat"
           estuarine_hab_types.push(hab)
         else
           #skipping this one because its so small
