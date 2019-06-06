@@ -35,30 +35,18 @@
     {{#hasCustomary}}
       <div class="reportSection tableContainer">
         <h4>Customary Areas</h4>
-        {{#hasExistingCustomary}}
-          <p> The {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following <strong>existing</strong> Customary Areas:</p>
-          <table data-paging="10">
-            <tbody>
-              {{#existing_customary_fishing}}
-              <tr>
-                <td>{{FEAT_TYPE}}</td>
-              </tr>
-              {{/existing_customary_fishing}}
-            </tbody>
-          </table>
-        {{/hasExistingCustomary}}
-        {{#hasProposedCustomary}}
+        {{#hasCustomary}}
           <p> The {{#isCollection}}network{{/isCollection}}{{^isCollection}}sketch{{/isCollection}} includes the following Customary Areas:</p>
           <table data-paging="10">
             <tbody>
-              {{#proposed_customary_fishing}}
+              {{#customary_fishing}}
               <tr>
                 <td>{{FEAT_TYPE}}</td>
               </tr>
-              {{/proposed_customary_fishing}}
+              {{/customary_fishing}}
             </tbody>
           </table>
-        {{/hasProposedCustomary}}
+        {{/hasCustomary}}
       </div>
     {{/hasCustomary}}
 

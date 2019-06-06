@@ -46,11 +46,17 @@ class FishingTab extends ReportTab
 
 
     existing_customary_fishing = @recordSet('FishingAreas', 'ExistingCustomaryArea').toArray()
-    hasExistingCustomary = existing_customary_fishing?.length > 0
     proposed_customary_fishing = @recordSet('FishingAreas', 'ProposedCustomaryArea').toArray()
-    hasProposedCustomary = proposed_customary_fishing?.length > 0
+    
+    customary_fishing = []
+    if existing_customary_fishing?.length > 0
+      customary_fishing = customary_fishing.concat(existing_customary_fishing)
 
-    hasCustomary = hasExistingCustomary or hasProposedCustomary
+    if proposed_customary_fishing?.length > 0
+      customary_fishing = customary_fishing.concat(proposed_customary_fishing)
+    customary_fishing.sort()
+    
+    hasCustomary = customary_fishing?.length > 0
 
     existing_fishing_areas = @recordSet('FishingAreas', 'FishingExistingArea').toArray()
     hasExistingFishing = existing_fishing_areas?.length > 0
@@ -67,14 +73,12 @@ class FishingTab extends ReportTab
         d3IsPresent: d3IsPresent
         isCollection: isCollection
         isMPA: isMPA
-        existing_customary_fishing: existing_customary_fishing
-        hasExistingCustomary: hasExistingCustomary
-        proposed_customary_fishing: proposed_customary_fishing
-        hasProposedCustomary: hasProposedCustomary
+        customary_fishing: customary_fishing
+        hasCustomary: hasCustomary
         existing_fishing_areas: existing_fishing_areas
         hasExistingFishing: hasExistingFishing
         hasAnyFishing: hasAnyFishing
-        hasCustomary: hasCustomary
+       
         fishery_intensity: fishery_intensity
         isConfidentialMPANetwork: isConfidentialMPANetwork
     else
@@ -86,14 +90,12 @@ class FishingTab extends ReportTab
         admin: @project.isAdmin window.user
         d3IsPresent: d3IsPresent
         isCollection: isCollection
-        existing_customary_fishing: existing_customary_fishing
-        hasExistingCustomary: hasExistingCustomary
-        proposed_customary_fishing: proposed_customary_fishing
-        hasProposedCustomary: hasProposedCustomary
+        customary_fishing: customary_fishing
+        hasCustomary: hasCustomary
         existing_fishing_areas: existing_fishing_areas
         hasExistingFishing: hasExistingFishing
         hasAnyFishing: hasAnyFishing
-        hasCustomary: hasCustomary
+        
         isMPA: isMPA
         isConfidentialMPANetwork: isConfidentialMPANetwork
 
