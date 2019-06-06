@@ -73,7 +73,8 @@ class UsesTab extends ReportTab
 
 
     non_smaro_rec_uses = rec_uses.filter (rec) -> rec.FEAT_TYPE != smaro
-    hasRecUses = non_smaro_rec_uses?.length > 0
+    #June 2019, disable rec uses
+    hasRecUses = false
     
     heritage = @recordSet('OverlapWithRecreationalUses', 'Heritage').toArray()
     hasHeritage = heritage?.length > 0
@@ -84,7 +85,7 @@ class UsesTab extends ReportTab
     attributes = @model.getAttributes()
     
     hasUses = hasRecUses or hasHeritage or hasInfrastructure or hasCoastal
-    hasMarineSpecies = hasMammals or hasSeals
+    hasMarineSpecies = false
 
     #adjacent terrestrial
     protected_areas = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
