@@ -20,7 +20,6 @@ class EnvironmentTab extends ReportTab
   template: templates.environment
   dependencies: [
     'HabitatsOverview'
-    'AdjacentTerrestrial'
     'NewHabRepsToolbox'
   ]
 
@@ -47,22 +46,6 @@ class EnvironmentTab extends ReportTab
     habs_in_sketch = hab_sizes?.length
     habs_plural = habs_in_sketch != 1
 
-    protected_areas = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
-    hasProtected = protected_areas?.length > 0
-
-    qe2_covenants = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
-    hasQE2covenants = qe2_covenants?.length > 0
-
-    napalis_covenants = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
-    hasNapalisCovenants = napalis_covenants?.length > 0
-
-    hasCovenants = (hasQE2covenants or hasNapalisCovenants)
-
-    if isGeneric or (!isCollection and isMPA)
-      showAdjacent = true
-    else
-      showAdjacent = false
-    
 
     REP_NAME = "Patch Size (Type-1)"
     isConfid = false
@@ -103,17 +86,6 @@ class EnvironmentTab extends ReportTab
       habs_plural: habs_plural
       habitats_represented: habitats_represented
 
-      protected_areas: protected_areas
-      hasProtected: hasProtected
-
-      qe2_covenants: qe2_covenants
-      hasQE2covenants: hasQE2covenants
-
-      napalis_covenants: napalis_covenants
-      hasNapalisCovenants: hasNapalisCovenants
-
-      hasCovenants: hasCovenants
-      showAdjacent: showAdjacent
       
       #only needed while we have Included/Patch Size behaving differently for MPA (confid) and MPA
       REP_NAME: REP_NAME
@@ -141,6 +113,18 @@ class EnvironmentTab extends ReportTab
         catch Error
 
       if hab.HAB_TYPE == "Bryozoan reef" or hab.HAB_TYPE == "Macrocystis bed" or hab.HAB_TYPE == "Seagrass bed"
+        '''
+        June 2019 changes
+        “Sensitive Marine Habitats” table: 
+         only keep seagrass bed, Bryozoans (but call “Bryozoan Thicket”) 
+         and Macrocystis bed (but call “Giant Kelp Forest”); 
+        '''
+        if hab.HAB_TYPE == "Bryozoan reef"
+          hab.HAB_TYPE = "Bryozoan Thicket"
+        if  hab.HAB_TYPE == "Macrocystis bed"
+          hab.HAB_TYPE = "Giant Kelp Forest"
+        if hab.HAB_TYPE == "Seagrass bed"
+          hab.HAB_TYPE =  "Seagrass Bed"
         critical_habitats.push(hab)
       else
 
@@ -151,11 +135,15 @@ class EnvironmentTab extends ReportTab
           if hab.HAB_TYPE != "Deep Water Gravel"
             coastal_hab_types.push(hab)
 
+   
+    '''
+     #June 2019 - removed
     na_habs = ["Brachiopod beds", "Calcareous tube worm thickets", "Chaetopteridae worm fields",
                "Rhodolith beds", "Sea pen fields", "Sponge gardens", "Stony coral thickets"]
     for nh in na_habs
       new_hab = {"HAB_TYPE": nh, "SIZE_SQKM":"NA", "PERC":"NA", "REPRESENT":"NA", "REPLIC":"NA", "CONN":"NA"}
       critical_habitats.push(new_hab)
+    '''
     return [coastal_hab_types, estuarine_hab_types, critical_habitats]
 
   roundData: (habitats) =>  
@@ -259,10 +247,11 @@ class EnvironmentTab extends ReportTab
         .attr("class", "hab_rows")
 
       if isMPA
+        #June 2019removed  "REPRESENT" from 3rd position
         if isCollection
-          columns = ["HAB_TYPE", "SIZE_SQKM", "PERC", "REPRESENT", "REPLIC", "CONN"]
+          columns = ["HAB_TYPE", "SIZE_SQKM", "PERC", "REPLIC", "CONN"]
         else
-          columns = ["HAB_TYPE", "SIZE_SQKM", "PERC", "REPRESENT"]
+          columns = ["HAB_TYPE", "SIZE_SQKM", "PERC"]
       else
         columns = ["HAB_TYPE", "SIZE_SQKM", "PERC"]
 
@@ -295,10 +284,12 @@ class EnvironmentTab extends ReportTab
     replicated_str = ""
     connected_str = ""
     if isMPA
-      represented_str = "<td">+d.REPRESENT+"</td>"
+      
+      represented_str = ''
       if isCollection
         replicated_str = "<td>"+d.REPLIC+"</td>"
         connected_str = "<td>"+d.CONN+"</td>"
+        represented_str = "<td">+d.REPRESENT+"</td>"
 
     return "<td>"+d.HAB_TYPE+"</td>"+"<td>"+d.SIZE_SQKM+"</td>"+"<td>"+d.PERC+"</td>"+represented_str+replicated_str
 

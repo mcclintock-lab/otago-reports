@@ -21,17 +21,25 @@ class UsesTab extends ReportTab
   dependencies: [
     'OverlapWithRecreationalUses'
     'SpeciesInformation'
+    'AdjacentTerrestrial'
   ]
 
 
   render: () ->
+
 
     #show tables instead of graph for IE
     if window.d3
       d3IsPresent = true
     else
       d3IsPresent = false
-
+    
+    scid = @sketchClass.id
+    if scid == GENERIC_ID or scid == GENERIC_COLLECTION_ID
+      isGeneric = true
+    else
+      isGeneric = false
+    isMPA = (scid == MPA_ID or scid == MPA_COLLECTION_ID or scid == MPA_CONFID_COLLECTION_ID)
     #species info
     try
       seabirds = @recordSet('SpeciesInformation', 'Seabirds').toArray()
@@ -78,6 +86,24 @@ class UsesTab extends ReportTab
     hasUses = hasRecUses or hasHeritage or hasInfrastructure or hasCoastal
     hasMarineSpecies = hasMammals or hasSeals
 
+    #adjacent terrestrial
+    protected_areas = @recordSet('AdjacentTerrestrial', 'PublicConservationLand').toArray()
+    hasProtected = protected_areas?.length > 0
+
+    qe2_covenants = @recordSet('AdjacentTerrestrial', 'CoastalProtection').toArray()
+    hasQE2covenants = qe2_covenants?.length > 0
+
+    napalis_covenants = @recordSet('AdjacentTerrestrial', 'AdjacentLandCover').toArray()
+    hasNapalisCovenants = napalis_covenants?.length > 0
+
+    hasCovenants = (hasQE2covenants or hasNapalisCovenants)
+
+    if isGeneric or (!isCollection and isMPA)
+      showAdjacent = true
+    else
+      showAdjacent = false
+    
+
     isCollection = @model.isCollection()
     context =
       sketch: @model.forTemplate()
@@ -113,6 +139,18 @@ class UsesTab extends ReportTab
 
       inHighDiversityReefFishArea: inHighDiversityReefFishArea
       hasMarineSpecies: hasMarineSpecies
+      
+      protected_areas: protected_areas
+      hasProtected: hasProtected
+
+      qe2_covenants: qe2_covenants
+      hasQE2covenants: hasQE2covenants
+
+      napalis_covenants: napalis_covenants
+      hasNapalisCovenants: hasNapalisCovenants
+
+      hasCovenants: hasCovenants
+      showAdjacent: showAdjacent
 
     @$el.html @template.render(context, partials)
     @enableLayerTogglers()

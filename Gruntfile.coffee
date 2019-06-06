@@ -6,7 +6,11 @@ module.exports = (grunt) ->
     connect:
       server:
         options:
-          port: 8080
+          protocol: 'https', # or 'http2'
+          port: 8443,
+          key: grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.key').toString(),
+          cert: grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.crt').toString(),
+          ca: grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/ca.crt').toString()
           base: './dist'
           keepalive: true
     watch:

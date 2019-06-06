@@ -11,7 +11,8 @@
     <p>
       <i>
         Area (%) refers to the percentage of the habitat contained within the {{#isGeneric}}collection{{/isGeneric}}{{^isGeneric}}network{{/isGeneric}}
-        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. {{^isConfid}}‘Patch size’ for subtidal habitats refers to the width of the largest patch included in a Type-1 MPA. For intertidal habitats this refers to the maximum length. Whether a habitat is considered ‘Representative’ under the Policy will need to be assessed on a case by case basis, taking into account such things as individual patch size and proportion of habitat. ’Replicates’ refers to there being 2 examples of the habitat type included in at least two Type-2 MPA.{{/isConfid}}
+        <!--June 2019 removed: {{^isConfid}}‘Patch size’ for subtidal habitats refers to the width of the largest patch included in a Type-1 MPA. For intertidal habitats this refers to the maximum length. -->
+        {{^isCollection}}sketch{{/isCollection}} as a proportion of the total area of habitat within the South-East Marine region. Whether a habitat is considered ‘Representative’ under the Policy will need to be assessed on a case by case basis, taking into account such things as individual patch size and proportion of habitat. ’Replicates’ refers to there being 2 examples of the habitat type included in at least two Type-2 MPA.{{/isConfid}}
         {{#isConfid}}Area (%) refers to the percentage of the habitat contained within the network as a proportion of the total area of habitat within the South-East Marine region. A habitat-type listed as ”Included” does not necessarily mean that it meets the requirement of being viable and therefore representative of that habitat type in the network. This will need to be assessed on a case by case basis, taking into account such things as individual patch size and proportion of habitat.{{/isConfid}}
       </i>
     </p>
@@ -25,8 +26,9 @@
               <th><a  class="coastal_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
               <th><a class="coastal_hab_new_perc sort_down" href="#">Area (%)</a></th>
               {{#isMPA}}
-              <th><a class="coastal_hab_represent sort_down" href="#" >{{REP_NAME}}</th>
+                
                 {{#isCollection}}
+                  <!--<th><a class="coastal_hab_represent sort_down" href="#" >{{REP_NAME}}</th>-->
                   <th><a class="coastal_hab_replicate sort_down" href="#">Replicates</th>
                   <th><a class="coastal_hab_connected sort_down" href="#">Connectivity (in km)<sup>*</sup></th>
                 {{/isCollection}}
@@ -43,13 +45,16 @@
               <th style="width:180px;">Habitat</th>
               <th>Area (km<sup>2</sup>)</th>
               <th>Area (%)</th>
+              
               {{#isMPA}}
-                <th>Patch Size (Type-1)</th>
-                  {{#isCollection}}
-                    <th>Replicates</th>
-                    <th>Connectivity (in km)</th>
-                  {{/isCollection}}
+                
+                {{#isCollection}}
+                  <!--<th>Patch Size (Type-1)</th>-->
+                  <th>Replicates</th>
+                  <th>Connectivity (in km)</th>
+                {{/isCollection}}
               {{/isMPA}}
+             
             </tr>
           </thead>
           <tbody>
@@ -60,8 +65,8 @@
                 <td>{{SIZE_SQKM}}</td>
                 <td>{{PERC}}</td>
                 {{#isMPA}}
-                  <td>{{REPRESENT}}</td>
-                  {{#isCollection}}<td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
+                 
+                  {{#isCollection}} <!--<td>{{REPRESENT}}</td>--><td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
                 {{/isMPA}}
               </tr>
               {{/coastal_hab_types}}
@@ -86,8 +91,9 @@
               <th><a  class="estuarine_hab_new_area sort_down" href="#" >Area (km<sup>2</sup>)</a></th>
               <th><a class="estuarine_hab_new_perc sort_down" href="#">Area (%)</a></th>
               {{#isMPA}}
-              <th><a class="estuarine_hab_represent sort_down" style="width:80px;" href="#" >{{REP_NAME}}</th>
+                
                 {{#isCollection}}
+                  <!--<th><a class="estuarine_hab_represent sort_down" style="width:80px;" href="#" >{{REP_NAME}}</th>-->
                   <th><a class="estuarine_hab_replicate sort_down" href="#" >Replicates</th>
                   <th><a class="estuarine_hab_connected sort_down" href="#">Connectivity (in km)</th>
                 {{/isCollection}}
@@ -104,13 +110,15 @@
               <th style="width:150px;">Habitat</th>
               <th>Area (km<sup>2</sup>)</th>
               <th>Area (%)</th>
+              
               {{#isMPA}}
-                <th>Patch Size (Type-1)</th>
-                  {{#isCollection}}
-                    <th>Replicates</th>
-                    <th>Connectivity (in km)</th>
-                  {{/isCollection}}
+                {{#isCollection}}
+                  <!--<th>Patch Size (Type-1)</th>-->
+                  <th>Replicates</th>
+                  <th>Connectivity (in km)</th>
+                {{/isCollection}}
               {{/isMPA}}
+              
             </tr>
           </thead>
           <tbody>
@@ -121,8 +129,8 @@
                 <td>{{SIZE_SQKM}}</td>
                 <td>{{PERC}}</td>
                 {{#isMPA}}
-                  <td>{{REPRESENT}}</td>
-                  {{#isCollection}}<td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
+                  
+                  {{#isCollection}}<!--<td>{{REPRESENT}}</td>--><td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
                 {{/isMPA}}
               </tr>
               {{/estuarine_hab_types}}
@@ -146,8 +154,9 @@
             <th><a  class="sig_hab_new_area sort_up" href="#" >Area (km<sup>2</sup>)</a></th>
             <th><a class="sig_hab_new_perc sort_down" href="#">Area (%)</a></th>
             {{#isMPA}}
-              <th><a class="sig_hab_represent sort_down" style="width:80px;" href="#">{{REP_NAME}}</th>
+              
               {{#isCollection}}
+                <!--<th><a class="sig_hab_represent sort_down" style="width:80px;" href="#">{{REP_NAME}}</th>-->
                 <th><a class="sig_hab_replicate sort_down" href="#">Replicates</th>
                 <th><a class="sig_hab_connected sort_down" href="#">Connectivity (in km) </th>
               {{/isCollection}}
@@ -164,13 +173,16 @@
             <th style="width:175px;">Habitat</th>
             <th>Area (km<sup>2</sup>)</th>
             <th>Area (%)</th>
+            
               {{#isMPA}}
-                <th>Patch Size</th>
-                  {{#isCollection}}
-                    <th>Replicates</th>
-                    <th>Connectivity (in km)</th>
-                  {{/isCollection}}
+                
+                {{#isCollection}}
+                  <!--<th>Patch Size</th>-->
+                  <th>Replicates</th>
+                  <th>Connectivity (in km)</th>
+                {{/isCollection}}
               {{/isMPA}}
+          
           </tr>
         </thead>
         <tbody>
@@ -181,8 +193,8 @@
               <td>{{SIZE_SQKM}}</td>
               <td>{{PERC}}</td>
               {{#isMPA}}
-                <td>{{REPRESENT}}</td>
-                {{#isCollection}}<td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
+                
+                {{#isCollection}}<!--<td>{{REPRESENT}}</td>--><td>{{REPLIC}}</td><td>{{CONN}}</td>{{/isCollection}}
               {{/isMPA}}
             </tr>
           {{/sig_habs}}
@@ -199,53 +211,10 @@
 
     {{/d3IsPresent}}
     <p>
-      <em>Sensitive habitats are defined in the report '<a href="https://www.mfe.govt.nz/sites/default/files/sensitive-marine-benthic-habitats-defined.pdf" target="_blank">Sensitive marine benthic habitats defined</a>.' ’NA’ indicates that the habitat is likely to be present in the region but not mapped.</em>
+      <em>Sensitive habitats are defined in the report '<a href="https://www.mfe.govt.nz/sites/default/files/sensitive-marine-benthic-habitats-defined.pdf" target="_blank">Sensitive marine benthic habitats defined</a>.'</em>
     </p>
   </div>
-{{#showAdjacent}}
 
-  <div class="reportSection tableContainer">
-    <h4>Adjacent Terrestrial Information</h4>
-        <p><em>Areas shown below are within 100m of {{#isCollection}}a sketch in the collection{{/isCollection}}{{^isCollection}} the sketch {{/isCollection}}</em></p>
-        <p class="large"><strong>Protected Areas</strong></p>
-        <table data-paging="20">
-          <tbody>
-            {{#hasProtected}}
-              {{#protected_areas}}
-              <tr>
-                <td>{{NAME}}</td>
-              </tr>
-              {{/protected_areas}}
-            {{/hasProtected}}
-            {{^hasProtected}}
-              <tr>
-                <td><em>None Present</em></td>
-              </tr>
-            {{/hasProtected}}
-          </tbody>
-        </table>
-        <p class="large"><strong>Conservation Covenants</strong></p>
-        <table data-paging="10">
-          <tbody>
-            {{#hasCovenants}}
-              {{#qe2_covenants}}
-              <tr>
-                <td>{{NAME}}</td>
-              </tr>
-              {{/qe2_covenants}}
-              {{#napalis_covenants}}
-              <tr>
-                <td>{{NAME}}</td>
-              </tr>
-              {{/napalis_covenants}}
-            {{/hasCovenants}}
-            {{^hasCovenants}}
-              <tr>
-                <td><em>None Present</em></td>
-              </tr>
-            {{/hasCovenants}}
-          </tbody>
-        </table>
-  </div>
-{{/showAdjacent}}
+
+
 
